@@ -28,7 +28,7 @@
               <p>安装位置</p>
               <input type="text" id="InstallationSite" placeholder="请输入安装位置"/>
             </div>
-            <!-- <div>
+            <div>
               <p>关联采集</p>
               <input type="text" id="AssociationCollect"/>
             </div>
@@ -72,7 +72,7 @@
             <p>备注</p>
             <div>
               <input type="text" id="Note"/>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
