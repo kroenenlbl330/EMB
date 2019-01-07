@@ -1,0 +1,168 @@
+<template>
+  <div class="left-bar">
+    <div class="info">
+      <span>罗夏</span>
+      <div class="add"></div>
+    </div>
+    <div class="menu">
+      <ul>
+        <!-- 每3行空一行： :class="(index + 1) % 3==0?'blank-line':''" -->
+        <!-- <li v-for="(list,index) in aM" :key="index" @click="change(index)"> 
+          <router-link :to="list.path"  class="rl-s" :class="{select:isActive == index}">
+            <div :class="{striping:isActive == index}"></div><span>{{list.name}}</span>
+          </router-link>      
+        </li>-->
+        <li v-for="(list,index) in aM" :key="index" @click="change(list.id)">
+          <div class="rl-s" :class="{'select':isSelect == list.id}">
+            <span>水表<br/>{{list.name}}</span>
+            <!-- <div :class="{'striping':isSelect == list.id}"></div> -->
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      
+      aM: [
+        { name: "表具设备", id: 'watermeter' },
+        { name: "采集器设备", id: 'watercollect' },
+        { name: "中继器设备", id: 'waterrelay' },
+        { name: "集中器设备", id: 'waterconcentrator' }
+      ],
+      isSelect: '',
+      // striping: 0
+    }
+  },
+  mounted() {
+    // if(this.$route.name){
+    //   this.isSelect = this.$route.name
+    // }else{
+    //   this.isSelect = "watermeter"
+    // }
+    this.isSelect = this.$route.name
+  },
+  methods: {
+    // change(index) {
+    //   this.isActive = index,
+    //   this.striping = index
+    // },
+    change(id) {
+      this.isSelect = id
+      switch (id) {
+        case "watermeter": this.$router.push("/watermeter")
+          break
+        case "watercollect": this.$router.push("/watercollect")
+          break
+        case "waterrelay": this.$router.push("/waterrelay")
+          break
+        case "waterconcentrator": this.$router.push("/waterconcentrator")
+          break
+      }
+    }
+  }
+};
+</script>
+
+<style>
+.left-bar {
+  height: 922px;
+  background-color: var(--black);
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+@media screen and (max-width: 1200px) {
+  .left-bar {
+    display: none;
+  }
+}
+
+/* info */
+.info {
+  padding-left: 8px;
+  width: 48px;
+  height: 922px;
+  background-color: var(--black);
+  border-right: 2px solid var(--gray-line);
+}
+
+.info > span {
+  color: #fff;
+  transform: rotate(-90deg);
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  font-size: 17px;
+  font-weight: bolder;
+}
+
+.add {
+  width: 28px;
+  height: 28px;
+  border-radius: 20px;
+  border: 2px solid var(--white);
+  margin: 0 auto;
+  position: relative;
+  top: 168px;
+}
+
+.add:hover {
+  cursor: pointer;
+}
+
+/* menu */
+.menu {
+  min-width: 254px;
+  background-color: var(--black);
+  height: 922px;
+  color: var(--gray-text);
+}
+
+.menu ul {
+  padding: 8px 0 0 12px;
+}
+
+.menu li{
+  margin-bottom: 16px;
+}
+
+.rl-s {
+  font-size: 1rem;
+  line-height: 16px;
+  color: var(--gray-text);
+  cursor: pointer;
+  /* font-weight: 300; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.select {
+  font-size: 1rem !important;
+  font-weight: bolder !important;
+  color: var(--white);
+  /* border-bottom: 2px solid var(--white) !important; */
+}
+
+.blank-line {
+  margin-bottom: 8px;
+}
+
+.striping {
+  height: 3px;
+  width: 32px;
+  background-color: var(--white);
+  margin-left: 12px;
+}
+</style>
+
