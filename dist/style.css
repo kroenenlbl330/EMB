@@ -376,21 +376,26 @@ input:-ms-input-placeholder {
   margin-bottom: 48px;
 } */
 
-.main-content-list > div > div {
+.main-content-list > div > div:first-child {
   width: 30%;
-  display: flex;
-  justify-content: flex-end;
+  /* display: flex;
+  justify-content: flex-end; */
 }
 
-.main-content-list > div > p {
+.main-content-list > div > div:last-child {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content-list > div > div:last-child > p {
   margin-bottom: 4px;
   color: var(--black);
-  width: 30%;
   font-weight: bolder;
 }
 
 .main-content-list > div > input{
-  width: 70%;
+  width: 50%;
   /* margin-bottom: 15px; */
   border: 0px;
   border-bottom: solid 1px var(--gray-line);
@@ -559,6 +564,38 @@ input[type=radio]:checked + span {
   /* background-color: var(--white); */
   padding: 0 8px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

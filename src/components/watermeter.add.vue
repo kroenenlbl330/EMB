@@ -14,35 +14,67 @@
           <div class="main-content-list">
             <p>主要</p>
             <div>
-              <div></div>
-              <p>图纸编号</p>
-              <input type="text" id="DrawingNumber" placeholder="请输入图纸编号"/>
+              <div>
+                
+              </div>
+              <div>
+                <p>图纸编号</p>
+                <input type="text" id="DrawingNumber" placeholder="请输入图纸编号"/>
+              </div>
             </div>
             <div>
-              <div></div>
-              <p>表具名称</p>
-              <input type="text" id="WaterMeterName" placeholder="请输入表具名称"/>
+              <div>
+
+              </div>
+              <div>
+                <p>表具名称</p>
+                <input type="text" id="WaterMeterName" placeholder="请输入表具名称"/>
+              </div>
             </div>
             <div>
-              <div></div>
-              <p>安装位置</p>
-              <input type="text" id="InstallationSite" placeholder="请输入安装位置"/>
+              <div>
+
+              </div>
+              <div>
+                <p>安装位置</p>
+                <input type="text" id="InstallationSite" placeholder="请输入安装位置"/>
+              </div>
             </div>
             <div>
-              <p>关联采集</p>
-              <input type="text" id="AssociationCollect"/>
+              <div>
+
+              </div>
+              <div>
+                <p>关联采集</p>
+                <input type="text" id="AssociationCollect"/>
+              </div>
             </div>
             <div>
-              <p>系数</p>
-              <input type="text" id="Coefficient" placeholder="请输入水表系数（1/0.1）"/>
+              <div>
+
+              </div>
+              <div>
+                <p>系数</p>
+                <input type="text" id="Coefficient" placeholder="请输入水表系数（1/0.1）"/>
+              </div>
             </div>
             <div>
-              <p>管径</p>
-              <input type="text" id="PipeDiameter" placeholder="请输入水表管径（15/20/25/40/50/80/100/150/200）"/>
+              <div>
+
+              </div>
+              <div>
+                <p>管径</p>
+                <input type="text" id="PipeDiameter" placeholder="请输入水表管径（15/20/25/40/50/80/100/150/200）"/>
+              </div>
             </div>
             <div>
-              <p>表级</p>
-              <input type="text" id="WaterMeterLevel" placeholder="请输入水表表级（1/2/3/4/5）"/>
+              <div>
+                
+              </div>
+              <div>
+                <p>表级</p>
+                <input type="text" id="WaterMeterLevel" placeholder="请输入水表表级（1/2/3/4/5）"/>
+              </div>
             </div>
           </div>
           <div class="main-content-list">
