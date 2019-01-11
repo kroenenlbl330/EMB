@@ -23,7 +23,7 @@ var Month = new Date().getMonth() + 1
 var Hours = new Date().getHours()
 
 // 日期补0
-var subtractDMH = function(DMH) {
+var subtractDMH = (DMH) => {
   if(DMH < 10){
     // return ("0" + (Hours - 12)).slice(-2)
     return "0" + DMH
@@ -41,7 +41,7 @@ var Year = strDate.substring(0, 10).split('/').reverse().join('/')
 var Week = new Date().toDateString().split(" ")[0] 
 
 //12小时制和时钟补0
-var subtractHours = function(Hours) {
+var subtractHours = (Hours) => {
   if(Hours < 10){
     // return ("0" + (Hours - 12)).slice(-2)
     return "0" + Hours
@@ -52,7 +52,7 @@ var subtractHours = function(Hours) {
 
 var Minutes = new Date().getMinutes()
 //分钟补0
-var addMinutes = function(Minutes) {
+var addMinutes = (Minutes) => {
   return ("0" + Minutes).slice(-2)
 }
 

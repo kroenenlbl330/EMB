@@ -4,8 +4,13 @@
       <Header>
 
       </Header>
-      <div class="main-content">
-        <div class="main-lift row-6">
+      <div class="main row-20">
+        <div class="main-title">
+          <div>
+            <span>新增表具设备</span>
+          </div>
+        </div>
+        <!-- <div class="main-lift row-6">
           <div class="main-lift-title">
             <div v-if="selectMeterList">
               <div>
@@ -30,64 +35,83 @@
               <p></p>
             </div>
           </div>  
-        </div>
-        <div class="main-right row-14">
-          <div class="main-right-title">
-            <span>新增采集设备</span>
-          </div>
-          <div class="main-right-box" align="left">
-            <div class="main-right-list">
+        </div> -->
+        <div class="main-content">
+            <div class="main-content-list">
               <div>
-                <!-- first div -->
-              </div>
-              <div class="main-right-content">
-                <p>主要</p>
+                <div>
+                  <span>01</span>
+                </div>
                 <div>
                   <p>通讯编号</p>
                   <input type="text" id="CommunicationNumber" placeholder="请输入通讯编号">
                 </div>
+              </div>
+              <div>
+                <div>
+
+                </div>
                 <div>
                   <p>安装位置</p>
                   <input type="text" id="InstallationSite" placeholder="请输入安装位置">
+                </div>
+              </div>
+              <div>
+                <div>
+
+                </div>
+                <div>
+                  <p>硬件编号</p>
+                  <input type="text" id="HardwareSerialNumber" placeholder="请输入硬件编号">
+                </div>
+              </div>
+              <div>
+                <div>
+
                 </div>
                 <div>
                   <p>关联水表</p>
                   <div class="association-meter" @click="selectAssociation">
                     <span>
                       {{selectAssociationPrompt}}
-                      <!-- <span>{{DrawingNumber}}&nbsp;&nbsp;{{WaterMeterName}}</span> -->
                       <span v-for="(sArr,index) in selectAssociationArr" :key="index">
                         <span>{{sArr.DN}}&nbsp;&nbsp;</span>
                       </span>
-                      <!-- <span>{{selectAssociationArr.DN}}</span> -->
                     </span>
-                    <!-- <img :src="IconAddSmall" align="absmiddle"> -->
                   </div>
                 </div>
               </div>
-              <div class="main-right-content">
-                <p>其他</p>
+            </div>
+            <div class="main-content-list">      
+              <div>
                 <div>
-                  <p>硬件编号</p>
-                  <input type="text" id="HardwareSerialNumber" placeholder="请输入硬件编号">
+                  <span>02</span>
                 </div>
                 <div>
                   <p>电源类型</p>
-                  <input type="text" id="PowerType">
-                </div>
+                  <div class="select-head" v-on:click.stop="powerTypeDown">
+                    <p><span>{{powerTypePrompt}}</span>{{powerTypeName}}</p>
+                    <img :src="IconDropDown">
+                  </div>
+                  <div v-show="powerTypeShowSelect" class="option">
+                    <div class="option-list" v-for="(powerType, index) in powerTypeList" @click.stop="powerTypeSelect(powerType)" :key="index">
+                      {{powerType.PowerType}}
+                    </div>
+                  </div>
+                </div>  
               </div>
-              <div class="main-right-content">
-                <p>备注</p>
+            </div>
+            <div class="main-content-list">
+              <div>
+                <div>
+                  <span>03</span>
+                </div>
                 <div>
                   <p>备注</p>
                   <input type="text" id="Note">
                 </div>
               </div>
-              <div>
-                <!-- last div -->
-              </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
@@ -106,6 +130,8 @@ import IconBack from "../assets/back@32x32_black.png"
 import IconSave from "../assets/save@32x32_black.png"
 import IconAddSmall from "../assets/add_small@22x22_black.png"
 import IconSearch from "../assets/search@32x32_black.png"
+import IconDropDown from "../assets/drop-down@24x24_black.png";
+
 import $ from "../static/jquery-vendor.js"
 
 export default {
@@ -125,7 +151,12 @@ export default {
       IconBack,
       IconSave,
       IconAddSmall,
-      IconSearch
+      IconSearch,
+      IconDropDown,
+
+      powerTypePrompt: '请选择电源类型',
+      powerTypeShowSelect: false,
+      powerTypeName: '',
     }
   },
   mounted: function() {
@@ -138,7 +169,19 @@ export default {
       })
       .catch(error => {
         console.log(error);
-      });
+      })
+
+    //powerTypeList
+    this.$ajax({
+      method: "post",
+      url: "/watermeter/powertype"
+    })
+      .then(response => {
+        this.powerTypeList = response.data;
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   methods: {
     backPage: function() {
@@ -214,6 +257,24 @@ export default {
       // this.WaterMeterName = WaterMeterName
       // this.selectMeterList = !this.selectMeterList
       this.selectAssociationArr.push({DN: DrawingNumber, WMN: WaterMeterName})
+    },
+
+    //PowerType
+    powerTypeDown() {
+      this.powerTypeShowSelect = !this.powerTypeShowSelect
+      document.addEventListener("click",this.removeEvt)
+    },
+    powerTypeSelect(powerType) {
+      this.powerTypeShowSelect = false
+      this.powerTypeName = powerType.PowerType
+      this.powerTypePrompt = ''
+    },
+    removeEvt(){
+      document.removeEventListener("click",()=>{})
+      this.hiedMenu()
+    },
+    hiedMenu(){
+      this.powerTypeShowSelect = false
     }
   },
   filters: {
@@ -258,7 +319,7 @@ export default {
 }
 
 .association-meter {
-  width: 100%;
+  width: 60%;
   border-bottom: 1px solid var(--gray-line);
   margin-bottom: 15px;
   display: flex;

@@ -46,7 +46,17 @@ exports.upDataWaterMeterDrawingNumber = function(req,res,callback){
 // 添加watermeter表的数据
 exports.addWaterMeter = function(req,res,callback){
   db.getConnection(function (err, connection) {
-      db.query(`INSERT INTO watermeter (DrawingNumber, WaterMeterName, InstallationSite, AssociationCollect, Coefficient, PipeDiameter, WaterMeterLevel, EnergyCode, SuperiorMeter, PowerType, MeterUse, SubordinateDepartments, Note) VALUES ('${req.body.DrawingNumber}', '${req.body.WaterMeterName}', '${req.body.InstallationSite}', '${req.body.AssociationCollect}', '${req.body.Coefficient}', '${req.body.PipeDiameter}', '${req.body.WaterMeterLevel}', '${req.body.EnergyCode}', '${req.body.SuperiorMeter}', '${req.body.PowerType}', '${req.body.MeterUse}', '${req.body.SubordinateDepartments}', '${req.body.Note}')`, function (err, result) {
+      db.query(`INSERT INTO watermeter (DrawingNumber, WaterMeterName, InstallationSite, Coefficient, PipeDiameter, WaterMeterLevel, EnergyCode, SuperiorMeter, PowerType, MeterUse, SubordinateDepartments, Note) VALUES ('${req.body.DrawingNumber}', '${req.body.WaterMeterName}', '${req.body.InstallationSite}', '${req.body.Coefficient}', '${req.body.PipeDiameter}', '${req.body.WaterMeterLevel}', '${req.body.EnergyCode}', '${req.body.SuperiorMeter}', '${req.body.PowerType}', '${req.body.MeterUse}', '${req.body.SubordinateDepartments}', '${req.body.Note}')`, function (err, result) {
+          callback(err,result)
+          connection.release()
+      })
+  })
+}
+
+// 查询watermeter表中WaterMeterLevel
+exports.selectWaterMeterLevel = function(req,res,callback){
+  db.getConnection(function (err, connection) {
+      db.query(`SELECT * FROM watermeter WHERE WaterMeterLevel='${req.body.WaterMeterLevelMinusOne}'`, function (err, result) {
           callback(err,result)
           connection.release()
       })
@@ -100,6 +110,56 @@ exports.getWaterMeterCommunicationNumber = function(req,res,callback){
 exports.getWaterMeterAssociationCollect = function(req,res,callback){
   db.getConnection(function (err, connection) {
       db.query(`SELECT * FROM watermeter WHERE AssociationCollect IS NULL`, function (err, result) {
+          callback(err,result)
+          connection.release()
+      })
+  })
+}
+
+
+
+
+
+// 查询coefficient表中水的系数
+exports.getCoefficient = function(req,res,callback){
+  db.getConnection(function (err, connection) {
+      db.query(`SELECT * FROM coefficient WHERE Type='0'`, function (err, result) {
+          callback(err,result)
+          connection.release()
+      })
+  })
+}
+// 查询pipediameter表
+exports.getPipeDiameter = function(req,res,callback){
+  db.getConnection(function (err, connection) {
+      db.query(`SELECT * FROM pipediameter`, function (err, result) {
+          callback(err,result)
+          connection.release()
+      })
+  })
+}
+// 查询powertype表
+exports.getPowerType = function(req,res,callback){
+  db.getConnection(function (err, connection) {
+      db.query(`SELECT * FROM powertype`, function (err, result) {
+          callback(err,result)
+          connection.release()
+      })
+  })
+}
+// 查询meteruse表
+exports.getMeterUse = function(req,res,callback){
+  db.getConnection(function (err, connection) {
+      db.query(`SELECT * FROM meteruse`, function (err, result) {
+          callback(err,result)
+          connection.release()
+      })
+  })
+}
+// 查询subordinatedepartments表
+exports.getSubordinateDepartments = function(req,res,callback){
+  db.getConnection(function (err, connection) {
+      db.query(`SELECT * FROM subordinatedepartments`, function (err, result) {
           callback(err,result)
           connection.release()
       })

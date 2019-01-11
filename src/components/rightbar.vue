@@ -15,7 +15,7 @@
           <slot name="delete-button" class="action-button"></slot>
         </div>     
       </div>
-      <div style="width: 48px; border-right: 2px solid #c1c1c1; height: 100%;"></div>
+      <!-- <div style="width: 48px; border-right: 2px solid #c1c1c1; height: 100%;"></div> -->
     </div>
 </template>
 
@@ -51,7 +51,7 @@ export default {
 
 <style>
 .right-bar {
-  min-width: 58px;
+  min-width: 48px;
   height: 938px;
   border-left: 2px solid var(--black);
   background-color: var(--gray);
@@ -72,11 +72,11 @@ export default {
 }
 
 .add-bar{
-  height: 128px;
+  height: 108px;
   width: 48px;
   display: flex;
   flex-direction: column;
-  margin-top: 16px;
+  margin-top: 36px;
 
 }
 

@@ -4,84 +4,124 @@
       <Header>
         
       </Header>
-      <div class="main-content">
-        <div class="main-lift row-6">
-          <div class="main-lift-title">
-              
+      <div class="main row-20">
+        <div class="main-title">
+          <div>
+            <span>水表表具设备-修改表具</span>
           </div>
         </div>
-        <div class="main-right row-14">
-          <div class="main-right-title">
-            <span>{{addPreZero(index + 1)}}&nbsp;设备详情</span>
+        <div class="main-content">
+          <div class="main-content-list">
+            <div>
+              <div>
+                <span>01</span>
+              </div>
+              <div>
+                <p>图纸编号</p>
+                <input type="text" v-model="DrawingNumber" id="DrawingNumber" value=""/>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>表具名称</p>
+                <input type="text" v-model="WaterMeterName" id="WaterMeterName" value=""/>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>安装位置</p>
+                <input type="text" v-model="InstallationSite" id="InstallationSite" value=""/>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>系数</p>
+                <input type="text" v-model="Coefficient" id="Coefficient" value=""/>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>管径</p>
+                <input type="text" v-model="PipeDiameter" id="PipeDiameter" value=""/>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>表级</p>
+                <input type="text" v-model="WaterMeterLevel" id="WaterMeterLevel" value=""/>
+              </div>
+            </div>
           </div>
-          <div class="main-right-box" align="left">
-            <div class="main-right-list">
+          <div class="main-content-list">
+            <div>
               <div>
-                <!-- first div -->
+                <span>02</span>
               </div>
-              <div class="main-right-content">
-                <p>主要</p>
-                <div>
-                  <p>图纸编号</p>
-                  <input type="text" v-model="DrawingNumber" id="DrawingNumber" value=""/>
-                </div>
-                <div>
-                  <p>表具名称</p>
-                  <input type="text" v-model="WaterMeterName" id="WaterMeterName" value=""/>
-                </div>
-                <div>
-                  <p>安装位置</p>
-                  <input type="text" v-model="InstallationSite" id="InstallationSite" value=""/>
-                </div>
-                <div>
-                  <p>关联采集</p>
-                  <span>{{AssociationCollect | empty}}</span>
-                  <!-- <input type="text" v-model="this.WaterMeterDetail.AssociationCollect" id="AssociationCollect"/> -->
-                </div>
-                <div>
-                  <p>系数</p>
-                  <input type="text" v-model="Coefficient" id="Coefficient" value=""/>
-                </div>
-                <div>
-                  <p>管径</p>
-                  <input type="text" v-model="PipeDiameter" id="PipeDiameter" value=""/>
-                </div>
-                <div>
-                  <p>表级</p>
-                  <input type="text" v-model="WaterMeterLevel" id="WaterMeterLevel" value=""/>
-                </div>
+              <div>
+                <p>能源数据编号</p>
+                <input type="text" v-model="EnergyCode" id="EnergyCode" value=""/>
               </div>
-              <div class="main-right-content">
-                <p>其他</p>
-                <div>
-                  <p>能源数据编号</p>
-                  <input type="text" v-model="EnergyCode" id="EnergyCode" value=""/>
-                </div>
-                <div>
-                  <p>上级表</p>
-                  <input type="text" v-model="SuperiorMeter" id="SuperiorMeter" value=""/>
-                </div>
-                <div>
-                  <p>电源类型</p>
-                  <input type="text" v-model="PowerType" id="PowerType" value=""/>
-                </div>
-                <div>
-                  <p>表具用途</p>
-                  <input type="text" v-model="MeterUse" id="MeterUse" value=""/>
-                </div>
-                <div>
-                  <p>所属部门</p>
-                  <input type="text" v-model="SubordinateDepartments" id="SubordinateDepartments" value=""/>
-                </div>
+            </div>
+            <div>
+              <div>
+
               </div>
-              <div class="main-right-content">
+              <div>
+                <p>上级表</p>
+                <input type="text" v-model="SuperiorMeter" id="SuperiorMeter" value=""/>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>电源类型</p>
+                <input type="text" v-model="PowerType" id="PowerType" value=""/>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>表具用途</p>
+                <input type="text" v-model="MeterUse" id="MeterUse" value=""/>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>所属部门</p>
+                <input type="text" v-model="SubordinateDepartments" id="SubordinateDepartments" value=""/>
+              </div>
+            </div>
+          </div>
+          <div class="main-content-list">
+            <div>
+              <div>
+                <span>03</span>
+              </div>
+              <div>
                 <p>备注</p>
-                <div>
-                  <input type="text" v-model="Note" id="Note" value=""/>
-                </div>
-              </div>
-              <div>
-                <!-- last div -->
+                <input type="text" v-model="Note" id="Note" value=""/>
               </div>
             </div>
           </div>

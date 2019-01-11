@@ -2,7 +2,8 @@
   margin: 0;
   padding: 0;
   font-size: 100%;
-  font-family: '\82F9\65B9';
+  /* font-family: '苹方'; */
+  font-family: '\601D\6E90\9ED1\4F53','Helvetica Neue',Roboto,Arial,'Droid Sans',sans-serif;
   list-style-type: none;  
   color: var(--back);
 }
@@ -46,7 +47,7 @@ table thead, tbody tr {
 td{
   height: 24px;
   font-size: 1rem;
-  padding-top: 6px;
+  padding-top: 8px;
   /* border-bottom: 1px solid var(--white); */
 }
 
@@ -86,7 +87,7 @@ tbody :hover{
   --gray-text: #a1a1a1;
   --prompt: #ccc;
   --input: #cdcdcd;
-  --lightGrey: #fcfcfc;
+  --lightGrey: #f8f8f8;
 }
 
 .row-1{
@@ -272,52 +273,6 @@ input:-ms-input-placeholder {
   display: flex;
   flex-direction: column;
 }
-/* 
-.main-lift-title{
-  display: flex;
-  height: 72px;
-  border-bottom: 2px solid var(--gray);
-}
-
-.main-lift-title > div {
-  padding-left: 8px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.main-lift-title > div > div:last-child {
-  margin-right: 12px;
-}
-
-.main-lift-title > div > div{
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.main-lift-title > div > div > p {
-  font-size: 1.125rem;
-  color: var(--black);
-  font-weight: bolder;
-  line-height: 24px;
-}
-
-.main-lift-title > div > div > img {
-  height: 24px;
-  width: 24px;
-}
-
-.main-lift-title > div > div > input {
-  border: 0px;
-  outline: none;
-  height: 24px;
-  font-size: 1.125rem;
-  line-height: 24px;
-  caret-color: var(--black);
-  vertical-align: bottom;
-} */
 
 .main-content { 
   display: flex;
@@ -328,11 +283,10 @@ input:-ms-input-placeholder {
   display: flex;
   align-items: flex-end;
   height: 72px;
-  /* padding-left: 8px; */
   border-bottom: 2px solid var(--gray);
 }
 
-.main-title > span {
+.main-title > div > span {
   font-size: 1.75rem;
   color: var(--black);
   font-weight: bolder;
@@ -340,71 +294,107 @@ input:-ms-input-placeholder {
 
 .main-content{
   height: 696px;
-  /* margin: 0 0 0 8px; */
-  /* padding-right: 8px; */ 
   display: block;
   overflow-y: scroll;
-  /* width: calc(100% - 12px); */
 }
 
-/* .main-right-list > div:first-child, .main-right-list > div:last-child {
-  height: 48px;
+.main-content-list {
+ padding: 60px 0;
 }
 
-.main-right-list > div:first-child {
-  border-top: none;
-} */
-
-/* .main-right-list > div {
-  border-top: 2px solid #ebebeb;
-} */
-
-.main-content-list > p {
-  font-size: 1.25rem;
-  font-weight: bolder;
-  margin: 60px 0 36px 0;
-}
+.main-content-list:last-child {
+  margin-bottom: 48px;
+ }
 
 .main-content-list > div {
   display: flex;
-  /* flex-direction: column; */
-  justify-content: center;
-  margin-bottom: 24px;
+  margin: 48px 0;
 }
 
-/* .mmain-content-list > div:last-child {
-  margin-bottom: 48px;
-} */
+.main-content-list > div:first-child {
+  margin-top: 0px;
+}
+
+.main-content-list > div:last-child {
+  margin-bottom: 0px;
+}
 
 .main-content-list > div > div:first-child {
-  width: 30%;
-  /* display: flex;
-  justify-content: flex-end; */
+  width: 35%;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.main-content-list > div > div:first-child > span{
+  position: absolute;
+  font-size: 6rem;
+  font-weight: bolder;
+  right: 24px;
+  color: var(--lightGrey);
+  vertical-align: text-top;
+  line-height: 80px;
 }
 
 .main-content-list > div > div:last-child {
-  width: 70%;
+  width: 65%;
   display: flex;
   flex-direction: column;
 }
 
 .main-content-list > div > div:last-child > p {
-  margin-bottom: 4px;
-  color: var(--black);
-  font-weight: bolder;
+  margin-bottom: 8px;
+  /* font-weight: bolder; */
+  height: 24px;
 }
 
-.main-content-list > div > input{
-  width: 50%;
+.main-content-list > div > div:last-child > span {
+  width: 60%;
+  margin-bottom: 8px;
+  font-weight: bolder;
+  height: 24px;
+  background-color: var(--lightGrey);
+}
+
+.main-content-list > div > div:last-child > div:hover, .main-content-list > div > div:last-child > div > p:hover, .main-content-list > div > div:last-child > div > p > span:hover{
+  cursor: default;
+}
+
+.main-content-list > div > div:last-child > input {
+  width: 60%;
   /* margin-bottom: 15px; */
   border: 0px;
-  border-bottom: solid 1px var(--gray-line);
+  border-bottom: solid 1px var(--gray);
   outline: none;
-  height: 22px;
-  line-height: 22px;
-  color: var(--input);
+  height: 23px;
+  line-height: 23px;
+  color: var(--black);
   font-weight: bolder;
-  /* caret-color: var(--black); */
+  caret-color: var(--black);
+}
+
+.main-content-select {
+  height: 24px;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: flex-start; */
+  margin-right:8px;
+}
+
+.main-content-select > input {
+  border: 0px;
+  outline: none;
+  margin-right: 8px;
+  padding: 0 12px;
+  font-weight: bolder;
+  /* width: 48px; */
+}
+
+.main-content-select > span {
+  padding: 0 12px;
+  margin-right: 8px;
+  background-color: var(--gray);
 }
 
 .main-msg div{
@@ -438,7 +428,7 @@ input:-ms-input-placeholder {
 }
 
 .right-bar {
-  min-width: 58px;
+  min-width: 48px;
   height: 938px;
   border-left: 2px solid var(--black);
   background-color: var(--gray);
@@ -456,11 +446,11 @@ input:-ms-input-placeholder {
   align-items: center;
 }
 .add-bar{
-  height: 128px;
+  height: 108px;
   width: 48px;
   display: flex;
   flex-direction: column;
-  margin-top: 16px;
+  margin-top: 36px;
 }
 .back-bar{
   height: 48px;
@@ -1077,143 +1067,38 @@ input[type=radio]:checked + span {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.select-head {
+  box-sizing: border-box;
+  line-height: 23px;
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray);
+}
+.select-head > p > span:first-child, .select-head > p > span:last-child {
+  color: var(--input);
+}
+.select-head > p > span:last-child {
+  font-weight: bolder;
+  color: var(--black);
+}
+.select-head + div {
+  padding: 8px 0;
+  text-indent: 12px;
+  width: 60%;
+  color: black;
+  line-height: 23px;
+  background-color: var(--lightGrey);
+}
+.select-head + div > div {
+  margin-top: 4px;
+  vertical-align: bottom;
+  border-bottom: 1px var(--lightGrey) solid;
+  font-weight: bolder;
+}
+.select-head + div > div:hover {
+  border-bottom: 1px var(--black) solid;
+}
 
 table > tbody > tr > td:nth-child(n + 7) span,
 table > thead > tr > th:nth-child(n + 7) {
@@ -1328,7 +1213,7 @@ input[type=radio]:checked + span {
   display: inline-block;
 }
 .association-meter {
-  width: 100%;
+  width: 60%;
   border-bottom: 1px solid var(--gray-line);
   margin-bottom: 15px;
   display: flex;

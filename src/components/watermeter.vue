@@ -269,8 +269,8 @@ export default {
         // console.log(this.WaterMeterList)
       })
       .catch(error => {
-        console.log(error);
-      });
+        console.log(error)
+      })
   },
 
   methods: {
@@ -335,7 +335,8 @@ export default {
     },
     // 删除
     del: function() {
-      this.$ajax({
+      if(this.check !== ''){
+        this.$ajax({
         method: "post",
         url: "/watermeter/del",
         data: {
@@ -348,7 +349,10 @@ export default {
         })
         .catch(error => {
           console.log(error);
-        });
+        })
+      }else{
+        alert('请选择一个表具')
+      }
     },
     // 返回上一页
     // backPage: function() {

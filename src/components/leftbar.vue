@@ -1,7 +1,7 @@
 <template>
   <div class="left-bar">
     <div class="info">
-      <span>罗夏</span>
+      <!-- <span>罗夏</span> -->
       <div class="add"></div>
     </div>
     <div class="menu">
@@ -14,7 +14,7 @@
         </li>-->
         <li v-for="(list,index) in aM" :key="index" @click="change(list.id)">
           <div class="rl-s" :class="{'select':isSelect == list.id}">
-            <span>水表<br/>{{list.name}}</span>
+            <span>{{list.name}}</span>
             <!-- <div :class="{'striping':isSelect == list.id}"></div> -->
           </div>
         </li>
@@ -29,10 +29,10 @@ export default {
     return {
       
       aM: [
-        { name: "表具设备", id: 'watermeter' },
-        { name: "采集器设备", id: 'watercollect' },
-        { name: "中继器设备", id: 'waterrelay' },
-        { name: "集中器设备", id: 'waterconcentrator' }
+        { name: "水表表具设备", id: 'watermeter' },
+        { name: "水表采集器设备", id: 'watercollect' },
+        { name: "水表中继器设备", id: 'waterrelay' },
+        { name: "水表集中器设备", id: 'waterconcentrator' }
       ],
       isSelect: '',
       // striping: 0

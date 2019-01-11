@@ -4,79 +4,124 @@
       <Header>
         
       </Header>
-      <div class="main-content">
-        <div class="main-lift row-6">
-          <div class="main-lift-title">
-              
+      <div class="main row-20">
+        <div class="main-title">
+          <div>
+            <span>水表表具设备-表具详情</span>
           </div>
         </div>
-        <div class="main-right row-14">
-          <div class="main-right-title">
-            <span>{{addPreZero(index + 1)}}&nbsp;设备详情</span>
+        <div class="main-content">
+          <div class="main-content-list">
+            <div>
+              <div>
+                <span>01</span>
+              </div>
+              <div>
+                <p>图纸编号</p>
+                <span>{{WaterMeterDetail.DrawingNumber}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>表具名称</p>
+                <span>{{WaterMeterDetail.WaterMeterName}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>关联采集</p>
+                <span>{{WaterMeterDetail.AssociationCollect | empty}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>系数</p>
+                <span>{{WaterMeterDetail.Coefficient}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>管径</p>
+                <span>{{WaterMeterDetail.PipeDiameter}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>表级</p>
+                <span>{{WaterMeterDetail.WaterMeterLevel}}</span>
+              </div>
+            </div>
           </div>
-          <div class="main-right-box" align="left">
-            <div class="main-right-list">
+          <div class="main-content-list">
+            <div>
               <div>
-                <!-- first div -->
+                <span>02</span>
               </div>
-              <div class="main-right-content">
-                <p>主要</p>
-                <div>
-                  <p>图纸编号</p>
-                  <span>{{WaterMeterDetail.DrawingNumber}}</span>
-                </div>
-                <div>
-                  <p>表具名称</p>
-                  <span>{{WaterMeterDetail.WaterMeterName}}</span>
-                </div>
-                <div>
-                  <p>关联采集</p>
-                  <span>{{WaterMeterDetail.AssociationCollect | empty}}</span>
-                </div>
-                <div>
-                  <p>系数</p>
-                  <span>{{WaterMeterDetail.Coefficient}}</span>
-                </div>
-                <div>
-                  <p>管径</p>
-                  <span>{{WaterMeterDetail.PipeDiameter}}</span>
-                </div>
-                <div>
-                  <p>表级</p>
-                  <span>{{WaterMeterDetail.WaterMeterLevel}}</span>
-                </div>
+              <div>
+                <p>能源数据编号</p>
+                <span>{{WaterMeterDetail.EnergyCode | empty}}</span>
               </div>
-              <div class="main-right-content">
-                <p>其他</p>
-                <div>
-                  <p>能源数据编号</p>
-                  <span>{{WaterMeterDetail.EnergyCode | empty}}</span>
-                </div>
-                <div>
-                  <p>上级表</p>
-                  <span>{{WaterMeterDetail.SuperiorMeter | empty}}</span>
-                </div>
-                <div>
-                  <p>电源类型</p>
-                  <span>{{WaterMeterDetail.PowerType | empty}}</span>
-                </div>
-                <div>
-                  <p>表具用途</p>
-                  <span>{{WaterMeterDetail.MeterUse | empty}}</span>
-                </div>
-                <div>
-                  <p>所属部门</p>
-                  <span>{{WaterMeterDetail.SubordinateDepartments | empty}}</span>
-                </div>
+            </div>
+            <div>
+              <div>
+
               </div>
-              <div class="main-right-content">
+              <div>
+                <p>上级表</p>
+                <span>{{WaterMeterDetail.SuperiorMeter | empty}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>电源类型</p>
+                <span>{{WaterMeterDetail.PowerType | empty}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>表具用途</p>
+                <span>{{WaterMeterDetail.MeterUse | empty}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>所属部门</p>
+                <span>{{WaterMeterDetail.SubordinateDepartments | empty}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="main-content-list">
+            <div>
+              <div>
+                <span>03</span>
+              </div>
+              <div>
                 <p>备注</p>
-                <div>
-                  <span>{{WaterMeterDetail.Note | empty}}</span>
-                </div>
-              </div>
-              <div>
-                <!-- last div -->
+                <span>{{WaterMeterDetail.Note | empty}}</span>
               </div>
             </div>
           </div>
@@ -121,7 +166,6 @@ export default {
     })
       .then(response => {
         this.WaterMeterDetail = response.data[0];
-        console.log(this.WaterMeterDetail);
       })
       .catch(error => {
         console.log(error);
