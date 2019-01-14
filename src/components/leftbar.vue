@@ -31,7 +31,7 @@ export default {
       aM: [
         { name: "水表表具设备", id: 'watermeter' },
         { name: "水表采集器设备", id: 'watercollect' },
-        { name: "水表中继器设备", id: 'waterrelay' },
+        { name: "水表中继器设备", id: 'repeater' },
         { name: "水表集中器设备", id: 'waterconcentrator' }
       ],
       isSelect: '',
@@ -86,7 +86,6 @@ export default {
 
 /* info */
 .info {
-  padding-left: 8px;
   width: 48px;
   height: 922px;
   background-color: var(--black);
@@ -108,6 +107,7 @@ export default {
   height: 28px;
   border-radius: 20px;
   border: 2px solid var(--white);
+  background-color: var(--white);
   margin: 0 auto;
   position: relative;
   top: 168px;

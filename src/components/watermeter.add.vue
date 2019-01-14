@@ -18,7 +18,7 @@
               </div>
               <div>
                 <p>图纸编号</p>
-                <input type="text" id="DrawingNumber" placeholder="请输入图纸编号" @blur.prevent="loseFocus()">
+                <input type="text" id="DrawingNumber" placeholder="请输入图纸编号" @blur.prevent="loseFocus()">  <!-- :class="{'text-border': isInput}" @input="changeClass" -->
               </div>
             </div>
             <div>
@@ -46,16 +46,16 @@
               <div></div>
               <div>
                 <p>上级表</p>
-                <div class="select-head" v-on:click.stop="selectWaterMeterLevelDown">
+                <div class="select-head" v-on:click.stop="superiorMeterDown">
                   <p>
-                    <span>{{selectWaterMeterLevelPrompt}}</span>
-                    <span>{{selectWaterMeterLevelName}}&nbsp;&nbsp;{{selectWaterMeterLevelMeterName}}</span>
+                    <span>{{superiorMeterPrompt}}</span>
+                    <span>{{superiorMeter}}&nbsp;&nbsp;{{superiorMeterName}}</span>
                     </p>
                   <img :src="IconDropDown">
                 </div>
-                <div v-show="selectWaterMeterLevelShowSelect">
-                  <div v-for="(selectWaterMeterLevel, index) in selectWaterMeterLevelList" @click.stop="selectWaterMeterLevelSelect(selectWaterMeterLevel)" :key="index">
-                    {{selectWaterMeterLevel.DrawingNumber}}&nbsp;&nbsp;{{selectWaterMeterLevel.WaterMeterName}}
+                <div v-show="superiorMeterShowSelect">
+                  <div v-for="(superiorMeter, index) in superiorMeterList" @click.stop="superiorMeterSelect(superiorMeter)" :key="index">
+                    {{superiorMeter.DrawingNumber}}&nbsp;&nbsp;{{superiorMeter.WaterMeterName}}
                   </div>
                 </div>
               </div>
@@ -186,9 +186,6 @@ import IconDropDown from "../assets/drop-down@24x24_black.png"
 
 import $ from "../static/jquery-vendor.js"
 
-// let DrawingNumber = $("#DrawingNumber").val()
-// console.log(DrawingNumber)
-
 export default {
   components: {
     Header,
@@ -200,10 +197,12 @@ export default {
       IconSave,
       IconDropDown,
 
-      selectWaterMeterLevelPrompt: '请选择上级表',
-      selectWaterMeterLevelShowSelect: false,
-      selectWaterMeterLevelName: '',
-      selectWaterMeterLevelMeterName: '',
+      // isInput: false,
+
+      superiorMeterPrompt: '请选择上级表',
+      superiorMeterShowSelect: false,
+      superiorMeter: '',
+      superiorMeterName: '',
 
       coefficientPrompt: '请选择系数',
       coefficientShowSelect: false,
@@ -225,7 +224,7 @@ export default {
       subordinateDepartmentsShowSelect: false,
       subordinateDepartmentsName: '',
       
-      selectWaterMeterLevelList: '',
+      superiorMeterList: '',
       coefficientList: '',
       pipeDiameterList: '',
       powerTypeList: '',
@@ -249,7 +248,7 @@ export default {
       }
     })
       .then(response => {
-        this.selectWaterMeterLevelList = response.data;
+        this.superiorMeterList = response.data;
       })
       .catch(error => {
         console.log(error)
@@ -260,7 +259,8 @@ export default {
       let WaterMeterName = $("#WaterMeterName").val()
       let InstallationSite = $("#InstallationSite").val()
       let EnergyCode = $("#EnergyCode").val()
-      let SuperiorMeter = this.selectWaterMeterLevelName
+      let SuperiorMeter = this.superiorMeter
+      let SuperiorMeterName = this.superiorMeterName
       let Coefficient = this.coefficientName
       let PipeDiameter = this.pipeDiameterName
       let PowerType = this.powerTypeName
@@ -313,6 +313,7 @@ export default {
             WaterMeterLevel: WaterMeterLevel,
             EnergyCode: EnergyCode,
             SuperiorMeter: SuperiorMeter,
+            SuperiorMeterName: SuperiorMeterName,
             PowerType: PowerType,
             MeterUse: MeterUse,
             SubordinateDepartments: SubordinateDepartments,
@@ -330,9 +331,16 @@ export default {
           })
       }
     },
-    //SelectWaterMeterLevel
-    selectWaterMeterLevelDown() {
-      this.selectWaterMeterLevelShowSelect = !this.selectWaterMeterLevelShowSelect
+
+    //SuperiorMeter
+    superiorMeterDown() {
+      // if(document.querySelector("#DrawingNumber").value == '') {
+      //   alert('请先填写图纸编号')
+      //   return  
+      // }else {
+        
+      // }
+      this.superiorMeterShowSelect = !this.superiorMeterShowSelect
       this.coefficientShowSelect = false
       this.pipeDiameterShowSelect = false
       this.powerTypeShowSelect = false
@@ -341,17 +349,17 @@ export default {
       //为document添加点击触发removeEvt()
       document.addEventListener("click",this.removeEvt)
     },
-    selectWaterMeterLevelSelect(selectWaterMeterLevel) {
-      this.selectWaterMeterLevelShowSelect = false
-      this.selectWaterMeterLevelName = selectWaterMeterLevel.DrawingNumber
-      this.selectWaterMeterLevelMeterName = selectWaterMeterLevel.WaterMeterName
-      this.selectWaterMeterLevelPrompt = ''
+    superiorMeterSelect(superiorMeter) {
+      this.superiorMeterShowSelect = false
+      this.superiorMeter = superiorMeter.DrawingNumber
+      this.superiorMeterName = superiorMeter.WaterMeterName
+      this.superiorMeterPrompt = ''
     },
     //Coefficient
     coefficientDown() {
       this.coefficientShowSelect = !this.coefficientShowSelect
       this.pipeDiameterShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
+      this.superiorMeterShowSelect = false
       this.powerTypeShowSelect = false
       this.meterUseShowSelect = false
       this.subordinateDepartmentsShowSelect = false
@@ -367,7 +375,7 @@ export default {
     pipeDiameterDown() {
       this.pipeDiameterShowSelect = !this.pipeDiameterShowSelect
       this.coefficientShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
+      this.superiorMeterShowSelect = false
       this.powerTypeShowSelect = false
       this.meterUseShowSelect = false
       this.subordinateDepartmentsShowSelect = false
@@ -383,7 +391,7 @@ export default {
       this.powerTypeShowSelect = !this.powerTypeShowSelect
       this.coefficientShowSelect = false
       this.pipeDiameterShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
+      this.superiorMeterShowSelect = false
       this.meterUseShowSelect = false
       this.subordinateDepartmentsShowSelect = false
       document.addEventListener("click",this.removeEvt)
@@ -399,7 +407,7 @@ export default {
       this.powerTypeShowSelect = false
       this.coefficientShowSelect = false
       this.pipeDiameterShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
+      this.superiorMeterShowSelect = false
       this.subordinateDepartmentsShowSelect = false
       document.addEventListener("click",this.removeEvt)
     },
@@ -415,7 +423,7 @@ export default {
       this.powerTypeShowSelect = false
       this.coefficientShowSelect = false
       this.pipeDiameterShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
+      this.superiorMeterShowSelect = false
       document.addEventListener("click",this.removeEvt)
     },
     subordinateDepartmentsSelect(subordinateDepartments) {
@@ -436,6 +444,7 @@ export default {
       this.powerTypeShowSelect = false
       this.subordinateDepartmentsShowSelect = false
       this.meterUseShowSelect = false
+      this.superiorMeterShowSelect = false
     }
   },
   filters: {
@@ -503,4 +512,9 @@ export default {
 .select-head + div > div:hover {
   border-bottom: 1px var(--black) solid;
 }
+
+/* .text-border{
+  font-weight: bolder;
+  color: var(--black);
+} */
 </style>

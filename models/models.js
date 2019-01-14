@@ -46,7 +46,7 @@ exports.upDataWaterMeterDrawingNumber = function(req,res,callback){
 // 添加watermeter表的数据
 exports.addWaterMeter = function(req,res,callback){
   db.getConnection(function (err, connection) {
-      db.query(`INSERT INTO watermeter (DrawingNumber, WaterMeterName, InstallationSite, Coefficient, PipeDiameter, WaterMeterLevel, EnergyCode, SuperiorMeter, PowerType, MeterUse, SubordinateDepartments, Note) VALUES ('${req.body.DrawingNumber}', '${req.body.WaterMeterName}', '${req.body.InstallationSite}', '${req.body.Coefficient}', '${req.body.PipeDiameter}', '${req.body.WaterMeterLevel}', '${req.body.EnergyCode}', '${req.body.SuperiorMeter}', '${req.body.PowerType}', '${req.body.MeterUse}', '${req.body.SubordinateDepartments}', '${req.body.Note}')`, function (err, result) {
+      db.query(`INSERT INTO watermeter (DrawingNumber, WaterMeterName, InstallationSite, Coefficient, PipeDiameter, WaterMeterLevel, EnergyCode, SuperiorMeter, SuperiorMeterName, PowerType, MeterUse, SubordinateDepartments, Note) VALUES ('${req.body.DrawingNumber}', '${req.body.WaterMeterName}', '${req.body.InstallationSite}', '${req.body.Coefficient}', '${req.body.PipeDiameter}', '${req.body.WaterMeterLevel}', '${req.body.EnergyCode}', '${req.body.SuperiorMeter}', '${req.body.SuperiorMeterName}', '${req.body.PowerType}', '${req.body.MeterUse}', '${req.body.SubordinateDepartments}', '${req.body.Note}')`, function (err, result) {
           callback(err,result)
           connection.release()
       })

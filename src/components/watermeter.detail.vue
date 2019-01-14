@@ -30,7 +30,7 @@
                 <span>{{WaterMeterDetail.WaterMeterName}}</span>
               </div>
             </div>
-            <div>
+            <!-- <div>
               <div>
 
               </div>
@@ -38,10 +38,39 @@
                 <p>关联采集</p>
                 <span>{{WaterMeterDetail.AssociationCollect | empty}}</span>
               </div>
+            </div> -->
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>安装位置</p>
+                <span>{{WaterMeterDetail.InstallationSite | empty}}</span>
+              </div>
             </div>
             <div>
               <div>
 
+              </div>
+              <div>
+                <p>能源数据编号</p>
+                <span>{{WaterMeterDetail.EnergyCode | empty}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>上级表</p>
+                <span>{{WaterMeterDetail.SuperiorMeter | empty}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="main-content-list">
+            <div>
+              <div>
+                <span>02</span>
               </div>
               <div>
                 <p>系数</p>
@@ -64,26 +93,6 @@
               <div>
                 <p>表级</p>
                 <span>{{WaterMeterDetail.WaterMeterLevel}}</span>
-              </div>
-            </div>
-          </div>
-          <div class="main-content-list">
-            <div>
-              <div>
-                <span>02</span>
-              </div>
-              <div>
-                <p>能源数据编号</p>
-                <span>{{WaterMeterDetail.EnergyCode | empty}}</span>
-              </div>
-            </div>
-            <div>
-              <div>
-
-              </div>
-              <div>
-                <p>上级表</p>
-                <span>{{WaterMeterDetail.SuperiorMeter | empty}}</span>
               </div>
             </div>
             <div>

@@ -764,308 +764,10 @@ input[type=radio]:checked + span {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.black > p > span:first-child {
+  font-weight: bolder !important;
+  color: var(--black) !important;
+}
 
 .select-head {
   box-sizing: border-box;
@@ -1099,6 +801,11 @@ input[type=radio]:checked + span {
 .select-head + div > div:hover {
   border-bottom: 1px var(--black) solid;
 }
+
+/* .text-border{
+  font-weight: bolder;
+  color: var(--black);
+} */
 
 table > tbody > tr > td:nth-child(n + 7) span,
 table > thead > tr > th:nth-child(n + 7) {
@@ -1361,6 +1068,182 @@ input[type=radio]:checked + span {
 
 
 
+table > tbody > tr > td:nth-child(n + 7) span,
+table > thead > tr > th:nth-child(n + 7) {
+  padding-right: 24px;
+}
+.water-meter-name {
+  font-weight: bolder;
+}
+.water-meter-note {
+  color: var(--gray-text);
+}
+.empty-list {
+  font-size: 1rem;
+  color: var(--prompt);
+}
+
+/* .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.alter img {
+  color: #294cb0;
+  cursor: pointer;
+  border-bottom: none;
+} */
+
+/* input[type=radio] + span {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background-color: var(--gray);
+  vertical-align: middle;
+}
+
+label:hover{
+  border-bottom: none;
+}
+
+input[type=radio]:checked + span {
+  background-color: var(--black);
+} */
+.radioCheck {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background-color: var(--gray);
+  vertical-align: middle;
+}
+.radioCheck:hover {
+  border-bottom: none;
+  cursor: pointer;
+}
+.radioChecked {
+  background-color: var(--black) !important;
+}
+.button-normal-margin {
+  margin-bottom: 24px;
+}
+
+/* 搜索 */
+.search {
+  display: flex;
+  /* justify-content: flex-start;
+  align-items: center; */
+  margin-bottom: 8px;
+}
+.search input {
+  min-width: 312px;
+  border: 0px;
+  outline: none;
+  height: 32px;
+  font-size: 1.375rem;
+  line-height: 32px;
+  caret-color: var(--black);
+  vertical-align: bottom;
+}
+.search img{
+  width: 32px;
+}
+.search button {
+  height: 32px;
+  border: none;
+  /* background-color: var(--white); */
+  padding: 0 8px;
+}
+
+table > tbody > tr > td:nth-child(n + 7) span,
+table > thead > tr > th:nth-child(n + 7) {
+  padding-right: 24px;
+}
+.water-meter-name {
+  font-weight: bolder;
+}
+.water-meter-note {
+  color: var(--gray-text);
+}
+.empty-list {
+  font-size: 1rem;
+  color: var(--prompt);
+}
+
+/* .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.alter img {
+  color: #294cb0;
+  cursor: pointer;
+  border-bottom: none;
+} */
+
+/* input[type=radio] + span {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background-color: var(--gray);
+  vertical-align: middle;
+}
+
+label:hover{
+  border-bottom: none;
+}
+
+input[type=radio]:checked + span {
+  background-color: var(--black);
+} */
+.radioCheck {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background-color: var(--gray);
+  vertical-align: middle;
+}
+.radioCheck:hover {
+  border-bottom: none;
+  cursor: pointer;
+}
+.radioChecked {
+  background-color: var(--black) !important;
+}
+.button-normal-margin {
+  margin-bottom: 24px;
+}
+
+/* 搜索 */
+.search {
+  display: flex;
+  /* justify-content: flex-start;
+  align-items: center; */
+  margin-bottom: 8px;
+}
+.search input {
+  min-width: 312px;
+  border: 0px;
+  outline: none;
+  height: 32px;
+  font-size: 1.375rem;
+  line-height: 32px;
+  caret-color: var(--black);
+  vertical-align: bottom;
+}
+.search img{
+  width: 32px;
+}
+.search button {
+  height: 32px;
+  border: none;
+  /* background-color: var(--white); */
+  padding: 0 8px;
+}
+
 .left-bar {
   height: 922px;
   background-color: var(--black);
@@ -1377,7 +1260,6 @@ input[type=radio]:checked + span {
 
 /* info */
 .info {
-  padding-left: 8px;
   width: 48px;
   height: 922px;
   background-color: var(--black);
@@ -1397,6 +1279,7 @@ input[type=radio]:checked + span {
   height: 28px;
   border-radius: 20px;
   border: 2px solid var(--white);
+  background-color: var(--white);
   margin: 0 auto;
   position: relative;
   top: 168px;

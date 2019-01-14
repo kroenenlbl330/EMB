@@ -10,12 +10,17 @@ import WaterCollect from '../../components/watercollect.vue'
 import WaterCollectAdd from '../../components/watercollect.add.vue'
 import WaterCollectDetail from '../../components/watercollect.detail.vue'
 
+import WaterRepeater from '../../components/waterrepeater.vue'
+
+import WaterConcentrator from '../../components/waterconcentrator.vue'
+
 Vue.use(Router)
 
 export default new Router({
   // mode: 'history',
   routes: [
     // { path: '*', component: NotFoundComponent },
+    //WATERMETER
     {
       path: '/',
       alias: '/watermeter',
@@ -41,7 +46,7 @@ export default new Router({
       // name: 'watermeteradd',
       component: WaterMeterAdd
     },
-    //
+    //WATERCOLLECT
     {
       path: '/watercollect',
       name: 'watercollect',
@@ -56,6 +61,18 @@ export default new Router({
       path: '/watercollect/detail/',
       name: 'watercollect',
       component: WaterCollectDetail
+    },
+    //WATERREPEATER
+    {
+      path: '/waterrepeater',
+      name: 'waterrepeater',
+      component: WaterRepeater
+    },
+    //WATERCONCENTRATOR
+    {
+      path: '/waterconcentrator',
+      name: 'waterconcentrator',
+      component: WaterConcentrator
     },
   ]
 })
