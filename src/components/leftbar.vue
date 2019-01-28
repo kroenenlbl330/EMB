@@ -29,10 +29,10 @@ export default {
     return {
       
       aM: [
-        { name: "水表表具设备", id: 'watermeter' },
         { name: "水表采集器设备", id: 'watercollect' },
-        { name: "水表中继器设备", id: 'repeater' },
-        { name: "水表集中器设备", id: 'waterconcentrator' }
+        { name: "水表中继器设备", id: 'waterrepeater' },
+        { name: "水表集中器设备", id: 'waterconcentrator' },
+        { name: "水表表具设备", id: 'watermeter' },
       ],
       isSelect: '',
       // striping: 0
@@ -58,7 +58,7 @@ export default {
           break
         case "watercollect": this.$router.push("/watercollect")
           break
-        case "waterrelay": this.$router.push("/waterrelay")
+        case "waterrepeater": this.$router.push("/waterrepeater")
           break
         case "waterconcentrator": this.$router.push("/waterconcentrator")
           break
@@ -76,6 +76,7 @@ export default {
   justify-content: flex-start;
   padding-top: 8px;
   padding-bottom: 8px;
+  /* border-right: 2px solid var(--black); */
 }
 
 @media screen and (max-width: 1200px) {
@@ -88,8 +89,7 @@ export default {
 .info {
   width: 48px;
   height: 922px;
-  background-color: var(--black);
-  border-right: 2px solid var(--gray-line);
+  border-right: 2px solid var(--gray-text);
 }
 
 .info > span {
@@ -107,7 +107,7 @@ export default {
   height: 28px;
   border-radius: 20px;
   border: 2px solid var(--white);
-  background-color: var(--white);
+  background-color: #fff;
   margin: 0 auto;
   position: relative;
   top: 168px;
@@ -119,26 +119,29 @@ export default {
 
 /* menu */
 .menu {
-  min-width: 254px;
-  background-color: var(--black);
+  min-width: 200px;
   height: 922px;
-  color: var(--gray-text);
+  /* color: var(--gray-text); */
 }
 
 .menu ul {
-  padding: 8px 0 0 12px;
+  padding: 4px 0 0 12px;
 }
 
 .menu li{
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+  
 }
 
 .rl-s {
-  font-size: 1rem;
-  line-height: 16px;
+  font-size: 1.125rem;
+  line-height: 18px;
+  height: 20px;
   color: var(--gray-text);
+  /* letter-spacing: 1px; */
+  /* color: var(--black); */
   cursor: pointer;
-  /* font-weight: 300; */
+  /* font-weight: bolder; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -148,9 +151,11 @@ export default {
 }
 
 .select {
-  font-size: 1rem !important;
+  font-size: 1.125rem !important;
+  color: var(--white) !important;
+  /* color: var(--black) !important; */
+  
   font-weight: bolder !important;
-  color: var(--white);
   /* border-bottom: 2px solid var(--white) !important; */
 }
 

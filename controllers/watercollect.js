@@ -1,5 +1,5 @@
 const express = require('express')
-const Model = require('../models/models.js')
+const Model = require('../models/watercollect.js')
 
 module.exports = function(){
   var router = express.Router();
@@ -14,8 +14,6 @@ module.exports = function(){
         res.status(404).send('error')
       }else{
         result = JSON.stringify(result)
-        // console.log(result)
-        // res.render('main/main',result)
         res.status(200).send(result)       
       }
     }) 
@@ -26,7 +24,6 @@ module.exports = function(){
       if(err){
         res.status(404).send('error')
       }else{
-        // result = JSON.stringify(result)
         res.status(200).send(result)  
       }
     }) 
@@ -42,10 +39,9 @@ module.exports = function(){
       }
     }) 
   })
-
   
-  router.post('/watermeter/association', function (req, res){  
-    Model.getWaterMeterAssociationCollect(req, res, function (err, result) {
+  router.post('/watercollect/delete', function (req, res){  
+    Model.delWaterCollectCommunicationNumber(req, res, function (err, result) {
       if(err){
         res.status(404).send('error')
       }else{
@@ -54,6 +50,28 @@ module.exports = function(){
       }
     }) 
   })
-  
+
+  router.post('/watercollect/updata', function (req, res){
+    
+    Model.upDataWaterCollectCommunicationNumber(req, res, function (err, result) {
+      if(err){
+        res.status(404).send('error')
+      }else{
+        // result = JSON.stringify(result)
+        res.status(200).send(result)  
+      }
+    }) 
+  })
+  // router.post('/watermeter/association', function (req, res){  
+  //   Model.getWaterMeterAssociationCollect(req, res, function (err, result) {
+  //     if(err){
+  //       res.status(404).send('error')
+  //     }else{
+  //       result = JSON.stringify(result)
+  //       res.status(200).send(result)       
+  //     }
+  //   }) 
+  // })
+
   return router
 }

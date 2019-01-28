@@ -18,7 +18,8 @@
               </div>
               <div>
                 <p>图纸编号</p>
-                <input type="text" v-model="DrawingNumber" id="DrawingNumber" @blur.prevent="loseFocus()"/>
+                <!-- <input type="text" v-model="DrawingNumber" id="DrawingNumber" @blur.prevent="loseFocus()"/> -->
+                <input type="text" v-model="DrawingNumber" id="DrawingNumber"/>
               </div>
             </div>
             <div>
@@ -197,9 +198,10 @@ export default {
   },
   data() {
     return {
-      DrawingNumber: this.$route.query.dn,
-      index: this.$route.query.id,
+      checkedID: this.$route.query.id,
+      // index: this.$route.query.id,
 
+      DrawingNumber: "",
       WaterMeterName: "",
       InstallationSite: "",
       AssociationCollect: "",
@@ -256,10 +258,11 @@ export default {
       method: "post",
       url: "/watermeter/detail",
       data: {
-        DrawingNumber: this.DrawingNumber
+        checkedID: this.checkedID
       }
     })
       .then(response => {
+        this.DrawingNumber = response.data[0].DrawingNumber
         this.WaterMeterName = response.data[0].WaterMeterName
         this.InstallationSite = response.data[0].InstallationSite
         this.AssociationCollect = response.data[0].AssociationCollect
@@ -273,9 +276,25 @@ export default {
         this.MeterUse = response.data[0].MeterUse
         this.SubordinateDepartments = response.data[0].SubordinateDepartments
         this.Note = response.data[0].Note
+
+        this.$ajax({
+          method: "post",
+          url: "/watermeter/select/watermeterlevel",
+          data: {
+            // WaterMeterLevelMinusOne: ($("#DrawingNumber").val()).substring(1,2)
+            WaterMeterLevelMinusOne: this.WaterMeterLevel - 1
+            // WaterMeterLevelMinusOne: parseInt(this.WaterMeterLevel)
+          }
+        })
+          .then(response => {
+            this.selectWaterMeterLevelList = response.data
+          })
+          .catch(error => {
+            console.log(error)
+          })
       })
       .catch(error => {
-        console.log(error);
+        console.log(error)
       })
 
     this.$ajax.all([
@@ -291,21 +310,7 @@ export default {
       this.powerTypeList = powertype.data
       this.pipeDiameterList = pipediameter.data
       this.coefficientList = coefficient.data
-    }))
-
-    this.$ajax({
-      method: "post",
-      url: "/watermeter/select/watermeterlevel",
-      data: {
-        WaterMeterLevelMinusOne: ($("#DrawingNumber").val()).substring(1,2) - 1
-      }
-    })
-      .then(response => {
-        this.selectWaterMeterLevelList = response.data;
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    }))    
   },
   methods: {
     backPage: function() {
@@ -371,11 +376,11 @@ export default {
         .then(response => {
           if(response){
             alert("修改成功")
-            history.go(-1);
+            history.go(-1)
           }
         })
         .catch(error => {
-          console.log(error);
+          console.log(error)
         })
       }
     },
@@ -493,7 +498,7 @@ export default {
       this.selectWaterMeterLevelShowSelect = false
       this.subordinateDepartmentsShowSelect = false
       this.meterUseShowSelect = false
-    }
+    },
   },
   filters: {
     empty: function (value) {
@@ -501,8 +506,30 @@ export default {
     }
   },
   created() {
-    this.id = this.$route.query.id;
+    this.id = this.$route.query.id
   },
+  // watch: {
+  //   WaterMeterLevel: {
+  //   　　handler(newName, oldName) {
+  //     　　this.$ajax({
+  //         method: "post",
+  //         url: "/watermeter/select/watermeterlevel",
+  //         data: {
+  //           // WaterMeterLevelMinusOne: ($("#DrawingNumber").val()).substring(1,2)
+  //           WaterMeterLevelMinusOne: this.WaterMeterLevel - 1
+  //           // WaterMeterLevelMinusOne: parseInt(this.WaterMeterLevel)
+  //         }
+  //       })
+  //         .then(response => {
+  //           this.selectWaterMeterLevelList = response.data
+  //         })
+  //         .catch(error => {
+  //           console.log(error)
+  //         })
+  //   　　},
+  //   　　immediate: true
+  //   }
+  // } 
 }
 </script>
 

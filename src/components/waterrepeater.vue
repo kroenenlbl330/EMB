@@ -23,11 +23,8 @@
               <th class="row-1"></th>
               <th class="row-2">通讯编号</th>
               <th class="row-4">硬件编号</th>
-              <th class="row-4">安装位置</th>
-              <th class="row-5">关联表具</th>
-              <!-- <th class="row-1" align="right">系数</th>
-              <th class="row-1" align="right">管径</th>
-              <th class="row-1" align="right">表级</th> -->
+              <th class="row-6">安装位置</th>
+              <th class="row-2">挂载数量</th>
             </tr>
           </thead>
           <tbody v-if="searchVal">
@@ -37,11 +34,8 @@
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <th class="row-5 row-empty"></th>
-              <!-- <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td> -->
+              <td class="row-6 row-empty"></td>
+              <td class="row-2 row-empty"></td>
             </tr>
             <!-- Nothing more... -->
             <tr v-for="(WaterCollect, index) in WaterCollectList" :key="index">
@@ -62,10 +56,10 @@
               <td class="row-4 text-bottom text-border">
                 <span>{{WaterCollect.HardwareSerialNumber}}</span>
               </td>
-              <td class="row-4 text-bottom">
+              <td class="row-6 text-bottom">
                 <span>{{WaterCollect.InstallationSite}}</span>
               </td>
-              <td class="row-5 text-bottom">
+              <td class="row-2 text-bottom">
                 <span>{{WaterCollect.AssociationMeter}}</span>
               </td>
             </tr>
@@ -76,8 +70,8 @@
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-5 row-empty"></td>
+              <td class="row-6 row-empty"></td>
+              <td class="row-2 row-empty"></td>
             </tr>
           </tbody>
           <tbody v-else>
@@ -87,8 +81,8 @@
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <th class="row-5 row-empty"></th>
+              <td class="row-6 row-empty"></td>
+              <th class="row-2 row-empty"></th>
             </tr>
             <!-- Nothing more... -->
             <tr v-for="(WaterCollect, index) in WaterCollectList" :key="index">
@@ -109,10 +103,10 @@
               <td class="row-4 text-bottom text-border">
                 <span>{{WaterCollect.HardwareSerialNumber}}</span>
               </td>
-              <td class="row-4 text-bottom">
+              <td class="row-6 text-bottom">
                 <span>{{WaterCollect.InstallationSite}}</span>
               </td>
-              <td class="row-5 text-bottom">
+              <td class="row-2 text-bottom">
                 <span>{{WaterCollect.AssociationMeter}}</span>
               </td>
             </tr>
@@ -123,8 +117,8 @@
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-5 row-empty"></td>
+              <td class="row-6 row-empty"></td>
+              <td class="row-2 row-empty"></td>
             </tr>
           </tbody>
         </table>
@@ -314,102 +308,6 @@ export default {
 </script>
 
 <style>
-table > tbody > tr > td:nth-child(n + 7) span,
-table > thead > tr > th:nth-child(n + 7) {
-  padding-right: 24px;
-}
 
-.water-meter-name {
-  font-weight: bolder;
-}
-
-.water-meter-note {
-  color: var(--gray-text);
-}
-
-.empty-list {
-  font-size: 1rem;
-  color: var(--prompt);
-}
-
-/* .icon {
-  width: 18px;
-  height: 18px;
-}
-
-.alter img {
-  color: #294cb0;
-  cursor: pointer;
-  border-bottom: none;
-} */
-
-/* input[type=radio] + span {
-  display: inline-block;
-  height: 16px;
-  width: 16px;
-  border-radius: 8px;
-  background-color: var(--gray);
-  vertical-align: middle;
-}
-
-label:hover{
-  border-bottom: none;
-}
-
-input[type=radio]:checked + span {
-  background-color: var(--black);
-} */
-
-.radioCheck {
-  display: inline-block;
-  height: 16px;
-  width: 16px;
-  border-radius: 8px;
-  background-color: var(--gray);
-  vertical-align: middle;
-}
-
-.radioCheck:hover {
-  border-bottom: none;
-  cursor: pointer;
-}
-
-.radioChecked {
-  background-color: var(--black) !important;
-}
-
-.button-normal-margin {
-  margin-bottom: 24px;
-}
-
-/* 搜索 */
-.search {
-  display: flex;
-  /* justify-content: flex-start;
-  align-items: center; */
-  margin-bottom: 8px;
-}
-
-.search input {
-  min-width: 312px;
-  border: 0px;
-  outline: none;
-  height: 32px;
-  font-size: 1.375rem;
-  line-height: 32px;
-  caret-color: var(--black);
-  vertical-align: bottom;
-}
-
-.search img{
-  width: 32px;
-}
-
-.search button {
-  height: 32px;
-  border: none;
-  /* background-color: var(--white); */
-  padding: 0 8px;
-}
 </style>
 

@@ -42,8 +42,32 @@
                 <input type="text" id="EnergyCode" placeholder="请输入能源数据编号">
               </div>
             </div>
+          </div>
+          <div class="main-content-list">
             <div>
-              <div></div>
+              <div>
+                <span>02</span>
+              </div>
+              <div>
+                <p>表级</p>
+                <div class="select-head" v-on:click.stop="waterMeterLevelDown">
+                  <p>
+                    <span>{{waterMeterLevelPrompt}}</span>
+                    <span>{{waterMeterLevelName}}</span>
+                    </p>
+                  <img :src="IconDropDown">
+                </div>
+                <div v-show="waterMeterLevelShowSelect">
+                  <div v-for="(waterMeterLevel, index) in waterMeterLevelList" @click.stop="waterMeterLevelSelect(waterMeterLevel)" :key="index">
+                    {{waterMeterLevel.WaterMeterLevel}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+
+              </div>
               <div>
                 <p>上级表</p>
                 <div class="select-head" v-on:click.stop="superiorMeterDown">
@@ -60,11 +84,31 @@
                 </div>
               </div>
             </div>
+            <div>
+              <div>
+
+              </div>
+              <div>
+                <p>关联采集</p>
+                <div class="select-head" v-on:click.stop="associationCollectDown">
+                  <p>
+                    <span>{{associationCollectPrompt}}</span>
+                    <span>{{associationCollect}}&nbsp;&nbsp;{{associationCollectName}}</span>
+                    </p>
+                  <img :src="IconDropDown">
+                </div>
+                <div v-show="associationCollectShowSelect">
+                  <div v-for="(associationCollect, index) in associationcollectList" @click.stop="associationCollectSelect(associationCollect)" :key="index">
+                    {{associationCollect.CommunicationNumber}}&nbsp;&nbsp;{{associationCollect.InstallationSite}}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="main-content-list">
             <div>
               <div>
-                <span>02</span>
+                <span>03</span>
               </div>
               <div>
                 <p>系数</p>             
@@ -158,7 +202,7 @@
           <div class="main-content-list">
             <div>
               <div>
-                <span>03</span>
+                <span>04</span>
               </div>
               <div>
                 <p>备注</p>
@@ -198,6 +242,14 @@ export default {
       IconDropDown,
 
       // isInput: false,
+      associationCollectPrompt: '选入采集器',
+      associationCollectShowSelect: false,
+      associationCollect: '',
+      associationCollectName: '',
+
+      waterMeterLevelPrompt: '请选择系数',
+      waterMeterLevelShowSelect: false,
+      waterMeterLevelName: '',
 
       superiorMeterPrompt: '请选择上级表',
       superiorMeterShowSelect: false,
@@ -224,6 +276,8 @@ export default {
       subordinateDepartmentsShowSelect: false,
       subordinateDepartmentsName: '',
       
+      associationcollectList: '',
+      waterMeterLevelList: "",
       superiorMeterList: '',
       coefficientList: '',
       pipeDiameterList: '',
@@ -232,6 +286,9 @@ export default {
       subordinateDepartmentsList: '',
     }
   },
+  computed: {
+
+  },
   methods: {
     backPage: function() {
       this.$router.go(-1)
@@ -239,27 +296,29 @@ export default {
     addPreZero(index) {
       return ("00" + index).slice(-3)
     },
-    loseFocus() {
-      this.$ajax({
-      method: "post",
-      url: "/watermeter/select/watermeterlevel",
-      data: {
-        WaterMeterLevelMinusOne: ($("#DrawingNumber").val()).substring(1,2) - 1
-      }
-    })
-      .then(response => {
-        this.superiorMeterList = response.data;
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
+    // loseFocus() {
+    //   this.$ajax({
+    //   method: "post",
+    //   url: "/watermeter/select/watermeterlevel",
+    //   data: {
+    //     WaterMeterLevelMinusOne: ($("#DrawingNumber").val()).substring(1,2) - 1
+    //   }
+    // })
+    //   .then(response => {
+    //     this.superiorMeterList = response.data;
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    // },
     save: function() {
       let DrawingNumber = $("#DrawingNumber").val()
       let WaterMeterName = $("#WaterMeterName").val()
       let InstallationSite = $("#InstallationSite").val()
       let EnergyCode = $("#EnergyCode").val()
       let SuperiorMeter = this.superiorMeter
+      let AssociationCollect = this.associationCollect
+      let WaterMeterLevel = this.waterMeterLevelName
       let SuperiorMeterName = this.superiorMeterName
       let Coefficient = this.coefficientName
       let PipeDiameter = this.pipeDiameterName
@@ -268,8 +327,8 @@ export default {
       let SubordinateDepartments = this.subordinateDepartmentsName
       let Note = $("#Note").val()
 
-      //根据图纸编号获取表级
-      let WaterMeterLevel = DrawingNumber.substring(1,2)
+      // 根据图纸编号获取表级
+      // let WaterMeterLevel = DrawingNumber.substring(1,2)
 
       if (!DrawingNumber) {
         alert("图纸编号不能为空")
@@ -280,24 +339,10 @@ export default {
       } else if (!InstallationSite) {
         alert("安装位置不能为空")
         return
-      } else if (Coefficient != "1" && Coefficient != "0.1") {
+      } else if (!Coefficient) {
         alert("请选择正确的系数")
         return
-      } else if (
-        PipeDiameter !== "15" &&
-        PipeDiameter !== "20" &&
-        PipeDiameter !== "25" &&
-        PipeDiameter !== "32" &&
-        PipeDiameter !== "40" &&
-        PipeDiameter !== "50" &&
-        PipeDiameter !== "65" &&
-        PipeDiameter !== "80" &&
-        PipeDiameter !== "100" &&
-        PipeDiameter !== "150" &&
-        PipeDiameter !== "200" &&
-        PipeDiameter !== "300" &&
-        PipeDiameter !== "400"
-      ) {
+      } else if (!PipeDiameter) {
         alert("请选择正确的管径")
         return;
       } else {
@@ -312,6 +357,7 @@ export default {
             PipeDiameter: PipeDiameter,
             WaterMeterLevel: WaterMeterLevel,
             EnergyCode: EnergyCode,
+            AssociationCollect: AssociationCollect,
             SuperiorMeter: SuperiorMeter,
             SuperiorMeterName: SuperiorMeterName,
             PowerType: PowerType,
@@ -323,16 +369,69 @@ export default {
           .then(response => {
             if (response) {
               alert("保存成功")
-              history.go(-1)
+              this.$router.go(-1)
             }
           })
           .catch(error => {
             console.log(error)
           })
+
+        this.$ajax({
+          method: "post",
+          url: "/watermeter/add/collect",
+          data: {
+            AssociationCollect: AssociationCollect,
+            DrawingNumber: DrawingNumber,
+          }
+        })
+          // .then(response => {
+          //   if (response) {
+          //     alert("保存成功")
+          //     this.$router.go(-1)
+          //   }
+          // })
+          // .catch(error => {
+          //   console.log(error)
+          // })
       }
     },
 
-    //SuperiorMeter
+    // AssociationCollectDown
+    associationCollectDown() {
+      this.associationCollectShowSelect = !this.associationCollectShowSelect
+      this.superiorMeterShowSelect = false
+      this.coefficientShowSelect = false
+      this.pipeDiameterShowSelect = false
+      this.powerTypeShowSelect = false
+      this.meterUseShowSelect = false
+      this.subordinateDepartmentsShowSelect = false
+      this.waterMeterLevelShowSelect = false
+      document.addEventListener("click",this.removeEvt)
+    },
+    associationCollectSelect(associationCollect) {
+      this.associationCollectShowSelect = false
+      this.associationCollect = associationCollect.CommunicationNumber
+      this.associationCollectName = associationCollect.InstallationSite
+      this.associationCollectPrompt = ''
+    },
+    // WaterMeterLevel
+    waterMeterLevelDown() {
+      this.waterMeterLevelShowSelect =! this.waterMeterLevelShowSelect
+      this.associationCollectShowSelect = false
+      this.superiorMeterShowSelect = false
+      this.coefficientShowSelect = false
+      this.pipeDiameterShowSelect = false
+      this.powerTypeShowSelect = false
+      this.meterUseShowSelect = false
+      this.subordinateDepartmentsShowSelect = false
+      document.addEventListener("click",this.removeEvt)
+    },
+    waterMeterLevelSelect(waterMeterLevel) {
+      this.waterMeterLevelShowSelect = false
+      this.waterMeterLevelName = waterMeterLevel.WaterMeterLevel
+      this.waterMeterLevelPrompt = ''
+    },
+    // SuperiorMeter
     superiorMeterDown() {
       // if(document.querySelector("#DrawingNumber").value == '') {
       //   alert('请先填写图纸编号')
@@ -346,6 +445,8 @@ export default {
       this.powerTypeShowSelect = false
       this.meterUseShowSelect = false
       this.subordinateDepartmentsShowSelect = false
+      this.associationCollectShowSelect = false
+      this.waterMeterLevelShowSelect = false
       //为document添加点击触发removeEvt()
       document.addEventListener("click",this.removeEvt)
     },
@@ -355,7 +456,7 @@ export default {
       this.superiorMeterName = superiorMeter.WaterMeterName
       this.superiorMeterPrompt = ''
     },
-    //Coefficient
+    // Coefficient
     coefficientDown() {
       this.coefficientShowSelect = !this.coefficientShowSelect
       this.pipeDiameterShowSelect = false
@@ -363,6 +464,8 @@ export default {
       this.powerTypeShowSelect = false
       this.meterUseShowSelect = false
       this.subordinateDepartmentsShowSelect = false
+      this.associationCollectShowSelect = false
+      this.waterMeterLevelShowSelect = false
       //为document添加点击触发removeEvt()
       document.addEventListener("click",this.removeEvt)
     },
@@ -371,7 +474,7 @@ export default {
       this.coefficientName = coefficient.Coefficient
       this.coefficientPrompt = ''
     },
-    //PipeDiameter
+    // PipeDiameter
     pipeDiameterDown() {
       this.pipeDiameterShowSelect = !this.pipeDiameterShowSelect
       this.coefficientShowSelect = false
@@ -379,6 +482,8 @@ export default {
       this.powerTypeShowSelect = false
       this.meterUseShowSelect = false
       this.subordinateDepartmentsShowSelect = false
+      this.associationCollectShowSelect = false
+      this.waterMeterLevelShowSelect = false
       document.addEventListener("click",this.removeEvt)
     },
     pipeDiameterSelect(pipeDiameter) {
@@ -386,7 +491,7 @@ export default {
       this.pipeDiameterName = pipeDiameter.PipeDiameter
       this.pipeDiameterPrompt = ''
     },
-    //PowerType
+    // PowerType
     powerTypeDown() {
       this.powerTypeShowSelect = !this.powerTypeShowSelect
       this.coefficientShowSelect = false
@@ -394,6 +499,8 @@ export default {
       this.superiorMeterShowSelect = false
       this.meterUseShowSelect = false
       this.subordinateDepartmentsShowSelect = false
+      this.associationCollectShowSelect = false
+      this.waterMeterLevelShowSelect = false
       document.addEventListener("click",this.removeEvt)
     },
     powerTypeSelect(powerType) {
@@ -401,7 +508,7 @@ export default {
       this.powerTypeName = powerType.PowerType
       this.powerTypePrompt = ''
     },
-    //MeterUse
+    // MeterUse
     meterUseDown() {
       this.meterUseShowSelect = !this.meterUseShowSelect
       this.powerTypeShowSelect = false
@@ -409,6 +516,8 @@ export default {
       this.pipeDiameterShowSelect = false
       this.superiorMeterShowSelect = false
       this.subordinateDepartmentsShowSelect = false
+      this.associationCollectShowSelect = false
+      this.waterMeterLevelShowSelect = false
       document.addEventListener("click",this.removeEvt)
     },
     meterUseSelect(meterUse) {
@@ -416,7 +525,7 @@ export default {
       this.meterUseName = meterUse.MeterUse
       this.meterUsePrompt = ''
     },
-    //SubordinateDepartments
+    // SubordinateDepartments
     subordinateDepartmentsDown() {
       this.subordinateDepartmentsShowSelect = !this.subordinateDepartmentsShowSelect
       this.meterUseShowSelect = false
@@ -424,6 +533,8 @@ export default {
       this.coefficientShowSelect = false
       this.pipeDiameterShowSelect = false
       this.superiorMeterShowSelect = false
+      this.associationCollectShowSelect = false
+      this.waterMeterLevelShowSelect = false
       document.addEventListener("click",this.removeEvt)
     },
     subordinateDepartmentsSelect(subordinateDepartments) {
@@ -445,32 +556,72 @@ export default {
       this.subordinateDepartmentsShowSelect = false
       this.meterUseShowSelect = false
       this.superiorMeterShowSelect = false
-    }
+      this.associationCollectShowSelect = false
+    },
   },
+  //过滤器
   filters: {
     empty: function(value) {
       return value ? value : "no more..."
     }
   },
+  //数据初始化
   created() {
     this.id = this.$route.query.id
   },
+  
   mounted: function() {
     this.$ajax.all([
+      this.$ajax.post('/watercollect'),
+      this.$ajax.post('/watermeter/select/watermeterlevel'),
       this.$ajax.post('/watermeter/meteruse'),
       this.$ajax.post('/watermeter/subordinatedepartments'),
       this.$ajax.post('/watermeter/powertype'),
       this.$ajax.post('/watermeter/pipediameter'),
       this.$ajax.post('/watermeter/coefficient'),
     ])
-    .then(this.$ajax.spread((meteruse, subordinatedepartments,powertype,pipediameter,coefficient)=> {
+    .then(this.$ajax.spread((associationcollect, watermeterlevel, meteruse, subordinatedepartments,powertype,pipediameter,coefficient)=> {
+      this.associationcollectList = associationcollect.data
+      this.waterMeterLevelList = watermeterlevel.data
       this.meterUseList = meteruse.data
       this.subordinateDepartmentsList = subordinatedepartments.data
       this.powerTypeList = powertype.data
       this.pipeDiameterList = pipediameter.data
       this.coefficientList = coefficient.data
     }))
+
+    this.$ajax({
+      method: "post",
+      url: "/watermeter/add/superior",
+      data: {
+        WaterMeterLevelMinusOne: this.waterMeterLevel
+      }
+    })
+      .then(response => {
+        this.superiorMeterList = response.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
+  watch: {
+    watermeterlevelName: function(a, b){
+    //   this.$ajax({
+    //   method: "post",
+    //   url: "/watermeter/add/superior",
+    //   data: {
+    //     WaterMeterLevelMinusOne: this.waterMeterLevel
+    //   }
+    // })
+    //   .then(response => {
+    //     this.superiorMeterList = response.data
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    alert(this.watermeterlevelName - 1)
+    }
+  }
 }
 </script>
 

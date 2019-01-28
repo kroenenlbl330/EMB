@@ -20,5 +20,6 @@ app.listen(4000,function(){
 
 app.use('/',require('./controllers/watermeter.js')())
 app.use('/',require('./controllers/watercollect.js')())
+app.use('/',require('./controllers/otheroptions.js')())
 // app.use('/',require('./controllers/watermeter.detail.js')())
 // app.use('/fill',require('./controllers/fill.js')())

@@ -4,6 +4,7 @@
   font-size: 100%;
   /* font-family: '苹方'; */
   font-family: '思源黑体','Helvetica Neue',Roboto,Arial,'Droid Sans',sans-serif;
+  /* font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol; */
   list-style-type: none;  
   color: var(--back);
 }
@@ -84,7 +85,7 @@ tbody :hover{
   --white: #ffffff;
   --gray: #e1e1e1;
   --gray-line: #c1c1c1;
-  --gray-text: #a1a1a1;
+  --gray-text: #848484;
   --prompt: #ccc;
   --input: #cdcdcd;
   --lightGrey: #f8f8f8;
@@ -112,6 +113,10 @@ tbody :hover{
 
 .row-6{
   width: 30%;
+}
+
+.row-8{
+  width: 40%;
 }
 
 .row-10{
@@ -263,6 +268,106 @@ input:-ms-input-placeholder {
   font-weight: bolder;
 }
 
+/* LIST */
+table > tbody > tr > td:nth-child(n + 8) span,
+table > thead > tr > th:nth-child(n + 8) {
+  padding-right: 12px;
+}
+
+.water-meter-name {
+  font-weight: bolder;
+}
+
+.water-meter-note {
+  color: var(--gray-text);
+}
+
+.empty-list {
+  font-size: 1rem;
+  color: var(--prompt);
+}
+
+/* .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.alter img {
+  color: #294cb0;
+  cursor: pointer;
+  border-bottom: none;
+} */
+
+/* input[type=radio] + span {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background-color: var(--gray);
+  vertical-align: middle;
+}
+
+label:hover{
+  border-bottom: none;
+}
+
+input[type=radio]:checked + span {
+  background-color: var(--black);
+} */
+
+.radioCheck {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background-color: var(--gray);
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+
+.radioCheck:hover {
+  border-bottom: none;
+  cursor: pointer;
+}
+
+.radioChecked {
+  background-color: var(--black) !important;
+}
+
+.button-normal-margin {
+  margin-bottom: 24px;
+}
+
+/* SEARCH */
+.search {
+  display: flex;
+  /* justify-content: flex-start;
+  align-items: center; */
+  margin-bottom: 8px;
+}
+
+.search input {
+  min-width: 312px;
+  border: 0px;
+  outline: none;
+  height: 32px;
+  font-size: 1.375rem;
+  line-height: 32px;
+  caret-color: var(--black);
+  vertical-align: bottom;
+}
+
+.search img{
+  width: 32px;
+}
+
+.search button {
+  height: 32px;
+  border: none;
+  /* background-color: var(--white); */
+  padding: 0 8px;
+}
+
 /* CONTENT */
 .main {
   display: flex;
@@ -289,7 +394,7 @@ input:-ms-input-placeholder {
 .main-title > div > span {
   font-size: 1.75rem;
   color: var(--black);
-  font-weight: bolder;
+  /* font-weight: bolder; */
 }
 
 .main-content{

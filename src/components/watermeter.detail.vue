@@ -158,8 +158,8 @@ export default {
   data() {
     return {
       WaterMeterDetail: "",
-      DrawingNumber: this.$route.query.dn,
-      index: this.$route.query.id,
+      checkedID: this.$route.query.id,
+      // index: this.$route.query.id,
 
       IconBack,
       IconDetail,
@@ -170,7 +170,7 @@ export default {
       method: "post",
       url: "/watermeter/detail",
       data: {
-        DrawingNumber: this.DrawingNumber
+        checkedID: this.checkedID
       }
     })
       .then(response => {

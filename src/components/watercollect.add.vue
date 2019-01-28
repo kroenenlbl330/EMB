@@ -37,81 +37,81 @@
           </div>  
         </div> -->
         <div class="main-content">
-            <div class="main-content-list">
+          <div class="main-content-list">
+            <div>
               <div>
-                <div>
-                  <span>01</span>
-                </div>
-                <div>
-                  <p>通讯编号</p>
-                  <input type="text" id="CommunicationNumber" placeholder="请输入通讯编号">
-                </div>
+                <span>01</span>
               </div>
               <div>
-                <div>
+                <p>通讯编号</p>
+                <input type="text" id="CommunicationNumber" placeholder="请输入通讯编号">
+              </div>
+            </div>
+            <div>
+              <div>
 
-                </div>
-                <div>
-                  <p>安装位置</p>
-                  <input type="text" id="InstallationSite" placeholder="请输入安装位置">
-                </div>
               </div>
               <div>
-                <div>
+                <p>安装位置</p>
+                <input type="text" id="InstallationSite" placeholder="请输入安装位置">
+              </div>
+            </div>
+            <div>
+              <div>
 
-                </div>
-                <div>
-                  <p>硬件编号</p>
-                  <input type="text" id="HardwareSerialNumber" placeholder="请输入硬件编号">
-                </div>
               </div>
               <div>
-                <div>
+                <p>硬件编号</p>
+                <input type="text" id="HardwareSerialNumber" placeholder="请输入硬件编号">
+              </div>
+            </div>
+            <!-- <div>
+              <div>
 
-                </div>
-                <div>
-                  <p>关联水表</p>
-                  <div class="association-meter" @click="selectAssociation">
-                    <span>
-                      {{selectAssociationPrompt}}
-                      <span v-for="(sArr,index) in selectAssociationArr" :key="index">
-                        <span>{{sArr.DN}}&nbsp;&nbsp;</span>
-                      </span>
+              </div>
+              <div>
+                <p>关联水表</p>
+                <div class="association-meter" @click="selectAssociation">
+                  <span>
+                    {{selectAssociationPrompt}}
+                    <span v-for="(sArr,index) in selectAssociationArr" :key="index">
+                      <span>{{sArr.DN}}&nbsp;&nbsp;</span>
                     </span>
-                  </div>
+                  </span>
                 </div>
               </div>
-            </div>
-            <div class="main-content-list">      
+            </div> -->
+          </div>
+          <div class="main-content-list">      
+            <div>
               <div>
-                <div>
-                  <span>02</span>
-                </div>
-                <div>
-                  <p>电源类型</p>
-                  <div class="select-head" v-on:click.stop="powerTypeDown">
-                    <p><span>{{powerTypePrompt}}</span>{{powerTypeName}}</p>
-                    <img :src="IconDropDown">
-                  </div>
-                  <div v-show="powerTypeShowSelect" class="option">
-                    <div class="option-list" v-for="(powerType, index) in powerTypeList" @click.stop="powerTypeSelect(powerType)" :key="index">
-                      {{powerType.PowerType}}
-                    </div>
-                  </div>
-                </div>  
+                <span>02</span>
               </div>
-            </div>
-            <div class="main-content-list">
               <div>
-                <div>
-                  <span>03</span>
+                <p>电源类型</p>
+                <div class="select-head" v-on:click.stop="powerTypeDown">
+                  <p><span>{{powerTypePrompt}}</span>{{powerTypeName}}</p>
+                  <img :src="IconDropDown">
                 </div>
-                <div>
-                  <p>备注</p>
-                  <input type="text" id="Note">
+                <div v-show="powerTypeShowSelect" class="option">
+                  <div class="option-list" v-for="(powerType, index) in powerTypeList" @click.stop="powerTypeSelect(powerType)" :key="index">
+                    {{powerType.PowerType}}
+                  </div>
                 </div>
+              </div>  
+            </div>
+          </div>
+          <div class="main-content-list">
+            <div>
+              <div>
+                <span>03</span>
+              </div>
+              <div>
+                <p>备注</p>
+                <input type="text" id="Note">
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -157,6 +157,7 @@ export default {
       powerTypePrompt: '请选择电源类型',
       powerTypeShowSelect: false,
       powerTypeName: '',
+
     }
   },
   mounted: function() {
@@ -195,7 +196,7 @@ export default {
       let HardwareSerialNumber = $("#HardwareSerialNumber").val();
       let InstallationSite = $("#InstallationSite").val();
       let AssociationMeter = $("#AssociationMeter").val();
-      let PowerType = $("#PowerType").val();
+      let PowerType = this.powerTypeName
       let Note = $("#Note").val();
 
       if (!CommunicationNumber) {
@@ -228,24 +229,24 @@ export default {
           })
           .catch(error => {
             console.log(error);
-          });
-
-        this.$ajax({
-          method: "post",
-          url: "/watermeter/add/collect",
-          data: {
-            CommunicationNumber: CommunicationNumber,
-            DrawingNumber: this.DrawingNumber
-          }
-        })
-          .then(response => {
-            if (response) {
-              // alert("aa")
-            }
           })
-          .catch(error => {
-            console.log(error)
-          });
+
+        // this.$ajax({
+        //   method: "post",
+        //   url: "/watermeter/add/collect",
+        //   data: {
+        //     CommunicationNumber: CommunicationNumber,
+        //     DrawingNumber: this.DrawingNumber
+        //   }
+        // })
+        //   .then(response => {
+        //     if (response) {
+        //       // alert("aa")
+        //     }
+        //   })
+        //   .catch(error => {
+        //     console.log(error)
+        //   })
       }
     },
     selectAssociation: function() {

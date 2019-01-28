@@ -23,8 +23,8 @@
               <th class="row-1"></th>
               <th class="row-2">通讯编号</th>
               <th class="row-4">硬件编号</th>
-              <th class="row-4">安装位置</th>
-              <th class="row-5">关联表具</th>
+              <th class="row-6">安装位置</th>
+              <th class="row-2">挂载数量</th>
               <!-- <th class="row-1" align="right">系数</th>
               <th class="row-1" align="right">管径</th>
               <th class="row-1" align="right">表级</th> -->
@@ -37,8 +37,8 @@
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <th class="row-5 row-empty"></th>
+              <td class="row-6 row-empty"></td>
+              <th class="row-2 row-empty"></th>
               <!-- <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td> -->
@@ -52,7 +52,7 @@
                 <div
                   :class="{'radioChecked':ind === index}"
                   class="radioCheck"
-                  @click="selectRadio(WaterCollect.CommunicationNumber,index)"
+                  @click="selectRadio(WaterCollect.CommunicationNumber, index, WaterCollect.MeterID)"
                 ></div>
               </td>
               <td class="row-1 text-bottom">{{addPreZero(index + 1)}}</td>
@@ -62,10 +62,10 @@
               <td class="row-4 text-bottom text-border">
                 <span>{{WaterCollect.HardwareSerialNumber}}</span>
               </td>
-              <td class="row-4 text-bottom">
+              <td class="row-6 text-bottom">
                 <span>{{WaterCollect.InstallationSite}}</span>
               </td>
-              <td class="row-5 text-bottom">
+              <td class="row-2 text-bottom">
                 <span>{{WaterCollect.AssociationMeter}}</span>
               </td>
             </tr>
@@ -76,8 +76,8 @@
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-5 row-empty"></td>
+              <td class="row-6 row-empty"></td>
+              <td class="row-2 row-empty"></td>
             </tr>
           </tbody>
           <tbody v-else>
@@ -87,8 +87,8 @@
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <th class="row-5 row-empty"></th>
+              <td class="row-6 row-empty"></td>
+              <th class="row-2 row-empty"></th>
             </tr>
             <!-- Nothing more... -->
             <tr v-for="(WaterCollect, index) in WaterCollectList" :key="index">
@@ -99,7 +99,7 @@
                 <div
                   :class="{'radioChecked':ind === index}"
                   class="radioCheck"
-                  @click="selectRadio(WaterCollect.CommunicationNumber,index)"
+                  @click="selectRadio(WaterCollect.CommunicationNumber,index,WaterCollect.MeterID)"
                 ></div>
               </td>
               <td class="row-1 text-bottom">{{addPreZero(index + 1)}}</td>
@@ -109,10 +109,10 @@
               <td class="row-4 text-bottom text-border">
                 <span>{{WaterCollect.HardwareSerialNumber}}</span>
               </td>
-              <td class="row-4 text-bottom">
+              <td class="row-6 text-bottom">
                 <span>{{WaterCollect.InstallationSite}}</span>
               </td>
-              <td class="row-5 text-bottom">
+              <td class="row-2 text-bottom">
                 <span>{{WaterCollect.AssociationMeter}}</span>
               </td>
             </tr>
@@ -123,8 +123,8 @@
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-5 row-empty"></td>
+              <td class="row-6 row-empty"></td>
+              <td class="row-2 row-empty"></td>
             </tr>
           </tbody>
         </table>
@@ -188,6 +188,8 @@ export default {
       searchVal: "",
       DrawingNumber: "",
       AssociationCollect: "",
+      checkCN: "",
+      checkID: "",
 
       IconAdd,
       IconBack,
@@ -215,7 +217,7 @@ export default {
   methods: {
     // 补零
     addPreZero(index) {
-      return ("00" + index).slice(-3);
+      return ("00" + index).slice(-3)
     },
     // 点击修改
     alter(index) {
@@ -223,59 +225,65 @@ export default {
         "/WaterCollect/alter?DrawingNumber=" + this.WaterCollectList[index].DrawingNumber
       )
     },
-    // 添加新设备
-    selectRadio: function(DN, IN) {
+    selectRadio: function(checkCN, IN, checkID) {
       // Bus.$emit('val', DN)
-      this.ind = IN;
-      this.check = DN;
+      this.checkCN = checkCN
+      this.ind = IN
+      this.checkID = checkID
     },
-    addNewMeter: function() {
+    // 添加新设备
+     addNewMeter: function() {
       this.$router.push({
         path: "/watercollect/add"
         // query: { id: this.ind, dn: this.check }
-      });
+      })
     },
     // 详情页
     detail: function() {
-      if (this.check == "") {
-        alert("请选择一个表具进行查看");
-        return;
+      if (this.checkID == "") {
+        alert("请选择一个表具进行查看")
+        return
       } else {
         // location.href = '/#/WaterCollect/detail/' + this.select
         this.$router.push({
-          path: "/WaterCollect/detail/",
-          query: { id: this.ind, dn: this.check }
-        });
+          path: "/watercollect/detail/",
+          query: { id: this.checkID }
+        })
       }
     },
     // 修改
     edit: function() {
-      if (this.check == "") {
+      if (this.checkID == "") {
         alert("请选择一个表具进行修改");
-        return;
+        return
       } else {
         this.$router.push({
           path: "/WaterCollect/edit/",
-          query: { id: this.ind, dn: this.check }
-        });
+          query: {id: this.checkID }
+          //  id: this.ind, 
+        })
       }
     },
     // 删除
     del: function() {
-      this.$ajax({
+      if(this.checkID !== '') {
+        this.$ajax({
         method: "post",
-        url: "/WaterCollect/del",
+        url: "/watercollect/delete",
         data: {
-          DelData: this.check
+          delID: this.checkID
         }
       })
         .then(response => {
-          alert("删除成功");
-          location.reload();
+          alert("删除成功")
+          this.$router.go(0)
         })
         .catch(error => {
-          console.log(error);
-        });
+          console.log(error)
+        })
+      }else {
+        alert('请选择一个表具')
+      }
     },
     // 返回上一页
     // backPage: function() {
@@ -307,109 +315,13 @@ export default {
           WaterCollectListArr.push(this.WaterCollectList[i])
         }
       }
-      return WaterCollectListArr;
+      return WaterCollectListArr
     }
   }
 }
 </script>
 
 <style>
-table > tbody > tr > td:nth-child(n + 7) span,
-table > thead > tr > th:nth-child(n + 7) {
-  padding-right: 24px;
-}
 
-.water-meter-name {
-  font-weight: bolder;
-}
-
-.water-meter-note {
-  color: var(--gray-text);
-}
-
-.empty-list {
-  font-size: 1rem;
-  color: var(--prompt);
-}
-
-/* .icon {
-  width: 18px;
-  height: 18px;
-}
-
-.alter img {
-  color: #294cb0;
-  cursor: pointer;
-  border-bottom: none;
-} */
-
-/* input[type=radio] + span {
-  display: inline-block;
-  height: 16px;
-  width: 16px;
-  border-radius: 8px;
-  background-color: var(--gray);
-  vertical-align: middle;
-}
-
-label:hover{
-  border-bottom: none;
-}
-
-input[type=radio]:checked + span {
-  background-color: var(--black);
-} */
-
-.radioCheck {
-  display: inline-block;
-  height: 16px;
-  width: 16px;
-  border-radius: 8px;
-  background-color: var(--gray);
-  vertical-align: middle;
-}
-
-.radioCheck:hover {
-  border-bottom: none;
-  cursor: pointer;
-}
-
-.radioChecked {
-  background-color: var(--black) !important;
-}
-
-.button-normal-margin {
-  margin-bottom: 24px;
-}
-
-/* 搜索 */
-.search {
-  display: flex;
-  /* justify-content: flex-start;
-  align-items: center; */
-  margin-bottom: 8px;
-}
-
-.search input {
-  min-width: 312px;
-  border: 0px;
-  outline: none;
-  height: 32px;
-  font-size: 1.375rem;
-  line-height: 32px;
-  caret-color: var(--black);
-  vertical-align: bottom;
-}
-
-.search img{
-  width: 32px;
-}
-
-.search button {
-  height: 32px;
-  border: none;
-  /* background-color: var(--white); */
-  padding: 0 8px;
-}
 </style>
 
