@@ -626,46 +626,5 @@ export default {
 </script>
 
 <style>
-.select-head {
-  box-sizing: border-box;
-  line-height: 23px;
-  width: 60%;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--gray);
-}
 
-.select-head > p > span:first-child, .select-head > p > span:last-child {
-  color: var(--input);
-}
-
-.select-head > p > span:last-child {
-  font-weight: bolder;
-  color: var(--black);
-}
-
-.select-head + div {
-  padding: 8px 0;
-  text-indent: 12px;
-  width: 60%;
-  color: black;
-  line-height: 23px;
-  background-color: var(--lightGrey);
-}
-
-.select-head + div > div {
-  margin-top: 4px;
-  vertical-align: bottom;
-  border-bottom: 1px var(--lightGrey) solid;
-  font-weight: bolder;
-}
-
-.select-head + div > div:hover {
-  border-bottom: 1px var(--black) solid;
-}
-
-/* .text-border{
-  font-weight: bolder;
-  color: var(--black);
-} */
 </style>

@@ -2,95 +2,128 @@
   <div class="wrapper">
     <div class="wrapper-content">
       <Header>
-        <div class="search" slot="search">
-          <img :src="IconSearch">
-          <input
-            type="text"
+        <div slot="search" class="search">
+          <div>
+            <img :src="IconSearch">
+          </div>
+          <input type="text"
             autocomplete="off"
-            class="search-box"
             placeholder="通过图纸编号搜索EMB..."
             v-model="searchVal"
           >
-          <!-- <button type="submit">搜索</button> -->
         </div>
+        <div class="add-button" slot="add-button" @click="addNewMeter">
+          <div>
+            <img :src="IconAdd" title="新增">
+          </div>
+          <span>添加设备</span>
+        </div>
+        <div class="detail-button" slot="detail-button" @click="detail">
+          <div>
+            <img :src="IconDetail" title="详情">
+          </div>
+          <span>详细信息</span>
+        </div>
+        <div class="edit-button" slot="edit-button" @click="edit">
+          <div>
+            <img :src="IconEdit" title="修改">
+          </div>
+          <span>修改</span>
+        </div>
+        <div class="delete-button" slot="delete-button" @click="del">
+          <div>
+            <img :src="IconDel" title="删除">
+          </div>
+          <span>删除</span>
+        </div>
+        
       </Header>
       <div>
         <table>
           <thead>
             <tr>
-              <th class="row-4">备注</th>
+              <!-- <th class="row-3">备注</th> -->
               <th class="row-1" align="center"></th>
-              <th class="row-1"></th>
-              <th class="row-2">图纸编号</th>
-              <th class="row-4">表具名称</th>
-              <th class="row-4">安装位置</th>
-              <th class="row-1">关联采集</th>
-              <th class="row-1" align="right">表级</th>
-              <th class="row-1" align="right">系数</th>
-              <th class="row-1" align="right">管径</th>
+              <th class="row-1 table-dividers"></th>
+              <th class="row-2 table-dividers"><span>图纸编号</span></th>
+              <th class="row-4 table-dividers"><span>表具名称</span></th>
+              <th class="row-4 table-dividers"><span>安装位置</span></th>
+              <th class="row-2 table-dividers"><span>关联采集</span></th>
+              <th class="row-2 table-dividers"><span>电源</span></th>
+              <th class="row-1 table-dividers" align="right"><span>表级</span></th>
+              <th class="row-1 table-dividers" align="right"><span>系数</span></th>
+              <th class="row-1 table-dividers" align="right"><span>管径</span></th>
+              <th class="row-1" align="right"><span>状态</span></th>
             </tr>
           </thead>
           <tbody v-if="searchVal">
             <tr>
-              <td class="row-4 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <th class="row-1 row-empty"></th>
+              <td class="row-2 row-empty"></td>
+              <td class="row-2 row-empty"></td>
+              <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
             </tr>
             <!-- Nothing more... -->
-            <tr v-for="(WaterMeter, index) in search" :key="index">
-              <td class="row-4 text-gray" v-bind:title="WaterMeter.Note">
-                <span>{{WaterMeter.Note}}</span>
-              </td>
+            <tr v-for="(WaterMeter, index) in search" :key="index" @click="selectRadio(WaterMeter.drawingcode,index,WaterMeter.id)">
+              <!-- <td class="row-3 text-gray" v-bind:title="WaterMeter.remark">
+                <span>{{WaterMeter.remark}}</span>
+              </td> -->
               <td class="row-1" align="center">
-                <!-- <label>
-                <input class="radio" type="radio" value="index" @click='selectRadio(WaterMeter.DrawingNumber)' hidden>
-                <span></span>
-                <span class="radioCheck" :class="{'radioChecked':ind === index}"></span>
-                </label>-->
                 <div
                   :class="{'radioChecked':ind === index}"
                   class="radioCheck"
-                  @click="selectRadio(WaterMeter.DrawingNumber,index,WaterMeter.MeterID)"
+                  
                 ></div>
               </td>
-              <td class="row-1 text-bottom">{{addPreZero(index + 1)}}</td>
+              <td class="row-1 text-bottom">
+                <span>{{addPreZero(index + 1)}}</span>
+              </td>
               <td class="row-2 text-bottom text-border">
-                <span>{{WaterMeter.DrawingNumber}}</span>
+                <span>{{WaterMeter.drawingcode}}</span>
               </td>
               <td class="row-4 text-bottom text-border">
-                <span>{{WaterMeter.WaterMeterName}}</span>
+                <span>{{WaterMeter.name}}</span>
               </td>
               <td class="row-4 text-bottom">
-                <span>{{WaterMeter.InstallationSite}}</span>
+                <span>{{WaterMeter.site}}</span>
               </td>
-              <td class="row-1 text-bottom">
-                <span>{{WaterMeter.AssociationCollect}}</span>
+              <td class="row-2 text-bottom">
+                <span>{{WaterMeter.relevance}}</span>
+              </td>
+              <td class="row-2 text-bottom">
+                <span>{{WaterMeter.supply}}</span>
+              </td>
+               <td class="row-1 text-bottom" align="right">
+                <span>{{WaterMeter.level}}</span>
               </td>
               <td class="row-1 text-bottom" align="right">
-                <span>{{WaterMeter.WaterMeterLevel}}</span>
+                <span>{{WaterMeter.coefficient}}</span>
               </td>
               <td class="row-1 text-bottom" align="right">
-                <span>{{WaterMeter.Coefficient}}</span>
+                <span>{{WaterMeter.diameter}}</span>
               </td>
               <td class="row-1 text-bottom" align="right">
-                <span>{{WaterMeter.PipeDiameter}}</span>
+                <span v-if="WaterMeter.state == 0">激活</span>
+                <span v-else-if="WaterMeter.state == 1">停用</span>
+                <span v-else-if="WaterMeter.state == 2">删除</span>
               </td>
             </tr>
             <!-- Nothing more... -->
             <tr>
-              <td class="row-4 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
               <td class="row-4 row-empty"></td>
+              <td class="row-2 row-empty"></td>
+              <td class="row-2 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
@@ -98,83 +131,85 @@
             </tr>
           </tbody>
           <tbody v-else>
-            <tr>
-              <td class="row-4 row-empty"></td>
+            <!-- <tr>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
               <td class="row-4 row-empty"></td>
-              <th class="row-1 row-empty"></th>
+              <td class="row-2 row-empty"></td>
+              <td class="row-2 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
-            </tr>
+              <td class="row-1 row-empty"></td>
+            </tr> -->
             <!-- Nothing more... -->
-            <tr v-for="(WaterMeter, index) in WaterMeterList" :key="index">
-              <td class="row-4 text-gray" v-bind:title="WaterMeter.Note">
-                <span>{{WaterMeter.Note}}</span>
-              </td>
+            <tr v-for="(WaterMeter, index) in WaterMeterList" :key="index" @click="selectRadio(WaterMeter.drawingcode,index,WaterMeter.id)">
+              <!-- <td class="row-3 text-gray" v-bind:title="WaterMeter.remark">
+                <span>{{WaterMeter.remark}}</span>
+              </td> -->
               <td class="row-1" align="center">
-                <!-- <label>
-                  <input class="radio" type="radio" value="index" @click='selectRadio(WaterMeter.DrawingNumber)' hidden>
-                  <span></span>
-                  <span class="radioCheck" :class="{'radioChecked':ind === index}"></span>
-                </label>-->
                 <div
                   :class="{'radioChecked':ind === index}"
                   class="radioCheck"
-                  @click="selectRadio(WaterMeter.DrawingNumber,index,WaterMeter.MeterID)"
+                  
                 ></div>
               </td>
               <td class="row-1 text-bottom">
-                {{addPreZero(index + 1)}}
+                <span>{{addPreZero(index + 1)}}</span>
               </td>
-              <td class="row-2 text-bottom text-border">
-                <span>{{WaterMeter.DrawingNumber}}</span>
+              <td class="row-2 text-border">
+                <span>{{WaterMeter.drawingcode}}</span>
               </td>
-              <td class="row-4 text-bottom text-border">
-                <span>{{WaterMeter.WaterMeterName}}</span>
+              <td class="row-4 text-border">
+                <span>{{WaterMeter.name}}</span>
               </td>
-              <td class="row-4 text-bottom">
-                <span>{{WaterMeter.InstallationSite}}</span>
+              <td class="row-4">
+                <span>{{WaterMeter.site}}</span>
               </td>
-              <td class="row-1 text-bottom">
-                <span>{{WaterMeter.AssociationCollect}}</span>
+              <td class="row-2">
+                <span>{{WaterMeter.relevance}}</span>
               </td>
-               <td class="row-1 text-bottom" align="right">
-                <span>{{WaterMeter.WaterMeterLevel}}</span>
+              <td class="row-2">
+                <span>{{WaterMeter.supply}}</span>
+              </td>
+               <td class="row-1" align="right">
+                <span>{{WaterMeter.level}}</span>
+              </td>
+              <td class="row-1" align="right">
+                <span>{{WaterMeter.coefficient}}</span>
               </td>
               <td class="row-1 text-bottom" align="right">
-                <span>{{WaterMeter.Coefficient}}</span>
+                <span>{{WaterMeter.diameter}}</span>
               </td>
               <td class="row-1 text-bottom" align="right">
-                <span>{{WaterMeter.PipeDiameter}}</span>
+                <span v-if="WaterMeter.state == 0">激活</span>
+                <span v-else-if="WaterMeter.state == 1">停用</span>
+                <span v-else-if="WaterMeter.state == 2">删除</span>
               </td>
-              <!-- <td class="row-1 alter" align="right" @click.stop='alter(index)'>
-                <img class="alter" align="AbsMiddle" v-bind:src="edit" v-bind:title="Operation"/>
-              </td>-->
             </tr>
             <!-- Nothing more... -->
-            <tr>
-              <td class="row-4 row-empty"></td>
+            <!-- <tr>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-2 row-empty"></td>
               <td class="row-4 row-empty"></td>
               <td class="row-4 row-empty"></td>
+              <td class="row-2 row-empty"></td>
+              <td class="row-2 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
               <td class="row-1 row-empty"></td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
     </div>
-    <RightBar>
+    <!-- <RightBar>
       <img slot="add-button" class="button-normal" :src="IconAdd" @click="addNewMeter" title="新增">
-      <!-- <img slot="back-button" class="button-normal" :src="IconBack" @click="backPage" title="返回上一页"> -->
+      <img slot="back-button" class="button-normal" :src="IconBack" @click="backPage" title="返回上一页">
       <img
         slot="detail-button"
         class="button-normal button-normal-margin"
@@ -196,20 +231,20 @@
         @click="del"
         title="删除"
       >
-    </RightBar>
+    </RightBar> -->
   </div>
 </template>
 
 <script>
 import Header from "./header.vue"
-import RightBar from "./rightbar.vue"
+// import RightBar from "./rightbar.vue"
 
-import IconAdd from "../assets/add@32x32_black.png"
+import IconAdd from "../assets/add@24x24_gray.png"
 import IconBack from "../assets/back@32x32_black.png"
-import IconDetail from "../assets/detail@32x32_black.png"
-import IconEdit from "../assets/edit@32x32_black.png"
-import IconDel from "../assets/del@32x32_black.png"
-import IconSearch from "../assets/search@32x32_black.png"
+import IconDetail from "../assets/detail@24x24_gray.png"
+import IconEdit from "../assets/edit@24x24_gray.png"
+import IconDel from "../assets/del@24x24_gray.png"
+import IconSearch from "../assets/search@24x24_gray.png"
 
 import Bus from "../static/bus.js"
 import $ from "../static/jquery-vendor.js"
@@ -217,7 +252,7 @@ import $ from "../static/jquery-vendor.js"
 export default {
   components: {
     Header,
-    RightBar
+    // RightBar,
   },
   data() {
     return {
@@ -237,7 +272,7 @@ export default {
       IconDetail,
       IconEdit,
       IconDel,
-      IconSearch
+      IconSearch,
     }
   },
 
@@ -264,11 +299,11 @@ export default {
   mounted: function() {
     this.$ajax({
       method: "post",
-      url: "/watermeter"
+      url: "/watermeter/a"
       // data: {}
     })
       .then(response => {
-        this.WaterMeterList = response.data;
+        this.WaterMeterList = response.data
         // console.log(this.WaterMeterList)
       })
       .catch(error => {
@@ -279,16 +314,16 @@ export default {
   methods: {
     // 补零
     addPreZero(index) {
-      return ("00" + index).slice(-3);
+      return ("00" + index).slice(-3)
     },
-    // 点击修改
-    alter(index) {
-      alert(
-        "/watermeter/alter?DrawingNumber=" +
-          this.WaterMeterList[index].DrawingNumber
-      );
-      // location.href = '/watermeter' + window.location.search + '?DrawingNumber=' + this.WaterMeterList[index].DrawingNumber
-    },
+    // // 点击修改
+    // alter(index) {
+    //   alert(
+    //     "/watermeter/alter?DrawingNumber=" +
+    //       this.WaterMeterList[index].DrawingNumber
+    //   );
+    //   // location.href = '/watermeter' + window.location.search + '?DrawingNumber=' + this.WaterMeterList[index].DrawingNumber
+    // },
     // 鼠标移入修改
     // enterAlter(index) {
     //   this.isActive = index
@@ -299,45 +334,47 @@ export default {
     //   // location.href = '/#/watermeter/detail/' + this.WaterMeterList[index].DrawingNumber
     //   // this.ind = index
     // },
-    // 添加新设备
+    
     selectRadio: function(DN, IN, ID) {
       // Bus.$emit('val', DN)
       this.ind = IN
       this.check = DN
       this.checkID = ID
     },
+
+    // 添加新设备
     addNewMeter: function() {
       this.$router.push({
         path: "/watermeter/add/"
-        // query: { id: this.ind, dn: this.check }
-      });
+      })
     },
+
     // 详情页
     detail: function() {
-      if (this.checkID == "") {
+      if (this.check == "") {
         alert("请选择一个表具进行查看")
-        return;
+        return
       } else {
-        // location.href = '/#/watermeter/detail/' + this.select
         this.$router.push({
           path: '/watermeter/detail',
-          query: { id: this.checkID }
-          // id: this.ind, 
+          query: { drawingcode: this.check }
         })
       }
     },
+
     // 修改
     edit: function() {
-      if (this.checkID == "") {
+      if (this.check == "") {
         alert("请选择一个表具进行修改");
-        return;
+        return
       } else {
         this.$router.push({
           path: '/watermeter/edit/',
-          query: { id: this.checkID }
+          query: { drawingcode: this.check }
         })
       }
     },
+
     // 删除
     del: function() {
       if(this.checkID !== ''){
@@ -345,7 +382,8 @@ export default {
         method: "post",
         url: "/watermeter/del",
         data: {
-          delID: this.checkID
+          delID: this.checkID,
+          state: "2",
         }
       })
         .then(response => {
@@ -359,10 +397,6 @@ export default {
         alert('请选择一个表具')
       }
     },
-    // 返回上一页
-    // backPage: function() {
-    //   this.$router.go(-1)
-    // }
   },
   computed: {
     // 逻辑-->升序降序排列  false: 默认从小到大  true：默认从大到小
@@ -383,19 +417,22 @@ export default {
       var waterMeterListArr = []
       for (var i = 0; i < this.WaterMeterList.length; i++) {
         // for循环数据中的每一项（根据name值）
-        if (this.WaterMeterList[i].DrawingNumber.indexOf(this.searchVal.toUpperCase()) != -1) {
+        if (this.WaterMeterList[i].drawingcode.indexOf(this.searchVal.toUpperCase()) != -1) {
           // 判断输入框中的值是否可以匹配到数据，如果匹配成功
           // 向空数组中添加数据
           waterMeterListArr.push(this.WaterMeterList[i])
         }
       }
-      return waterMeterListArr;
+      return waterMeterListArr
     }
   }
 }
 </script>
 
 <style>
-
+.table-dividers {
+  margin-right: 8px;
+  border-right: 2px solid #eee;
+}
 </style>
 

@@ -1,18 +1,29 @@
 <template> 
-  <div class="title">
-    <div class="title-area">
+  <div class="header">
+    <div class="screening-area">
       <div>
+
+      </div>
+      <!-- <div>
+        <p></p>
         <p class="title-time">{{currentDateHours}}:{{currentDateMinutes}}&nbsp;{{ampm}}</p>
         <p>{{currentDateWeek + '.'}}</p>
         <p>{{currentDateYear}}</p>
-        <!-- <p>{{Time}}</p> -->
+      </div>     -->
+    </div>
+    <div class="title-area">
+      <slot name="title-area"></slot>
+    </div>
+    <div class="fun-area">
+      <div>
+        <slot name="search"></slot>
       </div>
-      <slot name="search"></slot>
-      <!-- <div class="search">
-        <input type="text" autocomplete="off" class="search-box" placeholder="通过以下方式搜索EMB...">
-        <button type="submit" >搜索</button>
-      </div> -->
-      <slot name="watercollect"></slot>
+      <div class="fun-item">
+        <slot name="add-button"></slot>
+        <slot name="detail-button" class="action-button"></slot>
+        <slot name="edit-button" class="action-button"></slot>
+        <slot name="delete-button" class="action-button"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -78,16 +89,34 @@ export default {
 </script>
 
 <style>
-.title {
-  border-bottom: 2px solid var(--black);
-  /* padding: 0 12px 0 8px; */
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+}
+
+.screening-area {
+  height: 64px;
+  background-color: rgb(107,53,251);
+  z-index: 200;
+}
+
+.screening-area > div:first-child {
+  width: 100%;
+  height: 8px;
+  background-color: rgb(255,255,255);
+}
+
+.title-area {
+  height: 64px;
+  margin: 0 40px;
 }
 
 .title-area{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 166px;
   color: var(--black)
 }
 
@@ -95,12 +124,22 @@ export default {
   margin-top: 8px;
 }
 
-.title-area p{
+.title-area > div:first-child > p{
   height: 20px;
   line-height: 20px;
 }
 
 .title-time{
   font-weight: bolder;
+}
+
+.fun-area {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 40px;
+}
+
+.fun-item {
+  display: flex;
 }
 </style>

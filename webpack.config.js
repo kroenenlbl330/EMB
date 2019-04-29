@@ -59,7 +59,8 @@ module.exports = {
 
   //标准入口配置
   entry: {
-    index: './src/pages/index/index.js',//不写index: 'xxxxxx'，那入口名称的话默认为main
+    home: './src/pages/home/home.js',//不写index: 'xxxxxx'，那入口名称的话默认为main
+    login: './src/pages/login/login.js',
     school: './src/pages/school/school.js',
     main: './src/pages/main/main.js'
   },
@@ -83,8 +84,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: 'index/index.html',//生成内存中的文件名称
-      template: './src/pages/index/index.html',//源文件; path.join(__dirname,'')代表根目录
+      filename: 'home/home.html',//生成内存中的文件名称
+      template: './src/pages/home/home.html',//源文件; path.join(__dirname,'')代表根目录
       // title: 'test_title',
       // hash: true,
       // minify: {
@@ -92,7 +93,13 @@ module.exports = {
       //     collapseWhitespace: true     折成一行
       // }压缩设置
       inject: 'body', //可以选择插入在body或head中
-      chunks: ['index']//将index.js引入html
+      chunks: ['home']//将index.js引入html
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'login/login.html',
+      template: './src/pages/login/login.html',
+      inject: 'body',
+      chunks: ['login']
     }),
     new HtmlWebpackPlugin({
       filename: 'school/school.html',

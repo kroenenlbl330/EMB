@@ -129,7 +129,7 @@ import RightBar from "./rightbar.vue"
 import IconBack from "../assets/back@32x32_black.png"
 import IconSave from "../assets/save@32x32_black.png"
 import IconAddSmall from "../assets/add_small@22x22_black.png"
-import IconSearch from "../assets/search@32x32_black.png"
+import IconSearch from "../assets/search@24x24_gray.png"
 import IconDropDown from "../assets/drop-down@24x24_black.png";
 
 import $ from "../static/jquery-vendor.js"

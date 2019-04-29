@@ -52,8 +52,8 @@ export default {
 <style>
 .right-bar {
   min-width: 48px;
-  height: 938px;
-  border-left: 2px solid var(--black);
+  height: 936px;
+  /* border-left: 2px solid var(--black); */
   background-color: var(--gray);
 }
 

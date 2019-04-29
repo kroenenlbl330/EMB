@@ -3,19 +3,19 @@ var mysql = require('mysql')
 
 var db = mysql.createPool(dbconfig.mysql)
 
-// 查询coefficient表中水的系数
+// 查询meter_coefficient表中水的系数
 exports.getCoefficient = function(req,res,callback){
   db.getConnection(function (err, connection) {
-      db.query(`SELECT * FROM coefficient WHERE Type='0'`, function (err, result) {
+      db.query(`SELECT * FROM meter_coefficient`, function (err, result) {
           callback(err,result)
           connection.release()
       })
   })
 }
-// 查询pipediameter表
-exports.getPipeDiameter = function(req,res,callback){
+// 查询meter_diameter表
+exports.getDiameter = function(req,res,callback){
   db.getConnection(function (err, connection) {
-      db.query(`SELECT * FROM pipediameter`, function (err, result) {
+      db.query(`SELECT * FROM meter_diameter`, function (err, result) {
           callback(err,result)
           connection.release()
       })
@@ -53,7 +53,7 @@ exports.getSubordinateDepartments = function(req,res,callback){
 exports.selectWaterMeterLevel = function(req,res,callback){
   // console.log(req.body.WaterMeterLevelMinusOne)
   db.getConnection(function (err, connection) {
-      db.query(`SELECT * FROM watermeterlevel`, function (err, result) {
+      db.query(`SELECT * FROM meter_level`, function (err, result) {
           callback(err,result)
           connection.release()
       })

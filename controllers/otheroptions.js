@@ -4,9 +4,9 @@ const Model = require('../models/otheroptions.js')
 module.exports = function(){
   var router = express.Router();
 
-  router.get('/',function(req,res){
-    res.render('main/main')
-  })
+  // router.get('/',function(req,res){
+  //   res.render('main/main')
+  // })
 
   router.post('/watermeter/select/watermeterlevel', function (req, res){
     Model.selectWaterMeterLevel(req, res, function (err, result) {
@@ -18,7 +18,7 @@ module.exports = function(){
     }) 
   })
 
-  router.post('/watermeter/coefficient', function (req, res){
+  router.post('/watermeter/getcoefficient', function (req, res){
     Model.getCoefficient(req, res, function (err, result) {
       if(err){
         res.status(404).send('error')
@@ -28,12 +28,12 @@ module.exports = function(){
     }) 
   })
   
-  router.post('/watermeter/pipediameter', function (req, res){   
-    Model.getPipeDiameter(req, res, function (err, result) {
+  router.post('/watermeter/getdiameter', function (req, res){   
+    Model.getDiameter(req, res, function (err, result) {
       if(err){
         res.status(404).send('error')
       }else{
-        res.status(200).send(result)  
+        res.status(200).send(result)
       }
     }) 
   })

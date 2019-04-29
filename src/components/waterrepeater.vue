@@ -156,12 +156,12 @@
 import Header from "./header.vue"
 import RightBar from "./rightbar.vue"
 
-import IconAdd from "../assets/add@32x32_black.png"
+import IconAdd from "../assets/add@24x24_gray.png"
 import IconBack from "../assets/back@32x32_black.png"
-import IconDetail from "../assets/detail@32x32_black.png"
-import IconEdit from "../assets/edit@32x32_black.png"
-import IconDel from "../assets/del@32x32_black.png"
-import IconSearch from "../assets/search@32x32_black.png"
+import IconDetail from "../assets/detail@24x24_gray.png"
+import IconEdit from "../assets/edit@24x24_gray.png"
+import IconDel from "../assets/del@24x24_gray.png"
+import IconSearch from "../assets/search@24x24_gray.png"
 
 import Bus from "../static/bus.js"
 import $ from "../static/jquery-vendor.js"

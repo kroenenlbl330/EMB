@@ -2,135 +2,144 @@
   <div class="wrapper">
     <div class="wrapper-content">
       <Header>
-        
+        <div class="header-title" slot="search">
+          <p>水表表具设备 -- 表具详情</p>
+        </div>
       </Header>
       <div class="main row-20">
-        <div class="main-title">
+        <!-- <div class="main-title">
           <div>
             <span>水表表具设备-表具详情</span>
           </div>
-        </div>
+        </div> -->
         <div class="main-content">
           <div class="main-content-list">
             <div>
               <div>
-                <span>01</span>
+                <span>能源数据编号</span>
               </div>
               <div>
-                <p>图纸编号</p>
-                <span>{{WaterMeterDetail.DrawingNumber}}</span>
-              </div>
-            </div>
-            <div>
-              <div>
-
-              </div>
-              <div>
-                <p>表具名称</p>
-                <span>{{WaterMeterDetail.WaterMeterName}}</span>
-              </div>
-            </div>
-            <!-- <div>
-              <div>
-
-              </div>
-              <div>
-                <p>关联采集</p>
-                <span>{{WaterMeterDetail.AssociationCollect | empty}}</span>
-              </div>
-            </div> -->
-            <div>
-              <div>
-
-              </div>
-              <div>
-                <p>安装位置</p>
-                <span>{{WaterMeterDetail.InstallationSite | empty}}</span>
+                <span>{{WaterMeterDetail.energycode}}</span>
               </div>
             </div>
             <div>
               <div>
-
+                <span>图纸编号</span>
               </div>
               <div>
-                <p>能源数据编号</p>
-                <span>{{WaterMeterDetail.EnergyCode | empty}}</span>
+                <span>{{WaterMeterDetail.drawingcode}}</span>
               </div>
             </div>
             <div>
               <div>
-
+                <span>表具名称</span>
               </div>
               <div>
-                <p>上级表</p>
-                <span>{{WaterMeterDetail.SuperiorMeter | empty}}</span>
+                <span>{{WaterMeterDetail.name}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>安装位置</span>
+              </div>
+              <div>
+                <span>{{WaterMeterDetail.site}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>关联采集</span>
+              </div>
+              <div>
+                <span>{{WaterMeterDetail.relevance | empty}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>上级表</span>
+              </div>
+              <div>               
+                <span>{{WaterMeterDetail.superior}}</span>
               </div>
             </div>
           </div>
           <div class="main-content-list">
             <div>
               <div>
-                <span>02</span>
+                <span>所属楼宇</span>
               </div>
-              <div>
-                <p>系数</p>
-                <span>{{WaterMeterDetail.Coefficient}}</span>
-              </div>
-            </div>
-            <div>
-              <div>
-
-              </div>
-              <div>
-                <p>管径</p>
-                <span>{{WaterMeterDetail.PipeDiameter}}</span>
+              <div>               
+                <span>{{WaterMeterDetail.build}}</span>
               </div>
             </div>
             <div>
               <div>
-
+                <span>所属部门</span>
               </div>
               <div>
-                <p>表级</p>
-                <span>{{WaterMeterDetail.WaterMeterLevel}}</span>
-              </div>
-            </div>
-            <div>
-              <div>
-
-              </div>
-              <div>
-                <p>电源类型</p>
-                <span>{{WaterMeterDetail.PowerType | empty}}</span>
+                <span>{{WaterMeterDetail.department}}</span>
               </div>
             </div>
             <div>
               <div>
-
+                <span>所属校区</span>
               </div>
-              <div>
-                <p>表具用途</p>
-                <span>{{WaterMeterDetail.MeterUse | empty}}</span>
+              <div>               
+                <span>{{WaterMeterDetail.school}}</span>
               </div>
             </div>
             <div>
               <div>
-
+                <span>用途</span>
               </div>
               <div>
-                <p>所属部门</p>
-                <span>{{WaterMeterDetail.SubordinateDepartments | empty}}</span>
+                <span>{{WaterMeterDetail.purpose}}</span>
               </div>
             </div>
           </div>
           <div class="main-content-list">
             <div>
               <div>
-                <span>03</span>
+                <span>系数</span>
               </div>
               <div>
-                <p>备注</p>
-                <span>{{WaterMeterDetail.Note | empty}}</span>
+                <span>{{WaterMeterDetail.coefficient}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>管径</span>
+              </div>
+              <div>    
+                <span>{{WaterMeterDetail.diameter}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>表级</span>
+              </div>
+              <div>
+                <span>{{WaterMeterDetail.level}}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>电源</span>
+              </div>
+              <div>        
+                <span>{{WaterMeterDetail.supply | empty}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="main-content-list">
+            <div>
+              <div>
+                <span>状态</span>
+              </div>
+              <div>
+                <span v-if="WaterMeterDetail.state == 0">激活</span>
+                <span v-else-if="WaterMeterDetail.state == 1">停用</span>
+                <span v-else-if="WaterMeterDetail.state == 2">删除</span>
               </div>
             </div>
           </div>
@@ -158,7 +167,7 @@ export default {
   data() {
     return {
       WaterMeterDetail: "",
-      checkedID: this.$route.query.id,
+      checkedcode: this.$route.query.drawingcode,
       // index: this.$route.query.id,
 
       IconBack,
@@ -170,7 +179,7 @@ export default {
       method: "post",
       url: "/watermeter/detail",
       data: {
-        checkedID: this.checkedID
+        checkedcode: this.checkedcode
       }
     })
       .then(response => {
@@ -196,7 +205,7 @@ export default {
   },
   filters: {
     empty: function (value) {
-      return value?value:'no more...'
+      return value?value:'...'
     }
   },
   created() {

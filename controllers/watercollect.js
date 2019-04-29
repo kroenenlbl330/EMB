@@ -4,9 +4,9 @@ const Model = require('../models/watercollect.js')
 module.exports = function(){
   var router = express.Router();
 
-  router.get('/',function(req,res){
-    res.render('main/main')
-  })
+  // router.get('/',function(req,res){
+  //   res.render('main/main')
+  // })
 
   router.post('/watercollect', function (req, res){  
     Model.getWaterCollect(req, res, function (err, result) {

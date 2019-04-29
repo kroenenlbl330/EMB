@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Home from '../../components/home.vue'
+
 import WaterMeter from '../../components/watermeter.vue'
 import WaterMeterDetail from '../../components/watermeter.detail.vue'
 import WaterMeterEdit from '../../components/watermeter.edit.vue'
@@ -22,6 +24,12 @@ export default new Router({
   routes: [
     // { path: '*', component: NotFoundComponent },
     //WATERMETER
+    {
+      path: '/home',
+      alias: '/home',
+      name: 'Home',
+      component: Home
+    },
     {
       path: '/',
       alias: '/watermeter',

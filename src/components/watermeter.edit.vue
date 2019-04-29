@@ -2,58 +2,53 @@
   <div class="wrapper">
     <div class="wrapper-content">
       <Header>
-        
+        <div class="header-title" slot="search">
+          <p>水表表具设备 -- 修改表具</p>
+        </div>
       </Header>
       <div class="main row-20">
-        <div class="main-title">
-          <div>
-            <span>水表表具设备-修改表具</span>
-          </div>
-        </div>
         <div class="main-content">
           <div class="main-content-list">
             <div>
               <div>
-                <span>01</span>
+                <span>能源数据编号</span>
               </div>
-              <div>
-                <p>图纸编号</p>
-                <!-- <input type="text" v-model="DrawingNumber" id="DrawingNumber" @blur.prevent="loseFocus()"/> -->
-                <input type="text" v-model="DrawingNumber" id="DrawingNumber"/>
+              <div>      
+                <input type="text" v-model="energycode" id="EnergyCode" value=""/>
               </div>
             </div>
             <div>
               <div>
-
+                <span>图纸编号</span>
               </div>
               <div>
-                <p>表具名称</p>
-                <input type="text" v-model="WaterMeterName" id="WaterMeterName"/>
-              </div>
-            </div>
-            <div>
-              <div>
-
-              </div>
-              <div>
-                <p>安装位置</p>
-                <input type="text" v-model="InstallationSite" id="InstallationSite" value=""/>
+                <input type="text" v-model="drawingcode"/>
               </div>
             </div>
             <div>
               <div>
-                
+                <span>表具名称</span>
               </div>
-              <div>
-                <p>能源数据编号</p>
-                <input type="text" v-model="EnergyCode" id="EnergyCode" value=""/>
+              <div> 
+                <input type="text" v-model="name"/>
               </div>
             </div>
             <div>
-              <div></div>
               <div>
-                <p>上级表</p>
-                <div class="select-head black" v-on:click.stop="selectWaterMeterLevelDown">
+                <span>安装位置</span>
+              </div>
+              <div>      
+                <input type="text" v-model="site" id="site" value=""/>
+              </div>
+            </div>
+          </div>
+          <div class="main-content-list">
+            <div>
+              <div>
+                <span>上级表</span>
+              </div>
+              <div> 
+                <div class="select-head black" v-on:click.stop="funN('selectWaterMeterLevelShowSelect')">
                   <p>
                     <span>{{SuperiorMeter}}&nbsp;&nbsp;{{SuperiorMeterName}}</span>
                     <span>{{selectWaterMeterLevelName}}&nbsp;&nbsp;{{selectWaterMeterLevelMeterName}}</span>
@@ -61,8 +56,65 @@
                   <img :src="IconDropDown">
                 </div>
                 <div v-show="selectWaterMeterLevelShowSelect">
-                  <div v-for="(selectWaterMeterLevel, index) in selectWaterMeterLevelList" @click.stop="selectWaterMeterLevelSelect(selectWaterMeterLevel)" :key="index">
-                    {{selectWaterMeterLevel.DrawingNumber}}&nbsp;&nbsp;{{selectWaterMeterLevel.WaterMeterName}}
+                  <div v-for="(selectWaterMeterLevel, index) in selectWaterMeterLevelList" @click.stop="select('selectWaterMeterLevel',selectWaterMeterLevel)" :key="index">
+                    {{selectWaterMeterLevel}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>所属楼宇</span>
+              </div>
+              <div> 
+                <div class="select-head black" v-on:click.stop="funN('selectWaterMeterLevelShowSelect')">
+                  <p>
+                    <span>{{SuperiorMeter}}&nbsp;&nbsp;{{SuperiorMeterName}}</span>
+                    <span>{{selectWaterMeterLevelName}}&nbsp;&nbsp;{{selectWaterMeterLevelMeterName}}</span>
+                    </p>
+                  <img :src="IconDropDown">
+                </div>
+                <div v-show="selectWaterMeterLevelShowSelect">
+                  <div v-for="(selectWaterMeterLevel, index) in selectWaterMeterLevelList" @click.stop="select('selectWaterMeterLevel',selectWaterMeterLevel)" :key="index">
+                    {{selectWaterMeterLevel}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>所属部门</span>
+              </div>
+              <div> 
+                <div class="select-head black" v-on:click.stop="funN('selectWaterMeterLevelShowSelect')">
+                  <p>
+                    <span>{{SuperiorMeter}}&nbsp;&nbsp;{{SuperiorMeterName}}</span>
+                    <span>{{selectWaterMeterLevelName}}&nbsp;&nbsp;{{selectWaterMeterLevelMeterName}}</span>
+                    </p>
+                  <img :src="IconDropDown">
+                </div>
+                <div v-show="selectWaterMeterLevelShowSelect">
+                  <div v-for="(selectWaterMeterLevel, index) in selectWaterMeterLevelList" @click.stop="select('selectWaterMeterLevel',selectWaterMeterLevel)" :key="index">
+                    {{selectWaterMeterLevel}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>用途</span>
+              </div>
+              <div> 
+                <div class="select-head black" v-on:click.stop="funN('selectWaterMeterLevelShowSelect')">
+                  <p>
+                    <span>{{SuperiorMeter}}&nbsp;&nbsp;{{SuperiorMeterName}}</span>
+                    <span>{{selectWaterMeterLevelName}}&nbsp;&nbsp;{{selectWaterMeterLevelMeterName}}</span>
+                    </p>
+                  <img :src="IconDropDown">
+                </div>
+                <div v-show="selectWaterMeterLevelShowSelect">
+                  <div v-for="(selectWaterMeterLevel, index) in selectWaterMeterLevelList" @click.stop="select('selectWaterMeterLevel',selectWaterMeterLevel)" :key="index">
+                    {{selectWaterMeterLevel}}
                   </div>
                 </div>
               </div>
@@ -71,105 +123,40 @@
           <div class="main-content-list">
             <div>
               <div>
-                <span>02</span>
+                <span>系数</span>
               </div>
-              <div>
-                <p>系数</p>             
-                <div class="select-head black" v-on:click.stop="coefficientDown">
-                  <p>
-                    <span>{{Coefficient}}</span>
-                    <span>{{coefficientName}}</span>
-                    </p>
-                  <img :src="IconDropDown">
-                </div>
-                <div v-show="coefficientShowSelect">
-                  <div v-for="(coefficient, index) in coefficientList" @click.stop="coefficientSelect(coefficient)" :key="index">
-                    {{coefficient.Coefficient}}
-                  </div>
-                </div> 
+              <div>      
+                <input type="text" v-model="coefficient" id="EnergyCode" value=""/>
               </div>
             </div>
             <div>
-              <div></div>
               <div>
-                <p>管径</p>
-                <div class="select-head black" v-on:click.stop="pipeDiameterDown">
-                  <p>
-                    <span>{{PipeDiameter}}</span>
-                    <span>{{pipeDiameterName}}</span>
-                    </p>
-                  <img :src="IconDropDown">
-                </div>
-                <div v-show="pipeDiameterShowSelect">
-                  <div v-for="(pipeDiameter, index) in pipeDiameterList" @click.stop="pipeDiameterSelect(pipeDiameter)" :key="index">
-                    {{pipeDiameter.PipeDiameter}}
-                  </div>
-                </div> 
+                <span>管径</span>
+              </div>
+              <div>      
+                <input type="text" v-model="diameter" id="pipe" value=""/>
               </div>
             </div>
             <div>
-              <div></div>
               <div>
-                <p>电源类型</p>
-                <div class="select-head black" v-on:click.stop="powerTypeDown">
-                  <p>
-                    <span>{{PowerType}}</span>
-                    <span>{{powerTypeName}}</span>
-                  </p>
-                  <img :src="IconDropDown">
-                </div>
-                <div v-show="powerTypeShowSelect">
-                  <div v-for="(powerType, index) in powerTypeList" @click.stop="powerTypeSelect(powerType)" :key="index">
-                    {{powerType.PowerType}}
-                  </div>
-                </div>
+                <span>表级</span>
               </div>
-            </div>
-            <div>
-              <div></div>
-              <div>
-                <p>表具用途</p>
-                <div class="select-head black" v-on:click.stop="meterUseDown">
-                  <p>
-                    <span>{{MeterUse}}</span>
-                    <span>{{meterUseName}}</span>
-                  </p>
-                  <img :src="IconDropDown">
-                </div>
-                <div v-show="meterUseShowSelect">
-                  <div v-for="(meterUse, index) in meterUseList" @click.stop="meterUseSelect(meterUse)" :key="index">
-                    {{meterUse.MeterUse}}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div></div>
-              <div>
-                <p>所属部门</p>
-                <div class="select-head black" v-on:click.stop="subordinateDepartmentsDown">
-                  <p>
-                    <span>{{SubordinateDepartments}}</span>
-                    <span>{{subordinateDepartmentsName}}</span>
-                  </p>
-                  <img :src="IconDropDown">
-                </div>
-                <div v-show="subordinateDepartmentsShowSelect">
-                  <div v-for="(subordinateDepartments, index) in subordinateDepartmentsList" @click.stop="subordinateDepartmentsSelect(subordinateDepartments)" :key="index">
-                    {{subordinateDepartments.SubordinateDepartments}}
-                  </div>
-                </div>
+              <div>      
+                <input type="text" v-model="level" id="level" value=""/>
               </div>
             </div>
           </div>
-          <div class="main-content-list">
+          <div class="main-content-list"><!-- class="main-content-list" -->
             <div>
               <div>
-                <span>03</span>
+                <span>状态</span>
               </div>
-              <div>
-                <p>备注</p>
-                <input type="text" v-model="Note" id="Note" value=""/>
+              <div class="a" >
+                <div v-for="(state, index) in stateList" @click.stop="clickSelect('state', state, index)" :key="index" :class="{'active':ind === index}" >
+                  <span v-if="state == 0">激活</span>
+                  <span v-else-if="state == 1">停用</span>
+                  <span v-else-if="state == 2">删除</span>
+                </div>
               </div>
             </div>
           </div>
@@ -190,6 +177,7 @@ import RightBar from "./rightbar.vue"
 import IconBack from "../assets/back@32x32_black.png"
 import IconSave from "../assets/save@32x32_black.png"
 import IconDropDown from "../assets/drop-down@24x24_black.png"
+import { type } from 'os';
 
 export default {
   components: {
@@ -198,15 +186,17 @@ export default {
   },
   data() {
     return {
-      checkedID: this.$route.query.id,
+      checkedcode: this.$route.query.drawingcode,
       // index: this.$route.query.id,
 
-      DrawingNumber: "",
-      WaterMeterName: "",
+      ind: 0,
+
+      drawingcode: "",
+      metername: "",
       InstallationSite: "",
       AssociationCollect: "",
-      Coefficient: "",
-      PipeDiameter: "",
+      coefficient: "",
+      diameter: "",
       WaterMeterLevel: "",
       EnergyCode: "",
       SuperiorMeter: "",
@@ -220,6 +210,17 @@ export default {
       selectWaterMeterLevelShowSelect: false,
       selectWaterMeterLevelName: '',
       selectWaterMeterLevelMeterName: '',
+
+      diameterMenu: false,
+      diameterList: "",
+      diameterValue: "",
+      levelMenu: false,
+      levelValue: "",
+      coefficientMenu: false,
+      coefficientList: "",
+      stateMenu: false,
+      stateList: ['0', '1', '2'],
+      stateValue: 0,
 
       coefficientPrompt: '请选择系数',
       coefficientShowSelect: false,
@@ -241,12 +242,12 @@ export default {
       subordinateDepartmentsShowSelect: false,
       subordinateDepartmentsName: '',
 
-      selectWaterMeterLevelList: '',
+      levelList: ['1','2','3','4','5','6','2','3','4','5','6'],
+      selectWaterMeterLevelList: ['1','2','3','4','5','6','2','3','4','5','6'],
       meterUseList: "",
       subordinateDepartmentsList: "",
       powerTypeList: "",
       pipeDiameterList: "",
-      coefficientList: "",
 
       IconBack,
       IconSave,
@@ -258,59 +259,34 @@ export default {
       method: "post",
       url: "/watermeter/detail",
       data: {
-        checkedID: this.checkedID
+        checkedcode: this.checkedcode
       }
     })
       .then(response => {
-        this.DrawingNumber = response.data[0].DrawingNumber
-        this.WaterMeterName = response.data[0].WaterMeterName
-        this.InstallationSite = response.data[0].InstallationSite
-        this.AssociationCollect = response.data[0].AssociationCollect
-        this.Coefficient = response.data[0].Coefficient
-        this.PipeDiameter = response.data[0].PipeDiameter
-        this.WaterMeterLevel = response.data[0].WaterMeterLevel
-        this.EnergyCode = response.data[0].EnergyCode
-        this.SuperiorMeter = response.data[0].SuperiorMeter
-        this.SuperiorMeterName = response.data[0].SuperiorMeterName
-        this.PowerType = response.data[0].PowerType
-        this.MeterUse = response.data[0].MeterUse
-        this.SubordinateDepartments = response.data[0].SubordinateDepartments
-        this.Note = response.data[0].Note
-
-        this.$ajax({
-          method: "post",
-          url: "/watermeter/select/watermeterlevel",
-          data: {
-            // WaterMeterLevelMinusOne: ($("#DrawingNumber").val()).substring(1,2)
-            WaterMeterLevelMinusOne: this.WaterMeterLevel - 1
-            // WaterMeterLevelMinusOne: parseInt(this.WaterMeterLevel)
-          }
-        })
-          .then(response => {
-            this.selectWaterMeterLevelList = response.data
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        this.drawingcode = response.data[0].drawingcode
+        this.name = response.data[0].name
+        this.site = response.data[0].site
+        this.energycode = response.data[0].energycode
+        this.relevance = response.data[0].relevance
+        this.coefficient = response.data[0].coefficient
+        this.diameter = response.data[0].diameter
+        this.level = response.data[0].level      
+        this.superior = response.data[0].superior
+        this.department = response.data[0].department
+        this.remark = response.data[0].remark
       })
       .catch(error => {
         console.log(error)
       })
 
     this.$ajax.all([
-      this.$ajax.post('/watermeter/meteruse'),
-      this.$ajax.post('/watermeter/subordinatedepartments'),
-      this.$ajax.post('/watermeter/powertype'),
-      this.$ajax.post('/watermeter/pipediameter'),
-      this.$ajax.post('/watermeter/coefficient'),
+      this.$ajax.post('/watermeter/getdiameter'),
+      this.$ajax.post('/watermeter/getcoefficient')
     ])
-    .then(this.$ajax.spread((meteruse, subordinatedepartments,powertype,pipediameter,coefficient)=> {
-      this.meterUseList = meteruse.data
-      this.subordinateDepartmentsList = subordinatedepartments.data
-      this.powerTypeList = powertype.data
-      this.pipeDiameterList = pipediameter.data
+    .then(this.$ajax.spread((diameter, coefficient)=> {
+      this.diameterList = diameter.data
       this.coefficientList = coefficient.data
-    }))    
+    }))
   },
   methods: {
     backPage: function() {
@@ -384,121 +360,47 @@ export default {
         })
       }
     },
+    
+    dropDown(strMenu) {
+      var arrMenu = [
+        'levelMenu',
+        'stateMenu',
+        'coefficientMenu',
+        'diameterMenu',
+      ]
+      for(let i = 0; i < arrMenu.length; i++){
+        this[arrMenu[i]] = false
 
-    //SelectWaterMeterLevel
-    selectWaterMeterLevelDown() {
-      if(document.querySelector("#DrawingNumber").value == '') {
-        alert('请先填写图纸编号')
-        return  
-      }else {
-        this.selectWaterMeterLevelShowSelect = !this.selectWaterMeterLevelShowSelect
-        this.coefficientShowSelect = false
-        this.pipeDiameterShowSelect = false
-        this.powerTypeShowSelect = false
-        this.meterUseShowSelect = false
-        this.subordinateDepartmentsShowSelect = false
-        //为document添加点击触发removeEvt()
-        document.addEventListener("click",this.removeEvt)
-      }
-    },
-    selectWaterMeterLevelSelect(selectWaterMeterLevel) {
-      this.selectWaterMeterLevelShowSelect = false
-      this.selectWaterMeterLevelName = selectWaterMeterLevel.DrawingNumber
-      this.selectWaterMeterLevelMeterName = selectWaterMeterLevel.WaterMeterName
-      this.SuperiorMeter = ''
-      this.SuperiorMeterName = ''
-    },
-    //Coefficient
-    coefficientDown() {
-      this.coefficientShowSelect = !this.coefficientShowSelect
-      this.pipeDiameterShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
-      this.powerTypeShowSelect = false
-      this.meterUseShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      //为document添加点击触发removeEvt()
+      }    
+      this[strMenu] = !this[strMenu]
       document.addEventListener("click",this.removeEvt)
     },
-    coefficientSelect(coefficient) {
-      this.coefficientShowSelect = false
-      this.coefficientName = coefficient.Coefficient
-      this.Coefficient = ''
-    },
-    //PipeDiameter
-    pipeDiameterDown() {
-      this.pipeDiameterShowSelect = !this.pipeDiameterShowSelect
-      this.coefficientShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
-      this.powerTypeShowSelect = false
-      this.meterUseShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      document.addEventListener("click",this.removeEvt)
-    },
-    pipeDiameterSelect(pipeDiameter) {
-      this.pipeDiameterShowSelect = false
-      this.pipeDiameterName = pipeDiameter.PipeDiameter
-      this.PipeDiameter = ''
-    },
-    //PowerType
-    powerTypeDown() {
-      this.powerTypeShowSelect = !this.powerTypeShowSelect
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
-      this.meterUseShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      document.addEventListener("click",this.removeEvt)
-    },
-    powerTypeSelect(powerType) {
-      this.powerTypeShowSelect = false
-      this.powerTypeName = powerType.PowerType
-      this.PowerType = ''
-    },
-    //MeterUse
-    meterUseDown() {
-      this.meterUseShowSelect = !this.meterUseShowSelect
-      this.powerTypeShowSelect = false
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      document.addEventListener("click",this.removeEvt)
-    },
-    meterUseSelect(meterUse) {
-      this.meterUseShowSelect = false
-      this.meterUseName = meterUse.MeterUse
-      this.MeterUse = ''
-    },
-    //SubordinateDepartments
-    subordinateDepartmentsDown() {
-      this.subordinateDepartmentsShowSelect = !this.subordinateDepartmentsShowSelect
-      this.meterUseShowSelect = false
-      this.powerTypeShowSelect = false
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.selectWaterMeterLevelShowSelect = false
-      document.addEventListener("click",this.removeEvt)
-    },
-    subordinateDepartmentsSelect(subordinateDepartments) {
-      this.subordinateDepartmentsShowSelect = false
-      this.subordinateDepartmentsName = subordinateDepartments.SubordinateDepartments
-      this.SubordinateDepartments = ''
+
+    selectDropDownItem(strItem,item){
+      this[strItem + 'Menu'] = false
+      this[strItem + 'Value'] = item
     },
 
     removeEvt(){
-      //为document移除点击触发removeEvt()
       document.removeEventListener("click",()=>{})
       this.hiedMenu()
     },
     hiedMenu(){
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.waterMeterLevelShowSelect = false
+      this.stateMenu = false
+      this.levelMenu = false
+      this.coefficientMenu = false
+      this.diameterMenu = false
       this.powerTypeShowSelect = false
       this.selectWaterMeterLevelShowSelect = false
       this.subordinateDepartmentsShowSelect = false
       this.meterUseShowSelect = false
     },
+
+
+    clickSelect(strItem,item,index){
+      this[strItem + 'Value'] = item
+      this.ind = index
+    }
   },
   filters: {
     empty: function (value) {
@@ -508,28 +410,6 @@ export default {
   created() {
     this.id = this.$route.query.id
   },
-  // watch: {
-  //   WaterMeterLevel: {
-  //   　　handler(newName, oldName) {
-  //     　　this.$ajax({
-  //         method: "post",
-  //         url: "/watermeter/select/watermeterlevel",
-  //         data: {
-  //           // WaterMeterLevelMinusOne: ($("#DrawingNumber").val()).substring(1,2)
-  //           WaterMeterLevelMinusOne: this.WaterMeterLevel - 1
-  //           // WaterMeterLevelMinusOne: parseInt(this.WaterMeterLevel)
-  //         }
-  //       })
-  //         .then(response => {
-  //           this.selectWaterMeterLevelList = response.data
-  //         })
-  //         .catch(error => {
-  //           console.log(error)
-  //         })
-  //   　　},
-  //   　　immediate: true
-  //   }
-  // } 
 }
 </script>
 
@@ -537,5 +417,30 @@ export default {
 .black > p > span:first-child {
   font-weight: bolder !important;
   color: var(--black) !important;
+}
+
+.a{
+  display: flex;
+  /* justify-content: flex-start; */
+  /* flex-direction: column; */
+}
+
+.a div{
+  width: 64px;
+  background-color: #eee;
+  margin-right: 16px;
+  border-radius: 4px;
+  color: #ccc;
+}
+
+.active{
+  background-color: var(--black) !important;
+  color: var(--white) !important;
+}
+
+.a span{
+  line-height: 32px;
+  display: flex;
+  justify-content: center;
 }
 </style>

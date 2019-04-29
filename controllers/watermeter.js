@@ -4,11 +4,8 @@ const Model = require('../models/watermeter.js')
 module.exports = function(){
   var router = express.Router();
 
-  router.get('/',function(req,res){
-    res.render('main/main')
-  })
 
-  router.post('/watermeter', function (req, res){
+  router.post('/watermeter/a', function (req, res){
     
     Model.getWaterMeter(req, res, function (err, result) {
       if(err){
@@ -24,7 +21,7 @@ module.exports = function(){
 
   router.post('/watermeter/detail', function (req, res){
     
-    Model.getWaterMeterDrawingNumber(req, res, function (err, result) {
+    Model.getMeterDrawingCode(req, res, function (err, result) {
       if(err){
         res.status(404).send('error')
       }else{

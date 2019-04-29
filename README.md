@@ -5,17 +5,3 @@
   alias: {
       jquery: 'src/assets/jquery-vendor.js'
   }   
-
-** 水表表具watermeter **
-WaterMeterName | 表具名称
-InstallationSite | 安装位置
-AssociationCollect | 关联采集器
-Coefficient | 系数
-PipeDiameter | 管径
-WaterMeterLevel | 表级
-Note | 备注
-EnergyCode | 能源编号
-SuperiorMeter | 上级表
-MeterUse | 用途
-SubordinateDepartments | 所属部门
-PowerType | 电源类型

@@ -14,9 +14,9 @@ exports.getWaterMeter = function(req,res,callback){
 }
 
 // 查询watermeter表中的DrawingNunber字段的数据
-exports.getWaterMeterDrawingNumber = function(req,res,callback){
+exports.getMeterDrawingCode = function(req,res,callback){
   db.getConnection(function (err, connection) {
-      db.query(`SELECT * FROM watermeter WHERE MeterID='${req.body.checkedID}'`, function (err, result) {
+      db.query(`SELECT * FROM watermeter WHERE drawingcode='${req.body.checkedcode}'`, function (err, result) {
           callback(err,result)
           connection.release()
       })
@@ -26,7 +26,8 @@ exports.getWaterMeterDrawingNumber = function(req,res,callback){
 // 删除watermeter表中的DrawingNunber字段的数据
 exports.delWaterMeterDrawingNumber = function(req,res,callback){
   db.getConnection(function (err, connection) {
-      db.query(`DELETE FROM watermeter WHERE MeterID='${req.body.delID}'`, function (err, result) {
+      // db.query(`DELETE FROM watermeter WHERE MeterID='${req.body.delID}'`, function (err, result) {
+        db.query(`UPDATE watermeter SET state='${req.body.state}' WHERE id='${req.body.delID}'`, function (err, result) {
           callback(err,result)
           connection.release()
       })
