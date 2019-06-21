@@ -2,172 +2,158 @@
   <div class="wrapper">
     <div class="wrapper-content">
       <Header>
-        <div class="search" slot="search">
-          <img :src="IconSearch">
-          <input
-            type="text"
+        <!-- <div slot="screening-area">
+          
+        </div> -->
+<!-- 
+        <div slot="title-area">
+          
+        </div> -->
+
+        <div slot="search" class="search">
+          <div>
+            <img :src="SearchGray">
+          </div>
+          <input type="text"
             autocomplete="off"
-            class="search-box"
-            placeholder="通过通讯编号搜索EMB..."
-            v-model="searchVal"
-          >
-          <!-- <button type="submit">搜索</button> -->
+            placeholder="通过图纸编号搜索EMB..."
+            v-model="searchVal">
+            <!-- @focus.prevent="Focus(),SearchGray=overSearchPurple"
+            @blur.prevent="loseFocus(),SearchGray=outSearchGray" -->
         </div>
+        <div class="detail-button" slot="detail-button" @click="detail" 
+          @mouseover="DetailGray=overDetailPurple" @mouseout="DetailGray=outDetailGray" title="详情">
+          <div>
+            <img :src="DetailGray">
+          </div>
+        </div>
+        <div class="edit-button" slot="edit-button" @click="edit" 
+          @mouseover="EditGray=overEditPurple" @mouseout="EditGray=outEditGray" title="修改">
+          <div>
+            <img :src="EditGray">
+          </div>
+        </div>
+        <div class="delete-button" slot="delete-button" @click="del" 
+          @mouseover="DelGray=overDelPurple" @mouseout="DelGray=outDelGray" title="删除">
+          <div>
+            <img :src="DelGray">
+          </div>
+        </div>
+        <div class="add-button" slot="add-button" @click="addNewMeter" 
+          @mouseover="AddGray=overAddPurple" @mouseout="AddGray=outAddGray"  title="添加新的水表设备">
+          <div>
+            <img :src="AddGray">
+          </div>
+          <span>添加</span>
+        </div>
+
       </Header>
-      <div>
+      <div class="autoheight" :style="autoheight">
         <table>
           <thead>
             <tr>
-              <th class="row-4">备注</th>
               <th class="row-1" align="center"></th>
               <th class="row-1"></th>
-              <th class="row-2">通讯编号</th>
-              <th class="row-4">硬件编号</th>
-              <th class="row-6">安装位置</th>
-              <th class="row-2">挂载数量</th>
-              <!-- <th class="row-1" align="right">系数</th>
-              <th class="row-1" align="right">管径</th>
-              <th class="row-1" align="right">表级</th> -->
+              <th class="row-3"><span>通讯编号</span></th>
+              <th class="row-5"><span>硬件编号</span></th>
+              <th class="row-5"><span>安装位置</span></th>
+              <th class="row-2"><span>关联中继</span></th>
+              <th class="row-2"><span>电源类型</span></th>    
+              <th class="row-1" align="right"><span>状态</span></th>
             </tr>
           </thead>
           <tbody v-if="searchVal">
-            <tr>
-              <td class="row-4 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-6 row-empty"></td>
-              <th class="row-2 row-empty"></th>
-              <!-- <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td> -->
-            </tr>
-            <!-- Nothing more... -->
-            <tr v-for="(WaterCollect, index) in WaterCollectList" :key="index">
-              <td class="row-4 text-gray" v-bind:title="WaterCollect.Note">
-                <span>{{WaterCollect.Note}}</span>
-              </td>
+            <tr v-for="(WaterCollect, index) in search" :key="index" @click="selectRadio(WaterCollect.communicationcode,index,WaterCollect.id)">
               <td class="row-1" align="center">
-                <div
-                  :class="{'radioChecked':ind === index}"
-                  class="radioCheck"
-                  @click="selectRadio(WaterCollect.CommunicationNumber, index, WaterCollect.MeterID)"
-                ></div>
+                <div :class="{'radioChecked':ind === index + 1}" class="radioCheck">
+                  <!-- 选择框 -->
+                </div>
               </td>
-              <td class="row-1 text-bottom">{{addPreZero(index + 1)}}</td>
-              <td class="row-2 text-bottom text-border">
-                <span>{{WaterCollect.CommunicationNumber}}</span>
+              <td class="row-1">
+                <span>{{addPreZero(index + 1)}}</span>
               </td>
-              <td class="row-4 text-bottom text-border">
-                <span>{{WaterCollect.HardwareSerialNumber}}</span>
+              <td class="row-3 text-border">
+                <span>{{WaterCollect.communicationcode}}</span>
               </td>
-              <td class="row-6 text-bottom">
-                <span>{{WaterCollect.InstallationSite}}</span>
+              <td class="row-5 text-border">
+                <span>{{WaterCollect.equipmentcode}}</span>
               </td>
-              <td class="row-2 text-bottom">
-                <span>{{WaterCollect.AssociationMeter}}</span>
+              <td class="row-5">
+                <span>{{WaterCollect.site}}</span>
               </td>
-            </tr>
-            <!-- Nothing more... -->
-            <tr>
-              <td class="row-4 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-6 row-empty"></td>
-              <td class="row-2 row-empty"></td>
+              <td class="row-2">
+                <span>{{relevanceCode(WaterCollect.relevance)}}</span>
+              </td>
+              <!-- <td class="row-2">
+                <span>{{WaterCollect.superior}}</span>
+              </td> -->
+              <td class="row-2" align="right">
+                <span>{{WaterCollect.supply}}</span>
+              </td>
+              <td class="row-1" align="right">
+                <span v-if="WaterCollect.state == 0">激活</span>
+                <span v-else-if="WaterCollect.state == 1">停用</span>
+                <span v-else-if="WaterCollect.state == 2">删除</span>
+              </td>
             </tr>
           </tbody>
           <tbody v-else>
-            <tr>
-              <td class="row-4 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-6 row-empty"></td>
-              <th class="row-2 row-empty"></th>
-            </tr>
-            <!-- Nothing more... -->
-            <tr v-for="(WaterCollect, index) in WaterCollectList" :key="index">
-              <td class="row-4 text-gray" v-bind:title="WaterCollect.Note">
-                <span>{{WaterCollect.Note}}</span>
-              </td>
+            <tr v-for="(WaterCollect, index) in waterCollectList" :key="index" @click="selectRadio(WaterCollect.communicationcode,index,WaterCollect.id)">
               <td class="row-1" align="center">
-                <div
-                  :class="{'radioChecked':ind === index}"
-                  class="radioCheck"
-                  @click="selectRadio(WaterCollect.CommunicationNumber,index,WaterCollect.MeterID)"
-                ></div>
+                <div :class="{'radioChecked':ind === index + 1}" class="radioCheck">
+                  <!-- 选择框 -->
+                </div>
               </td>
-              <td class="row-1 text-bottom">{{addPreZero(index + 1)}}</td>
-              <td class="row-2 text-bottom text-border">
-                <span>{{WaterCollect.CommunicationNumber}}</span>
+              <td class="row-1">
+                <span>{{addPreZero(index + 1)}}</span>
               </td>
-              <td class="row-4 text-bottom text-border">
-                <span>{{WaterCollect.HardwareSerialNumber}}</span>
+              <td class="row-3 text-border">
+                <span>{{WaterCollect.communicationcode}}</span>
               </td>
-              <td class="row-6 text-bottom">
-                <span>{{WaterCollect.InstallationSite}}</span>
+              <td class="row-5 text-border">
+                <span>{{WaterCollect.equipmentcode}}</span>
               </td>
-              <td class="row-2 text-bottom">
-                <span>{{WaterCollect.AssociationMeter}}</span>
+              <td class="row-5">
+                <span>{{WaterCollect.site}}</span>
               </td>
-            </tr>
-            <!-- Nothing more... -->
-            <tr>
-              <td class="row-4 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-6 row-empty"></td>
-              <td class="row-2 row-empty"></td>
+              <td class="row-2" v-bind:title="WaterCollect.relevance">
+                <span v-if="WaterCollect.relevance != null">{{relevanceCode(WaterCollect.relevance)}}</span>
+              </td>
+              <td class="row-2">
+                <span>{{WaterCollect.supply}}</span>
+              </td>
+              <td class="row-1" align="right">
+                <span v-if="WaterCollect.state == 0">激活</span>
+                <span v-else-if="WaterCollect.state == 1">停用</span>
+                <span v-else-if="WaterCollect.state == 2">删除</span>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <Footer>
+        <div slot="footer-msg" class="footer-msg"></div>
+      </Footer>
     </div>
-    <RightBar>
-      <img slot="add-button" class="button-normal" :src="IconAdd" @click="addNewMeter" title="新增">
-      <!-- <img slot="back-button" class="button-normal" :src="IconBack" @click="backPage" title="返回上一页"> -->
-      <img
-        slot="detail-button"
-        class="button-normal button-normal-margin"
-        :src="IconDetail"
-        @click="detail"
-        title="详情"
-      >
-      <img
-        slot="edit-button"
-        class="button-normal button-normal-margin"
-        :src="IconEdit"
-        @click="edit"
-        title="修改"
-      >
-      <img
-        slot="delete-button"
-        class="button-normal button-normal-margin"
-        :src="IconDel"
-        @click="del"
-        title="删除"
-      >
-    </RightBar>
   </div>
 </template>
 
 <script>
 import Header from "./header.vue"
-import RightBar from "./rightbar.vue"
+import Footer from "./footer.vue"
 
-import IconAdd from "../assets/add@24x24_gray.png"
+import AddGray from "../assets/add@24x24_gray.png"
 import IconBack from "../assets/back@32x32_black.png"
-import IconDetail from "../assets/detail@24x24_gray.png"
-import IconEdit from "../assets/edit@24x24_gray.png"
-import IconDel from "../assets/del@24x24_gray.png"
-import IconSearch from "../assets/search@24x24_gray.png"
+import DetailGray from "../assets/detail@24x24_gray.png"
+import EditGray from "../assets/edit@24x24_gray.png"
+import DelGray from "../assets/del@24x24_gray.png"
+import SearchGray from "../assets/search@24x24_gray.png"
+
+import AddPurple from "../assets/add@24x24_purple.png"
+import DetailPurple from "../assets/detail@24x24_purple.png"
+import EditPurple from "../assets/edit@24x24_purple.png"
+import DelPurple from "../assets/del@24x24_purple.png"
+import SearchPurple from "../assets/search@24x24_Purple.png"
 
 import Bus from "../static/bus.js"
 import $ from "../static/jquery-vendor.js"
@@ -175,11 +161,12 @@ import $ from "../static/jquery-vendor.js"
 export default {
   components: {
     Header,
-    RightBar
+    Footer,
   },
   data() {
     return {
-      WaterCollectList: [],
+      waterCollectList: [],
+      waterMeterList: [],
       NothingMore: "Nothing more...",
       Operation: "修改",
       isActive: -1,
@@ -191,12 +178,31 @@ export default {
       checkCN: "",
       checkID: "",
 
-      IconAdd,
+      overAddPurple: AddPurple,
+      outAddGray: AddGray,
+
+      overDetailPurple: DetailPurple,
+      outDetailGray: DetailGray,
+
+      overEditPurple: EditPurple,
+      outEditGray: EditGray,
+
+      overDelPurple: DelPurple,
+      outDelGray: DelGray,
+
+      overSearchPurple: SearchPurple,
+      outSearchGray: SearchGray,
+
+      AddGray,
       IconBack,
-      IconDetail,
-      IconEdit,
-      IconDel,
-      IconSearch
+      DetailGray,
+      EditGray,
+      DelGray,
+      SearchGray,
+
+      autoheight:{
+　　　　　　height:''
+　　　 },
     }
   },
   mounted: function() {
@@ -204,11 +210,26 @@ export default {
     this.$ajax({
       method: "post",
       url: "/watercollect"
-      // data: {}
     })
       .then(response => {
-        this.WaterCollectList = response.data
-        // console.log(this.WaterCollectList)
+        // this.waterCollectList = response.data
+        for(let i=0;i<response.data.length;i++){
+          if(response.data[i].state !== 2){
+            this.waterCollectList.push(response.data[i])
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      
+    // 获得水表列表
+    this.$ajax({
+      method: "post",
+      url: "/watermeter"
+    })
+      .then(response => {
+        this.waterMeterList = response.data
       })
       .catch(error => {
         console.log(error)
@@ -219,20 +240,23 @@ export default {
     addPreZero(index) {
       return ("00" + index).slice(-3)
     },
-    // 点击修改
-    alter(index) {
-      alert(
-        "/WaterCollect/alter?DrawingNumber=" + this.WaterCollectList[index].DrawingNumber
-      )
+    relevanceCode(relevance) {   
+      return relevance.split(' ')[0]
     },
-    selectRadio: function(checkCN, IN, checkID) {
+    selectRadio: function(DN, IN, ID) {
       // Bus.$emit('val', DN)
-      this.checkCN = checkCN
-      this.ind = IN
-      this.checkID = checkID
+      if(this.ind != 0 && this.ind == IN + 1){
+        this.ind = ""
+        this.check = ""
+        this.checkID = ""
+      }else{
+        this.ind = IN + 1
+        this.check = DN
+        this.checkID = ID
+      }
     },
     // 添加新设备
-     addNewMeter: function() {
+    addNewMeter: function() {
       this.$router.push({
         path: "/watercollect/add"
         // query: { id: this.ind, dn: this.check }
@@ -259,7 +283,7 @@ export default {
       } else {
         this.$router.push({
           path: "/WaterCollect/edit/",
-          query: {id: this.checkID }
+          query: { communicationcode: this.check, id: this.checkID }
           //  id: this.ind, 
         })
       }
@@ -267,28 +291,52 @@ export default {
     // 删除
     del: function() {
       if(this.checkID !== '') {
+        // 将状态改成删除状态
         this.$ajax({
-        method: "post",
-        url: "/watercollect/delete",
-        data: {
-          delID: this.checkID
+          method: "post",
+          url: "/watercollect/del",
+          data: {
+            delID: this.checkID,
+            state: "2",
+          }
+        })
+          .then(response => {
+            alert("删除成功")
+            this.$router.go(0)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+
+        // 从水表relevance_di与当前采集id对应的水表中删除
+        for(let i=0;i<this.waterMeterList.length;i++){
+          // 如果水表relevance_id的值等于当前采集id
+          if(this.waterMeterList[i].relevance_id == this.checkID){
+            // 清空这个水表中的relevance的值
+            this.$ajax({
+              method: "post",
+              url: "/watermeter/empty/relevance",
+              data: {
+                id: this.waterMeterList[i].id,
+                relevance: "",
+                relevance_id: "",
+              }
+            })
+              .then(response => {
+                console.log('s')
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          }
         }
-      })
-        .then(response => {
-          alert("删除成功")
-          this.$router.go(0)
-        })
-        .catch(error => {
-          console.log(error)
-        })
       }else {
         alert('请选择一个表具')
       }
     },
-    // 返回上一页
-    // backPage: function() {
-    //   this.$router.go(-1)
-    // }
+    getHeight(){
+      this.autoheight.height = window.innerHeight-296+'px'
+    },
   },
   computed: {
     // 逻辑-->升序降序排列  false: 默认从小到大  true：默认从大到小
@@ -307,17 +355,28 @@ export default {
       // 逻辑-->根据input的value值筛选WaterCollectList中的数据
       // 声明一个空数组来存放数据
       var WaterCollectListArr = []
-      for (var i = 0; i < this.WaterCollectList.length; i++) {
+      for (var i = 0; i < this.waterCollectList.length; i++) {
         // for循环数据中的每一项（根据name值）
-        if (this.WaterCollectList[i].CommunicationNumber.toString().indexOf(this.searchVal) != -1) {
+        if (this.waterCollectList[i].communicationcode.toString().indexOf(this.searchVal) != -1) {
           // 判断输入框中的值是否可以匹配到数据，如果匹配成功
           // 向空数组中添加数据
-          WaterCollectListArr.push(this.WaterCollectList[i])
+          WaterCollectListArr.push(this.waterCollectList[i])
         }
       }
       return WaterCollectListArr
     }
-  }
+  },
+  // 在实例创建完成后被立即调用
+  created() {
+    // 实例创建完成后为window添加resize(调整)事件
+    window.addEventListener('resize', this.getHeight)
+    this.getHeight()
+  },
+  // 实例销毁后调用 Vue实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。
+  destroyed() {
+    // 实例销毁后为window移除resize(调整)事件
+    window.removeEventListener('resize', this.getHeight)
+  },
 }
 </script>
 

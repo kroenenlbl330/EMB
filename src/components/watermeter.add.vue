@@ -2,105 +2,88 @@
   <div class="wrapper">
     <div class="wrapper-content">
       <Header>
-
-      </Header>
-      <div class="main row-20">
-        <div class="main-title">
+        <div class="fun-title" slot="search">
+          <span>水表表具设备 -- 新增表具</span>
+        </div>
+        <div class="detail-button" slot="back-button" @click="back" 
+          @mouseover="BackGray=overBackPurple" @mouseout="BackGray=outBackGray" title="详情">
           <div>
-            <span>水表表具设备-新增表具</span>
+            <img :src="BackGray">
           </div>
         </div>
-        <div class="main-content">
+        <div class="save-button" slot="add-button" @click="save" 
+          @mouseover="SaveGray=overSaveWhite" @mouseout="SaveGray=outSaveGray"  title="保存">
+          <div>
+            <img :src="SaveGray">
+          </div>
+          <span>保存</span>
+        </div>
+      </Header>
+      <div class="main">
+        <div class="main-content autoheight" :style="autoheight">
           <div class="main-content-list">
             <div>
               <div>
-                <span>01</span>
+                <span>能源数据编号</span>
               </div>
               <div>
-                <p>图纸编号</p>
-                <input type="text" id="DrawingNumber" placeholder="请输入图纸编号" @blur.prevent="loseFocus()">  <!-- :class="{'text-border': isInput}" @input="changeClass" -->
-              </div>
-            </div>
-            <div>
-              <div></div>
-              <div>
-                <p>表具名称</p>
-                <input type="text" id="WaterMeterName" placeholder="请输入表具名称">
+                <input type="text" v-model="energycode" placeholder="请输入16位能源数据编号"/>
               </div>
             </div>
             <div>
-              <div></div>
               <div>
-                <p>安装位置</p>
-                <input type="text" id="InstallationSite" placeholder="请输入安装位置">
+                <span>图纸编号</span>
+              </div>
+              <div>
+                <input type="text" v-model="drawingcode" placeholder="请输入图纸编号" @blur.prevent="loseFocus()"/>  <!-- :class="{'text-border': isInput}" @input="changeClass" -->
               </div>
             </div>
             <div>
-              <div></div>
               <div>
-                <p>能源数据编号</p>
-                <input type="text" id="EnergyCode" placeholder="请输入能源数据编号">
+                <span>表具名称</span>
+              </div>
+              <div>
+                <input type="text" v-model="name" placeholder="请输入表具名称"/>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>安装位置</span>
+              </div>
+              <div>
+                <input type="text" v-model="site" placeholder="请输入安装位置"/>
               </div>
             </div>
           </div>
           <div class="main-content-list">
             <div>
               <div>
-                <span>02</span>
+                <span>上级表</span>
               </div>
               <div>
-                <p>表级</p>
-                <div class="select-head" v-on:click.stop="waterMeterLevelDown">
+                <div id="superior" class="select-head" v-on:click.stop="dropDown('superiorMenu')">
                   <p>
-                    <span>{{waterMeterLevelPrompt}}</span>
-                    <span>{{waterMeterLevelName}}</span>
+                    <span>{{superiorValue}}&nbsp;&nbsp;{{superiorName}}</span>
                     </p>
-                  <img :src="IconDropDown">
+                  <img :src="DropDownGray">
                 </div>
-                <div v-show="waterMeterLevelShowSelect">
-                  <div v-for="(waterMeterLevel, index) in waterMeterLevelList" @click.stop="waterMeterLevelSelect(waterMeterLevel)" :key="index">
-                    {{waterMeterLevel.WaterMeterLevel}}
+                <div v-show="superiorMenu">
+                  <div v-for="(superior, index) in superiorList" @click.stop="selectDropDownItem('superior',superior.drawingcode,superior.name)" :key="index">
+                    {{superior.drawingcode}}&nbsp;&nbsp;{{superior.name}}
                   </div>
                 </div>
               </div>
             </div>
             <div>
               <div>
-
+                <span>关联采集</span>
               </div>
-              <div>
-                <p>上级表</p>
-                <div class="select-head" v-on:click.stop="superiorMeterDown">
-                  <p>
-                    <span>{{superiorMeterPrompt}}</span>
-                    <span>{{superiorMeter}}&nbsp;&nbsp;{{superiorMeterName}}</span>
-                    </p>
-                  <img :src="IconDropDown">
+              <div class="choose-relevance">    
+                <div>
+                  <span>{{relevanceContent}}</span>
                 </div>
-                <div v-show="superiorMeterShowSelect">
-                  <div v-for="(superiorMeter, index) in superiorMeterList" @click.stop="superiorMeterSelect(superiorMeter)" :key="index">
-                    {{superiorMeter.DrawingNumber}}&nbsp;&nbsp;{{superiorMeter.WaterMeterName}}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div>
-
-              </div>
-              <div>
-                <p>关联采集</p>
-                <div class="select-head" v-on:click.stop="associationCollectDown">
-                  <p>
-                    <span>{{associationCollectPrompt}}</span>
-                    <span>{{associationCollect}}&nbsp;&nbsp;{{associationCollectName}}</span>
-                    </p>
-                  <img :src="IconDropDown">
-                </div>
-                <div v-show="associationCollectShowSelect">
-                  <div v-for="(associationCollect, index) in associationcollectList" @click.stop="associationCollectSelect(associationCollect)" :key="index">
-                    {{associationCollect.CommunicationNumber}}&nbsp;&nbsp;{{associationCollect.InstallationSite}}
-                  </div>
+                <div class="choose-relevance-btn" @click="showRelevanceArea = !showRelevanceArea">
+                  <span>选择采集</span>
                 </div>
               </div>
             </div>
@@ -108,92 +91,90 @@
           <div class="main-content-list">
             <div>
               <div>
-                <span>03</span>
+                <span>所属楼宇</span>
               </div>
               <div>
-                <p>系数</p>             
-                <div class="select-head" v-on:click.stop="coefficientDown">
+                <div class="select-head" v-on:click.stop="dropDown('buildMenu')">
                   <p>
-                    <span>{{coefficientPrompt}}</span>
-                    <span>{{coefficientName}}</span>
-                    </p>
-                  <img :src="IconDropDown">
-                </div>
-                <div v-show="coefficientShowSelect">
-                  <div v-for="(coefficient, index) in coefficientList" @click.stop="coefficientSelect(coefficient)" :key="index">
-                    {{coefficient.Coefficient}}
-                  </div>
-                </div> 
-              </div>
-            </div>
-            <div>
-              <div></div>
-              <div>
-                <p>管径</p>
-                <div class="select-head" v-on:click.stop="pipeDiameterDown">
-                  <p>
-                    <span>{{pipeDiameterPrompt}}</span>
-                    <span>{{pipeDiameterName}}</span>
-                    </p>
-                  <img :src="IconDropDown">
-                </div>
-                <div v-show="pipeDiameterShowSelect">
-                  <div v-for="(pipeDiameter, index) in pipeDiameterList" @click.stop="pipeDiameterSelect(pipeDiameter)" :key="index">
-                    {{pipeDiameter.PipeDiameter}}
-                  </div>
-                </div> 
-              </div>
-            </div>
-            <div>
-              <div></div>
-              <div>
-                <p>电源类型</p>
-                <div class="select-head" v-on:click.stop="powerTypeDown">
-                  <p>
-                    <span>{{powerTypePrompt}}</span>
-                    <span>{{powerTypeName}}</span>
+                    <span>{{buildValue}}</span>
                   </p>
-                  <img :src="IconDropDown">
+                  <img :src="DropDownGray">
                 </div>
-                <div v-show="powerTypeShowSelect">
-                  <div v-for="(powerType, index) in powerTypeList" @click.stop="powerTypeSelect(powerType)" :key="index">
-                    {{powerType.PowerType}}
+                <div v-show="buildMenu">
+                  <div v-for="(build, index) in buildList" @click.stop="selectDropDownItem('build',build.build)" :key="index">
+                    {{build.build}}
+                  </div>
+                </div>
+              </div>
+            </div>           
+            <div>
+              <div>
+                <span>所属部门</span>
+              </div>
+              <div>
+                <div class="select-head" v-on:click.stop="dropDown('departmentMenu')">
+                  <p>
+                    <span>{{departmentValue}}</span>
+                  </p>
+                  <img :src="DropDownGray">
+                </div>
+                <div v-show="departmentMenu">
+                  <div v-for="(department, index) in departmentList" @click.stop="selectDropDownItem('department',department.department)" :key="index">
+                    {{department.department}}
                   </div>
                 </div>
               </div>
             </div>
             <div>
-              <div></div>
               <div>
-                <p>表具用途</p>
-                <div class="select-head" v-on:click.stop="meterUseDown">
+                <span>所属校区</span>
+              </div>
+              <div>
+                <div class="select-head" v-on:click.stop="dropDown('schoolMenu')">
                   <p>
-                    <span>{{meterUsePrompt}}</span>
-                    <span>{{meterUseName}}</span>
+                    <span>{{schoolValue}}</span>
                   </p>
-                  <img :src="IconDropDown">
+                  <img :src="DropDownGray">
                 </div>
-                <div v-show="meterUseShowSelect">
-                  <div v-for="(meterUse, index) in meterUseList" @click.stop="meterUseSelect(meterUse)" :key="index">
-                    {{meterUse.MeterUse}}
+                <div v-show="schoolMenu">
+                  <div v-for="(school, index) in schoolList" @click.stop="selectDropDownItem('school',school.school)" :key="index">
+                    {{school.school}}
                   </div>
                 </div>
               </div>
             </div>
             <div>
-              <div></div>
               <div>
-                <p>所属部门</p>
-                <div class="select-head" v-on:click.stop="subordinateDepartmentsDown">
+                <span>表具用途</span>
+              </div>
+              <div>
+                <div class="select-head" v-on:click.stop="dropDown('purposeMenu')">
                   <p>
-                    <span>{{subordinateDepartmentsPrompt}}</span>
-                    <span>{{subordinateDepartmentsName}}</span>
+                    <span>{{purposeValue}}</span>
                   </p>
-                  <img :src="IconDropDown">
+                  <img :src="DropDownGray">
                 </div>
-                <div v-show="subordinateDepartmentsShowSelect">
-                  <div v-for="(subordinateDepartments, index) in subordinateDepartmentsList" @click.stop="subordinateDepartmentsSelect(subordinateDepartments)" :key="index">
-                    {{subordinateDepartments.SubordinateDepartments}}
+                <div v-show="purposeMenu">
+                  <div v-for="(purpose, index) in purposeList" @click.stop="selectDropDownItem('purpose',purpose.purpose)" :key="index">
+                    {{purpose.purpose}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>电源类型</span>
+              </div>
+              <div>
+                <div class="select-head" v-on:click.stop="dropDown('supplyMenu')">
+                  <p>
+                    <span>{{supplyValue}}</span>
+                  </p>
+                  <img :src="DropDownGray">
+                </div>
+                <div v-show="supplyMenu">
+                  <div v-for="(supply, index) in supplyList" @click.stop="selectDropDownItem('supply',supply.supply)" :key="index">
+                    {{supply.supply}}
                   </div>
                 </div>
               </div>
@@ -202,168 +183,329 @@
           <div class="main-content-list">
             <div>
               <div>
-                <span>04</span>
+                <span>系数</span>
               </div>
               <div>
-                <p>备注</p>
-                <input type="text" id="Note" placeholder="备注">
+                <input type="text" v-model="coefficient" placeholder="请输入系数">
+              </div>
+            </div>
+            <div>
+              <div>
+                <span>管径</span>
+              </div>
+              <div>
+                <input type="text" v-model="diameter" placeholder="请输入管径">
+              </div>
+            </div>
+          </div>
+          <div class="main-content-list">
+            <div>
+              <div>
+                <span>状态</span>
+              </div>
+              <div class="select-state" >
+                <div v-for="(state, index) in stateList" @click.stop="clickSelect('state', state, index)" :key="index" :class="{'active':ind === index}">
+                  <span v-if="state == 0">激活</span>
+                  <span v-if="state == 1">停用</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- 选择关联采集 -->
+      <div class="relevance-area" v-if="showRelevanceArea"> 
+        <div>
+          <p>选择关联水表</p>
+          <p>请选择一个采集设备，并点击下方确认键来添加关联水表</p>
+        </div>
+        <div class="relevance-content meterlistheight" :style="meterlistheight">
+          <div class="relevance-list" v-for="(waterCollect, index) in waterCollectList" :key="index"
+          @click="selectMeter(waterCollect.id)">
+            <div class="radioCheck" :class="{'radioChecked':relevanceID === waterCollect.id}">
+              <!-- 选择框 -->
+            </div>   
+            <span class="relevance-list-code">{{waterCollect.communicationcode}}</span>
+            <span class="relevance-list-name">{{waterCollect.site}}</span>
+          </div>
+        </div>
+        <div class="relevance-area-btn" @click="chooseRelevanceMeter(relevanceID),showRelevanceArea = !showRelevanceArea">
+          <span>确认关联</span>
+        </div>
+      </div>
+
+      <Footer>
+      </Footer>
     </div>
-    <RightBar>
-      <img slot="save-button" class="button-normal" :src="IconSave" @click="save">
-      <img slot="back-button" class="button-normal" :src="IconBack" @click="backPage">
-    </RightBar>
   </div>
 </template>
 
 <script>
 import Header from "./header.vue"
-import RightBar from "./rightbar.vue"
+import Footer from "./footer.vue"
 
-import IconBack from "../assets/back@32x32_black.png"
-import IconSave from "../assets/save@32x32_black.png"
-import IconDropDown from "../assets/drop-down@24x24_black.png"
+import DropDownGray from "../assets/drop-down@24x24_gray.png"
+import BackGray from "../assets/back@24x24_gray.png";
+import BackPurple from "../assets/back@24x24_purple.png";
+import SaveGray from "../assets/save@24x24_gray.png";
+import SaveWhite from "../assets/save@24x24_white.png";
 
 import $ from "../static/jquery-vendor.js"
+import { delimiter } from 'path';
 
 export default {
   components: {
     Header,
-    RightBar
   },
   data() {
     return {
-      IconBack,
-      IconSave,
-      IconDropDown,
+      overBackPurple: BackPurple,
+      outBackGray: BackGray,
 
-      // isInput: false,
-      associationCollectPrompt: '选入采集器',
-      associationCollectShowSelect: false,
-      associationCollect: '',
-      associationCollectName: '',
+      overSaveWhite: SaveWhite,
+      outSaveGray: SaveGray,
 
-      waterMeterLevelPrompt: '请选择系数',
-      waterMeterLevelShowSelect: false,
-      waterMeterLevelName: '',
+      DropDownGray,
 
-      superiorMeterPrompt: '请选择上级表',
-      superiorMeterShowSelect: false,
-      superiorMeter: '',
-      superiorMeterName: '',
+      BackGray,
+      BackPurple,
 
-      coefficientPrompt: '请选择系数',
-      coefficientShowSelect: false,
-      coefficientName: '',
+      SaveGray,
+      SaveWhite,
 
-      pipeDiameterPrompt: '请选择管径',
-      pipeDiameterShowSelect: false,
-      pipeDiameterName: '',
-
-      powerTypePrompt: '请选择电源类型',
-      powerTypeShowSelect: false,
-      powerTypeName: '',
-
-      meterUsePrompt: '请选择表具用途',
-      meterUseShowSelect: false,
-      meterUseName: '',
-
-      subordinateDepartmentsPrompt: '请选择所属部门',
-      subordinateDepartmentsShowSelect: false,
-      subordinateDepartmentsName: '',
+      communicationNum: 0,
       
-      associationcollectList: '',
-      waterMeterLevelList: "",
-      superiorMeterList: '',
-      coefficientList: '',
-      pipeDiameterList: '',
-      powerTypeList: '',
-      meterUseList: '',
-      subordinateDepartmentsList: '',
+      // 所属楼宇
+      build: "",
+      buildList: "",
+      buildValue: "",
+      buildMenu: false,
+      // 所属部门
+      department: "",
+      departmentList: "",
+      departmentValue: "",
+      departmentMenu: false,
+      // 所属校区
+      school: "",
+      schoolList: "",
+      schoolValue: "",
+      schoolMenu: false,
+      // 表具用途
+      purpose: "",
+      purposeList: "",
+      purposeValue: "",
+      purposeMenu: false,
+      // 电源
+      supply: "",
+      supplyList: "",
+      supplyValue: "",
+      supplyMenu: false,
+      // 上级表
+      superiorList: "",
+      superiorValue: "",
+      superiorName: "",
+      superiorMenu: false,
+      // 状态
+      stateList: ['0', '1'],
+      stateValue: 0,
+      ind: 0,
+
+      energycode: "",
+      drawingcode: "",
+      name: "",
+      site: "",
+      coefficient: "",
+      diameter: "",
+
+      autoheight:{
+　　　　　　height:''
+　　　 },
+      meterlistheight:{
+        height:''
+　　　 },
+      
+      waterMeterList: [],
+      waterCollectList: [],
+      showRelevanceArea: false,
+      relevanceID: "",
+      relevanceContent: "",
     }
   },
-  computed: {
 
+
+
+  // VUE实例创建完毕，属性成功被绑定，DOM未生成，页面未被展示 ************************
+  created() {
+    // 数据初始化
+    // this.id = this.$route.query.id
+    // 实例创建完成后为window添加resize(调整)事件
+    window.addEventListener('resize', this.getHeight)
+    this.getHeight()
   },
+
+
+
+  // 模板编译完成并开始挂载，此方法结束后，DOM结构完成，页面就会显示出来 ************************
+  mounted: function() {
+    this.$ajax.all([
+      this.$ajax.post('/purpose'),
+      this.$ajax.post('/supply'),
+      this.$ajax.post('/department'),
+      this.$ajax.post('/coefficient'),
+      this.$ajax.post('/build'),
+      this.$ajax.post('/school'),
+    ])
+    .then(this.$ajax.spread((purpose,supply,department,coefficient,build,school)=> {
+      this.purposeList = purpose.data
+      this.supplyList = supply.data
+      this.departmentList = department.data
+      this.coefficientList = coefficient.data
+      this.buildList = build.data
+      this.schoolList = school.data
+    }))
+
+    // 获取采集
+    this.$ajax({
+      method: "post",
+      url: "/watercollect"
+    })
+      .then(response => {
+        // 去除state为0的项
+        for(let i=0;i<response.data.length;i++){
+          if(response.data[i].state == 0){
+            this.waterCollectList.push(response.data[i])
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    // 获取水表
+    this.$ajax({
+      method: "post",
+      url: "/watermeter"
+    })
+      .then(response => {
+        // 去除state为2的项
+        for(let i=0;i<response.data.length;i++){
+          if(response.data[i].state != 2){
+            this.waterMeterList.push(response.data[i])
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  },
+
+
+
+  // 页面的增删改查
   methods: {
-    backPage: function() {
+    clickSelect(strItem,item,index){
+      this[strItem + 'Value'] = item
+      this.ind = index
+    },
+    back: function() {
       this.$router.go(-1)
     },
-    addPreZero(index) {
-      return ("00" + index).slice(-3)
+
+    // 当鼠标离开时
+    loseFocus() {
+      // 查询所有上级表
+      this.$ajax({
+        method: "post",
+        url: "/returnlevel",
+        data: {
+          level: this.drawingcode.substring(1,2) - 1
+        }
+      })
+        .then(response => {
+          if(response.data == ""){
+            this.superiorList = [{drawingcode:"最上级",name:""}]
+          }else {
+            this.superiorList = response.data;
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
-    // loseFocus() {
-    //   this.$ajax({
-    //   method: "post",
-    //   url: "/watermeter/select/watermeterlevel",
-    //   data: {
-    //     WaterMeterLevelMinusOne: ($("#DrawingNumber").val()).substring(1,2) - 1
-    //   }
-    // })
-    //   .then(response => {
-    //     this.superiorMeterList = response.data;
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
-    // },
+
+    // 判断是否有重复的图纸或能源数据编号
+    judgementRepeat() {
+      for(let i=0;i<this.waterMeterList.length;i++){
+        if(this.waterMeterList[i].energycode == this.energycode || this.waterMeterList[i].drawingcode == this.drawingcode){
+          alert("？？？")
+        }
+      }
+    },
+
     save: function() {
-      let DrawingNumber = $("#DrawingNumber").val()
-      let WaterMeterName = $("#WaterMeterName").val()
-      let InstallationSite = $("#InstallationSite").val()
-      let EnergyCode = $("#EnergyCode").val()
-      let SuperiorMeter = this.superiorMeter
-      let AssociationCollect = this.associationCollect
-      let WaterMeterLevel = this.waterMeterLevelName
-      let SuperiorMeterName = this.superiorMeterName
-      let Coefficient = this.coefficientName
-      let PipeDiameter = this.pipeDiameterName
-      let PowerType = this.powerTypeName
-      let MeterUse = this.meterUseName
-      let SubordinateDepartments = this.subordinateDepartmentsName
-      let Note = $("#Note").val()
+      let energycode = this.energycode
+      let drawingcode = this.drawingcode
+      let name = this.name
+      let site = this.site
 
-      // 根据图纸编号获取表级
-      // let WaterMeterLevel = DrawingNumber.substring(1,2)
+      let superior = this.superiorValue + " " + this.superiorName
+      let relevance = this.relevanceContent
+      let relevance_id = this.relevanceID
+      let level = this.drawingcode.substring(1,2)
 
-      if (!DrawingNumber) {
-        alert("图纸编号不能为空")
+      let build = this.buildValue
+      let department = this.departmentValue
+      let school = this.schoolValue
+      let purpose = this.purposeValue
+      let supply = this.supplyValue
+
+      let coefficient = this.coefficient
+      let diameter = this.diameter
+
+      let state = this.stateValue
+
+
+      if (!drawingcode) {
+        alert("图纸编号不能为空aa")
         return
-      } else if (!WaterMeterName) {
+      } else if (!name) {
         alert("表具名称不能为空")
         return
-      } else if (!InstallationSite) {
+      } else if (!site) {
         alert("安装位置不能为空")
         return
-      } else if (!Coefficient) {
+      } else if (!coefficient) {
         alert("请选择正确的系数")
         return
-      } else if (!PipeDiameter) {
+      } else if (!diameter) {
         alert("请选择正确的管径")
         return;
       } else {
         this.$ajax({
           method: "post",
-          url: "/watermeter/add",
+          url: "/addmeter",
           data: {
-            DrawingNumber: DrawingNumber,
-            WaterMeterName: WaterMeterName,
-            InstallationSite: InstallationSite,
-            Coefficient: Coefficient,
-            PipeDiameter: PipeDiameter,
-            WaterMeterLevel: WaterMeterLevel,
-            EnergyCode: EnergyCode,
-            AssociationCollect: AssociationCollect,
-            SuperiorMeter: SuperiorMeter,
-            SuperiorMeterName: SuperiorMeterName,
-            PowerType: PowerType,
-            MeterUse: MeterUse,
-            SubordinateDepartments: SubordinateDepartments,
-            Note: Note
+            energycode: energycode,
+            drawingcode: drawingcode,
+            name: name,
+            site: site,
+
+            superior: superior,
+            relevance: relevance,
+            relevance_id: relevance_id,
+            level: level,
+
+            build: build,
+            department: department,
+            school: school,
+            purpose: purpose,
+            supply: supply,
+
+            coefficient: coefficient,
+            diameter: diameter,
+
+            state: state,
           }
         })
           .then(response => {
@@ -375,237 +517,87 @@ export default {
           .catch(error => {
             console.log(error)
           })
-
-        this.$ajax({
-          method: "post",
-          url: "/watermeter/add/collect",
-          data: {
-            AssociationCollect: AssociationCollect,
-            DrawingNumber: DrawingNumber,
-          }
-        })
-          // .then(response => {
-          //   if (response) {
-          //     alert("保存成功")
-          //     this.$router.go(-1)
-          //   }
-          // })
-          // .catch(error => {
-          //   console.log(error)
-          // })
       }
     },
 
-    // AssociationCollectDown
-    associationCollectDown() {
-      this.associationCollectShowSelect = !this.associationCollectShowSelect
-      this.superiorMeterShowSelect = false
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.powerTypeShowSelect = false
-      this.meterUseShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      this.waterMeterLevelShowSelect = false
+    dropDown(strMenu) {
+      // 点击下拉菜单 传入菜单名称
+      // 创建 arrMenu 菜单名称列表
+      var arrMenu = [
+        'buildMenu',
+        'departmentMenu',
+        'purposeMenu',
+        'supplyMenu',
+        'superiorMenu',
+        'schoolMenu',
+      ]
+      // 循环菜单名称 使所有菜单为关闭状态
+      for(let i = 0; i < arrMenu.length; i++){
+        this[arrMenu[i]] = false
+      } 
+      // 传入的菜单名称和列表中的匹配则打开   
+      this[strMenu] = !this[strMenu]
+      // 为页面添加函数
       document.addEventListener("click",this.removeEvt)
     },
-    associationCollectSelect(associationCollect) {
-      this.associationCollectShowSelect = false
-      this.associationCollect = associationCollect.CommunicationNumber
-      this.associationCollectName = associationCollect.InstallationSite
-      this.associationCollectPrompt = ''
+    selectDropDownItem(strItem,...items){
+      // 选择菜单项 传入选择项的名称，选择项的值
+      this[strItem + 'Menu'] = false
+      this[strItem + 'Value'] = items[0]
+      this[strItem + 'Name'] = items[1]
     },
-    // WaterMeterLevel
-    waterMeterLevelDown() {
-      this.waterMeterLevelShowSelect =! this.waterMeterLevelShowSelect
-      this.associationCollectShowSelect = false
-      this.superiorMeterShowSelect = false
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.powerTypeShowSelect = false
-      this.meterUseShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      document.addEventListener("click",this.removeEvt)
-    },
-    waterMeterLevelSelect(waterMeterLevel) {
-      this.waterMeterLevelShowSelect = false
-      this.waterMeterLevelName = waterMeterLevel.WaterMeterLevel
-      this.waterMeterLevelPrompt = ''
-    },
-    // SuperiorMeter
-    superiorMeterDown() {
-      // if(document.querySelector("#DrawingNumber").value == '') {
-      //   alert('请先填写图纸编号')
-      //   return  
-      // }else {
-        
-      // }
-      this.superiorMeterShowSelect = !this.superiorMeterShowSelect
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.powerTypeShowSelect = false
-      this.meterUseShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      this.associationCollectShowSelect = false
-      this.waterMeterLevelShowSelect = false
-      //为document添加点击触发removeEvt()
-      document.addEventListener("click",this.removeEvt)
-    },
-    superiorMeterSelect(superiorMeter) {
-      this.superiorMeterShowSelect = false
-      this.superiorMeter = superiorMeter.DrawingNumber
-      this.superiorMeterName = superiorMeter.WaterMeterName
-      this.superiorMeterPrompt = ''
-    },
-    // Coefficient
-    coefficientDown() {
-      this.coefficientShowSelect = !this.coefficientShowSelect
-      this.pipeDiameterShowSelect = false
-      this.superiorMeterShowSelect = false
-      this.powerTypeShowSelect = false
-      this.meterUseShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      this.associationCollectShowSelect = false
-      this.waterMeterLevelShowSelect = false
-      //为document添加点击触发removeEvt()
-      document.addEventListener("click",this.removeEvt)
-    },
-    coefficientSelect(coefficient) {
-      this.coefficientShowSelect = false
-      this.coefficientName = coefficient.Coefficient
-      this.coefficientPrompt = ''
-    },
-    // PipeDiameter
-    pipeDiameterDown() {
-      this.pipeDiameterShowSelect = !this.pipeDiameterShowSelect
-      this.coefficientShowSelect = false
-      this.superiorMeterShowSelect = false
-      this.powerTypeShowSelect = false
-      this.meterUseShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      this.associationCollectShowSelect = false
-      this.waterMeterLevelShowSelect = false
-      document.addEventListener("click",this.removeEvt)
-    },
-    pipeDiameterSelect(pipeDiameter) {
-      this.pipeDiameterShowSelect = false
-      this.pipeDiameterName = pipeDiameter.PipeDiameter
-      this.pipeDiameterPrompt = ''
-    },
-    // PowerType
-    powerTypeDown() {
-      this.powerTypeShowSelect = !this.powerTypeShowSelect
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.superiorMeterShowSelect = false
-      this.meterUseShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      this.associationCollectShowSelect = false
-      this.waterMeterLevelShowSelect = false
-      document.addEventListener("click",this.removeEvt)
-    },
-    powerTypeSelect(powerType) {
-      this.powerTypeShowSelect = false
-      this.powerTypeName = powerType.PowerType
-      this.powerTypePrompt = ''
-    },
-    // MeterUse
-    meterUseDown() {
-      this.meterUseShowSelect = !this.meterUseShowSelect
-      this.powerTypeShowSelect = false
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.superiorMeterShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      this.associationCollectShowSelect = false
-      this.waterMeterLevelShowSelect = false
-      document.addEventListener("click",this.removeEvt)
-    },
-    meterUseSelect(meterUse) {
-      this.meterUseShowSelect = false
-      this.meterUseName = meterUse.MeterUse
-      this.meterUsePrompt = ''
-    },
-    // SubordinateDepartments
-    subordinateDepartmentsDown() {
-      this.subordinateDepartmentsShowSelect = !this.subordinateDepartmentsShowSelect
-      this.meterUseShowSelect = false
-      this.powerTypeShowSelect = false
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.superiorMeterShowSelect = false
-      this.associationCollectShowSelect = false
-      this.waterMeterLevelShowSelect = false
-      document.addEventListener("click",this.removeEvt)
-    },
-    subordinateDepartmentsSelect(subordinateDepartments) {
-      this.subordinateDepartmentsShowSelect = false
-      this.subordinateDepartmentsName = subordinateDepartments.SubordinateDepartments
-      this.subordinateDepartmentsPrompt = ''
-    },
-
     removeEvt(){
       //为document移除点击触发removeEvt()
       document.removeEventListener("click",()=>{})
       this.hiedMenu()
     },
     hiedMenu(){
-      this.coefficientShowSelect = false
-      this.pipeDiameterShowSelect = false
-      this.waterMeterLevelShowSelect = false
-      this.powerTypeShowSelect = false
-      this.subordinateDepartmentsShowSelect = false
-      this.meterUseShowSelect = false
-      this.superiorMeterShowSelect = false
-      this.associationCollectShowSelect = false
+      this.buildMenu = false
+      this.departmentMenu = false
+      this.purposeMenu = false
+      this.supplyMenu = false
+      this.superiorMenu = false
+      this.school = false
+    },
+    
+    // 
+    selectMeter: function(id) {
+      if(this.relevanceID != 0 && this.relevanceID == id){
+        this.relevanceID = ""
+      }else{
+        this.relevanceID = id
+      }
+    },
+
+    chooseRelevanceMeter: function(id) {
+      this.relevanceContent = ""
+      for(let i=0;i<this.waterCollectList.length;i++){
+        if(this.waterCollectList[i].id == id){
+          this.relevanceContent = this.waterCollectList[i].communicationcode + " " + this.waterCollectList[i].site
+        }
+      }      
+    },
+
+    getHeight(){
+      this.autoheight.height = window.innerHeight-304+'px'
+      this.meterlistheight.height = window.innerHeight-248+'px'
     },
   },
+
+
+
   //过滤器
   filters: {
     empty: function(value) {
       return value ? value : "no more..."
     }
   },
-  //数据初始化
-  created() {
-    this.id = this.$route.query.id
-  },
-  
-  mounted: function() {
-    this.$ajax.all([
-      this.$ajax.post('/watercollect'),
-      this.$ajax.post('/watermeter/select/watermeterlevel'),
-      this.$ajax.post('/watermeter/meteruse'),
-      this.$ajax.post('/watermeter/subordinatedepartments'),
-      this.$ajax.post('/watermeter/powertype'),
-      this.$ajax.post('/watermeter/pipediameter'),
-      this.$ajax.post('/watermeter/coefficient'),
-    ])
-    .then(this.$ajax.spread((associationcollect, watermeterlevel, meteruse, subordinatedepartments,powertype,pipediameter,coefficient)=> {
-      this.associationcollectList = associationcollect.data
-      this.waterMeterLevelList = watermeterlevel.data
-      this.meterUseList = meteruse.data
-      this.subordinateDepartmentsList = subordinatedepartments.data
-      this.powerTypeList = powertype.data
-      this.pipeDiameterList = pipediameter.data
-      this.coefficientList = coefficient.data
-    }))
 
-    this.$ajax({
-      method: "post",
-      url: "/watermeter/add/superior",
-      data: {
-        WaterMeterLevelMinusOne: this.waterMeterLevel
-      }
-    })
-      .then(response => {
-        this.superiorMeterList = response.data
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  },
+
+
+
   watch: {
-    watermeterlevelName: function(a, b){
+    // watermeterlevelName: function(a, b){
     //   this.$ajax({
     //   method: "post",
     //   url: "/watermeter/add/superior",
@@ -614,14 +606,26 @@ export default {
     //   }
     // })
     //   .then(response => {
-    //     this.superiorMeterList = response.data
+    //     this.superiorList = response.data
     //   })
     //   .catch(error => {
     //     console.log(error)
     //   })
-    alert(this.watermeterlevelName - 1)
+    // alert(this.watermeterlevelName - 1)
+    // }
+    drawingcode() {
+      this.superiorValue = "..."
+      this.superiorName = ""
     }
-  }
+  },
+
+
+
+  // 实例销毁后调用 Vue实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。
+  destroyed() {
+    // 实例销毁后为window移除resize(调整)事件
+    window.removeEventListener('resize', this.getHeight)
+  },
 }
 </script>
 

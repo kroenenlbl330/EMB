@@ -8,8 +8,9 @@ module.exports = function(){
   //   res.render('main/main')
   // })
 
-  router.post('/watermeter/select/watermeterlevel', function (req, res){
-    Model.selectWaterMeterLevel(req, res, function (err, result) {
+  // 返回的表级
+  router.post('/returnlevel', function (req, res){
+    Model.returnLevel(req, res, function (err, result) {
       if(err){
         res.status(404).send('error')
       }else{
@@ -18,7 +19,7 @@ module.exports = function(){
     }) 
   })
 
-  router.post('/watermeter/getcoefficient', function (req, res){
+  router.post('/coefficient', function (req, res){
     Model.getCoefficient(req, res, function (err, result) {
       if(err){
         res.status(404).send('error')
@@ -28,18 +29,19 @@ module.exports = function(){
     }) 
   })
   
-  router.post('/watermeter/getdiameter', function (req, res){   
-    Model.getDiameter(req, res, function (err, result) {
+  router.post('/department', function (req, res){   
+    Model.getDepartment(req, res, function (err, result) {
       if(err){
         res.status(404).send('error')
       }else{
         res.status(200).send(result)
       }
+      
     }) 
   })
   
-  router.post('/watermeter/powertype', function (req, res){   
-    Model.getPowerType(req, res, function (err, result) {
+  router.post('/supply', function (req, res){   
+    Model.getSupply(req, res, function (err, result) {
       if(err){
         res.status(404).send('error')
       }else{
@@ -58,8 +60,38 @@ module.exports = function(){
     }) 
   })
   
-  router.post('/watermeter/subordinatedepartments', function (req, res){   
-    Model.getSubordinateDepartments(req, res, function (err, result) {
+  router.post('/purpose', function (req, res){   
+    Model.getPurpose(req, res, function (err, result) {
+      if(err){
+        res.status(404).send('error')
+      }else{
+        res.status(200).send(result)  
+      }
+    }) 
+  })
+
+  router.post('/build', function (req, res){   
+    Model.getBulid(req, res, function (err, result) {
+      if(err){
+        res.status(404).send('error')
+      }else{
+        res.status(200).send(result)  
+      }
+    }) 
+  })
+
+  router.post('/superior', function (req, res){   
+    Model.getSuperior(req, res, function (err, result) {
+      if(err){
+        res.status(404).send('error')
+      }else{
+        res.status(200).send(result)  
+      }
+    }) 
+  })
+
+  router.post('/school', function (req, res){   
+    Model.getSchool(req, res, function (err, result) {
       if(err){
         res.status(404).send('error')
       }else{

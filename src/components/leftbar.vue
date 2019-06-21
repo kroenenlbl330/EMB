@@ -71,7 +71,6 @@ export default {
 
 <style>
 .left-bar {
-  height: 760px;
   background-color: rgb(255, 255, 255);
   display: flex;
   justify-content: flex-start;
@@ -131,12 +130,8 @@ export default {
   padding: 0 0 0 16px;
 }
 
-.menu li{
-  margin-bottom: 8px;
-}
-
 .rl-s {
-  height: 32px;
+  height: 40px;
   /* color: var(--gray-text); */ 
   /* letter-spacing: 1px; */
   /* color: var(--black); */
@@ -159,7 +154,7 @@ export default {
 
 .select {
   background-color: rgb(243,243,243);
-  height: 32px;
+  height: 40px;
   width: 240px;
   /* margin-right: 16px; */
   border-radius: 4px 0 0 4px;

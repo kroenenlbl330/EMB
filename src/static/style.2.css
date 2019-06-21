@@ -1,0 +1,532 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  font-family: '苹方';
+  /* font-family: '思源黑体','Helvetica Neue',Roboto,Arial,'Droid Sans',sans-serif; */
+  /* font-family: '更纱黑体 UI SC','Helvetica Neue',Roboto,Arial,'Droid Sans',sans-serif; */
+  /* font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol; */
+  list-style-type: none;  
+  color: var(--back);
+}
+
+a{
+  text-decoration: none;
+}
+
+/* TABLE */
+table{
+  border-collapse: collapse;  
+  border-spacing: 0; 
+  /* margin: 0 12px 0 8px; */
+  /* margin: 0 0 0 8px; */
+}
+
+thead{
+  /* border-right: 8px solid var(--white); */
+  box-sizing: border-box;
+  height: 48px;
+  vertical-align: top;
+  border-bottom: 2px solid var(--gray);
+  /* width: calc(100% - 22px); */
+}
+
+table tbody {
+  display: block;
+  height: 720px;
+  overflow-y: scroll;
+  width: calc(100% + 4px);
+}
+
+table thead, tbody tr {
+  display: table;
+  table-layout: fixed;
+  text-align: left;
+  width: 100%;
+  /* width: calc(100% - 22px); */
+}
+
+td{
+  height: 24px;
+  font-size: 1rem;
+  padding-top: 8px;
+  /* border-bottom: 1px solid var(--white); */
+}
+
+td span{
+  line-height: 24px;
+}
+
+td span:hover{
+  border-bottom: none;
+}
+
+td, th{
+  white-space: nowrap; /* 设置内容抵达容器边界会不会转到下一行 */
+  overflow: hidden; /* 不显示超过对象尺寸的内容（这个绝对不能少）,也就是说设置td里面的数据无论有多少，都不会换行 */
+  text-overflow: ellipsis; /* 将被隐藏的那部分用省略号代替 */
+}
+
+tbody tr{
+  border-bottom: 1px solid var(--white);
+  box-sizing: border-box;
+  cursor: default;
+  /* vertical-align: text-bottom; */
+}
+
+tbody :hover{
+  /* cursor: pointer; */
+  border-bottom: 1px solid var(--black);
+  box-sizing: border-box;
+}
+
+/* COLOR */
+:root{
+  --black: rgb(32, 32, 32);
+  --white: #ffffff;
+  --gray: #e1e1e1;
+  --gray-line: #c1c1c1;
+  --gray-text: #848484;
+  --prompt: #ccc;
+  --input: #cdcdcd;
+  --lightGrey: #f8f8f8;
+}
+
+.row-1{
+  width: 5%;
+}
+
+.row-2{
+  width: 10%;
+}
+
+.row-3{
+  width: 15%;
+}
+
+.row-4{
+  width: 20%;
+}
+
+.row-5{
+  width: 25%;
+}
+
+.row-6{
+  width: 30%;
+}
+
+.row-8{
+  width: 40%;
+}
+
+.row-10{
+  width: 50%;
+}
+
+.row-14{
+  width: 70%;
+}
+
+.row-15{
+  width: 75%;
+}
+
+.row-20{
+  width: 100%;
+}
+
+.text-bottom{
+  vertical-align: bottom;
+}
+
+.row-empty{
+  cursor: default;
+  height: 48px;
+  border-bottom: 1px solid var(--white) !important;
+  box-sizing: border-box;
+}
+
+/* 滚动条 */
+/* 滚动条整体部分 */
+::-webkit-scrollbar {  
+  width: 4px;
+  margin-right: 2px;
+}
+/* 滚动条两端的按钮 */
+/* ::-webkit-scrollbar-button { 
+  width:10px;
+  background-color: yellow;
+} */
+::-webkit-scrollbar:horizontal {
+  height: 4px;
+  margin-bottom: 4px;
+}
+/* 外层轨道 */
+::-webkit-scrollbar-track {  
+  border-radius: 2px;
+}
+/*内层轨道，滚动条中间部分 */
+::-webkit-scrollbar-track-piece {  
+  background-color: var(--white);
+  border-radius: 2px;
+}
+/* 滑块 */
+::-webkit-scrollbar-thumb {  
+  width: 4px;
+  border-radius: 2px;
+  background: var(--black);
+}
+/* 边角 */
+/* ::-webkit-scrollbar-corner { 
+  width: 10px;
+  background-color: red;
+} */
+/* 鼠标移入滑块 */
+::-webkit-scrollbar-thumb:hover { 
+  background: var(--black);
+}
+
+/* input */
+/* Mozilla Firefox 4 to 18 */
+/* :-moz-placeholder { 
+  color: #eee; opacity:1; 
+} */
+/* Mozilla Firefox 19+ */
+/* ::-moz-placeholder { 
+  color: #eee;opacity:1;
+}
+
+input:-ms-input-placeholder{
+  color: #eee;opacity:1;
+}
+
+input::-webkit-input-placeholder{
+  color: #eee;opacity:1;
+} */
+
+/*input提示文字的颜色*/
+/* WebKit browsers */ 
+input::-webkit-input-placeholder { 
+  color: var(--prompt);   
+} 
+/* Mozilla Firefox 4 to 18 */  
+input:-moz-placeholder {  
+  color: var(--prompt);  
+} 
+/* Mozilla Firefox 19+ */   
+input::-moz-placeholder { 
+  color: var(--prompt); 
+} 
+/* Internet Explorer 10+ */  
+input:-ms-input-placeholder { 
+  color: var(--prompt); 
+} 
+
+/* .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+} */
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.wrapper-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0 12px 0 8px;
+}
+
+/* BUTTON*/
+.button-normal {
+  width: 32px;
+  height: 32px;
+  /* border-radius: 20px; */
+  /* background-image: url(../assets/edit.png); */
+  /* border: 2px solid var(--gray-rightbar); */
+  margin: 0 auto;
+  position: relative;
+
+}
+
+.button-normal:hover {
+  cursor: pointer;
+}
+
+
+/* TEXT */
+.text-gray{
+  color: var(--gray-text)
+}
+
+.text-border{
+  font-weight: bolder;
+}
+
+
+/* LIST */
+table > tbody > tr > td:nth-child(n + 8) span,
+table > thead > tr > th:nth-child(n + 8) {
+  padding-right: 16px;
+}
+
+table > tbody > tr > td:last-child span,
+table > thead > tr > th:last-child {
+  padding-right: 0px;
+}
+
+.water-meter-name {
+  font-weight: bolder;
+}
+
+.water-meter-note {
+  color: var(--gray-text);
+}
+
+.empty-list {
+  font-size: 1rem;
+  color: var(--prompt);
+}
+
+/* .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.alter img {
+  color: #294cb0;
+  cursor: pointer;
+  border-bottom: none;
+} */
+
+/* input[type=radio] + span {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background-color: var(--gray);
+  vertical-align: middle;
+}
+
+label:hover{
+  border-bottom: none;
+}
+
+input[type=radio]:checked + span {
+  background-color: var(--black);
+} */
+
+.radioCheck {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background-color: var(--gray);
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+
+.radioCheck:hover {
+  border-bottom: none;
+  /* cursor: pointer; */
+}
+
+.radioChecked {
+  background-color: var(--black) !important;
+}
+
+.button-normal-margin {
+  margin-bottom: 24px;
+}
+
+
+/* HEADER */
+.search {
+  display: flex;
+  /* justify-content: flex-start;
+  align-items: center; */
+  margin-bottom: 8px;
+}
+
+.search input {
+  min-width: 312px;
+  border: 0px;
+  outline: none;
+  height: 32px;
+  font-size: 1.375rem;
+  line-height: 32px;
+  caret-color: var(--black);
+  vertical-align: bottom;
+}
+
+.search img{
+  width: 32px;
+}
+
+.search button {
+  height: 32px;
+  border: none;
+  /* background-color: var(--white); */
+  padding: 0 8px;
+}
+
+.header-title{
+  height: 32px;
+  margin-bottom: 8px;
+}
+
+.header-title > p{
+  line-height: 32px;
+  font-weight: bold;
+  font-size: 1.75rem;
+}
+
+
+/* CONTENT */
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content { 
+  /* display: flex; */
+  width: calc(100% + 4px);
+  height: 766px;
+  display: block;
+  overflow-y: scroll;
+}
+
+.main-title {
+  display: flex;
+  align-items: flex-end;
+  height: 72px;
+  border-bottom: 2px solid var(--gray);
+}
+
+.main-title > div > span {
+  font-size: 1.75rem;
+  color: var(--black);
+  /* font-weight: bolder; */
+}
+
+.main-content-list {
+ padding: 60px 0;
+}
+
+.main-content-list:last-child {
+  margin-bottom: 48px;
+ }
+
+.main-content-list > div {
+  display: flex;
+  margin: 48px 0;
+}
+
+.main-content-list > div:first-child {
+  margin-top: 0px;
+}
+
+.main-content-list > div:last-child {
+  margin-bottom: 0px;
+}
+
+.main-content-list > div > div:first-child {
+  width: 35%;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.main-content-list > div > div:first-child > span{
+  position: absolute;
+  font-size: 6rem;
+  font-weight: bolder;
+  right: 24px;
+  color: var(--lightGrey);
+  vertical-align: text-top;
+  line-height: 80px;
+}
+
+.main-content-list > div > div:last-child {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  height: 24px;
+}
+
+.main-content-list > div > div:last-child > p {
+  margin-bottom: 8px;
+  /* font-weight: bolder; */
+  height: 24px;
+  color: var(--gray-text);
+}
+
+.main-content-list > div > div:last-child > span {
+  width: 60%;
+  margin-bottom: 8px;
+  font-weight: bolder;
+  line-height: 24px;
+  background-color: var(--lightGrey);
+}
+
+.main-content-list > div > div:last-child > div:hover, .main-content-list > div > div:last-child > div > p:hover, .main-content-list > div > div:last-child > div > p > span:hover{
+  cursor: default;
+}
+
+.main-content-list > div > div:last-child > input {
+  width: 60%;
+  /* margin-bottom: 15px; */
+  border: 0px;
+  border-bottom: solid 1px var(--gray);
+  outline: none;
+  height: 23px;
+  line-height: 23px;
+  color: var(--black);
+  font-weight: bolder;
+  caret-color: var(--black);
+}
+
+.main-content-select {
+  height: 24px;
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: flex-start; */
+  margin-right:8px;
+}
+
+.main-content-select > input {
+  border: 0px;
+  outline: none;
+  margin-right: 8px;
+  padding: 0 12px;
+  font-weight: bolder;
+  /* width: 48px; */
+}
+
+.main-content-select > span {
+  padding: 0 12px;
+  margin-right: 8px;
+  background-color: var(--gray);
+}
+
+.main-msg div{
+  border-top: 1px solid var(--black);
+  /* height: 24px; */
+}
+
+.main-right-list > div:last-child{
+  height: 48px;
+}

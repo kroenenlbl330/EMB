@@ -1,5 +1,6 @@
-import '../../static/style.1.css'
+import '../../static/style.css'
 import Vue from 'vue'
+// import store from '../../store/index.js'
 import router from '../route/routes.js'
 import App from './app.vue'
 import axios from 'axios'

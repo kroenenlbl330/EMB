@@ -1,42 +1,51 @@
 <template>
   <div class="wrapper">
     <div class="wrapper-content">
-      <Header>
+      <Header :message="WaterMeterList.length">
+        <!-- <span slot="screening-area">水表设备</span> -->
+
+        <!-- <div slot="title-area">
+          <p>水表表具设备中&nbsp;共有设备&nbsp;&nbsp;{{WaterMeterList.length}}</p>
+          <p>激活&nbsp;{{activateNum()}}&nbsp;&nbsp;停用&nbsp;{{disableNum()}}&nbsp;&nbsp;关联采集的水表&nbsp;{{relevance()}}</p>
+        </div> -->
+
         <div slot="search" class="search">
           <div>
-            <img :src="IconSearch">
+            <img :src="SearchGray">
           </div>
           <input type="text"
             autocomplete="off"
             placeholder="通过图纸编号搜索EMB..."
-            v-model="searchVal"
-          >
+            v-model="searchVal">
+            <!-- @focus.prevent="Focus(),SearchGray=overSearchPurple"
+            @blur.prevent="loseFocus(),SearchGray=outSearchGray" -->
         </div>
-        <div class="add-button" slot="add-button" @click="addNewMeter">
+        <div class="detail-button" slot="detail-button" @click="detail" 
+          @mouseover="DetailGray=overDetailPurple" @mouseout="DetailGray=outDetailGray" title="详情">
           <div>
-            <img :src="IconAdd" title="新增">
+            <img :src="DetailGray">
           </div>
-          <span>添加设备</span>
         </div>
-        <div class="detail-button" slot="detail-button" @click="detail">
+        <div class="edit-button" slot="edit-button" @click="edit" 
+          @mouseover="EditGray=overEditPurple" @mouseout="EditGray=outEditGray" title="修改">
           <div>
-            <img :src="IconDetail" title="详情">
+            <img :src="EditGray">
           </div>
-          <span>详细信息</span>
         </div>
-        <div class="edit-button" slot="edit-button" @click="edit">
+        <div class="delete-button" slot="delete-button" @click="del" 
+          @mouseover="DelGray=overDelPurple" @mouseout="DelGray=outDelGray" title="删除">
           <div>
-            <img :src="IconEdit" title="修改">
+            <img :src="DelGray">
           </div>
-          <span>修改</span>
         </div>
-        <div class="delete-button" slot="delete-button" @click="del">
+        <div class="add-button" slot="add-button" @click="addNewMeter" 
+          @mouseover="AddGray=overAddPurple" @mouseout="AddGray=outAddGray"  title="添加新的水表设备">
           <div>
-            <img :src="IconDel" title="删除">
+            <img :src="AddGray">
           </div>
-          <span>删除</span>
+          <span>添加</span>
         </div>
-        
+
       </Header>
       <div>
         <table>
@@ -44,119 +53,33 @@
             <tr>
               <!-- <th class="row-3">备注</th> -->
               <th class="row-1" align="center"></th>
-              <th class="row-1 table-dividers"></th>
-              <th class="row-2 table-dividers"><span>图纸编号</span></th>
-              <th class="row-4 table-dividers"><span>表具名称</span></th>
-              <th class="row-4 table-dividers"><span>安装位置</span></th>
-              <th class="row-2 table-dividers"><span>关联采集</span></th>
-              <th class="row-2 table-dividers"><span>电源</span></th>
-              <th class="row-1 table-dividers" align="right"><span>表级</span></th>
-              <th class="row-1 table-dividers" align="right"><span>系数</span></th>
-              <th class="row-1 table-dividers" align="right"><span>管径</span></th>
+              <th class="row-1"></th>
+              <th class="row-2"><span>图纸编号</span></th>
+              <th class="row-4"><span>表具名称</span></th>
+              <th class="row-4"><span>安装位置</span></th>
+              <th class="row-2"><span>关联采集</span></th>
+              <th class="row-2"><span>电源类型</span></th>
+              <th class="row-1" align="right"><span>表级</span></th>
+              <th class="row-1" align="right"><span>系数</span></th>
+              <th class="row-1" align="right"><span>管径</span></th>
               <th class="row-1" align="right"><span>状态</span></th>
             </tr>
           </thead>
+
+          <!-- 搜索 -->
           <tbody v-if="searchVal">
-            <tr>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-            </tr>
-            <!-- Nothing more... -->
             <tr v-for="(WaterMeter, index) in search" :key="index" @click="selectRadio(WaterMeter.drawingcode,index,WaterMeter.id)">
               <!-- <td class="row-3 text-gray" v-bind:title="WaterMeter.remark">
                 <span>{{WaterMeter.remark}}</span>
               </td> -->
               <td class="row-1" align="center">
                 <div
-                  :class="{'radioChecked':ind === index}"
+                  :class="{'radioChecked':ind === index + 1}"
                   class="radioCheck"
                   
                 ></div>
               </td>
-              <td class="row-1 text-bottom">
-                <span>{{addPreZero(index + 1)}}</span>
-              </td>
-              <td class="row-2 text-bottom text-border">
-                <span>{{WaterMeter.drawingcode}}</span>
-              </td>
-              <td class="row-4 text-bottom text-border">
-                <span>{{WaterMeter.name}}</span>
-              </td>
-              <td class="row-4 text-bottom">
-                <span>{{WaterMeter.site}}</span>
-              </td>
-              <td class="row-2 text-bottom">
-                <span>{{WaterMeter.relevance}}</span>
-              </td>
-              <td class="row-2 text-bottom">
-                <span>{{WaterMeter.supply}}</span>
-              </td>
-               <td class="row-1 text-bottom" align="right">
-                <span>{{WaterMeter.level}}</span>
-              </td>
-              <td class="row-1 text-bottom" align="right">
-                <span>{{WaterMeter.coefficient}}</span>
-              </td>
-              <td class="row-1 text-bottom" align="right">
-                <span>{{WaterMeter.diameter}}</span>
-              </td>
-              <td class="row-1 text-bottom" align="right">
-                <span v-if="WaterMeter.state == 0">激活</span>
-                <span v-else-if="WaterMeter.state == 1">停用</span>
-                <span v-else-if="WaterMeter.state == 2">删除</span>
-              </td>
-            </tr>
-            <!-- Nothing more... -->
-            <tr>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <!-- <tr>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-            </tr> -->
-            <!-- Nothing more... -->
-            <tr v-for="(WaterMeter, index) in WaterMeterList" :key="index" @click="selectRadio(WaterMeter.drawingcode,index,WaterMeter.id)">
-              <!-- <td class="row-3 text-gray" v-bind:title="WaterMeter.remark">
-                <span>{{WaterMeter.remark}}</span>
-              </td> -->
-              <td class="row-1" align="center">
-                <div
-                  :class="{'radioChecked':ind === index}"
-                  class="radioCheck"
-                  
-                ></div>
-              </td>
-              <td class="row-1 text-bottom">
+              <td class="row-1">
                 <span>{{addPreZero(index + 1)}}</span>
               </td>
               <td class="row-2 text-border">
@@ -180,101 +103,146 @@
               <td class="row-1" align="right">
                 <span>{{WaterMeter.coefficient}}</span>
               </td>
-              <td class="row-1 text-bottom" align="right">
+              <td class="row-1" align="right">
                 <span>{{WaterMeter.diameter}}</span>
               </td>
-              <td class="row-1 text-bottom" align="right">
+              <td class="row-1" align="right">
                 <span v-if="WaterMeter.state == 0">激活</span>
                 <span v-else-if="WaterMeter.state == 1">停用</span>
                 <span v-else-if="WaterMeter.state == 2">删除</span>
               </td>
             </tr>
-            <!-- Nothing more... -->
-            <!-- <tr>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-4 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-2 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-              <td class="row-1 row-empty"></td>
-            </tr> -->
+          </tbody>
+
+
+          <tbody class="autoheight" :style="autoheight" v-else>
+            <tr v-for="(WaterMeter, index) in WaterMeterList" :key="index" @click="selectRadio(WaterMeter.drawingcode,index,WaterMeter.id)">
+              <td class="row-1" align="center">
+                <div :class="{'radioChecked':ind === index + 1}" class="radioCheck">
+                  <!-- 选择框 -->
+                </div>
+              </td>
+              <td class="row-1">
+                <span>{{addPreZero(index + 1)}}</span>
+              </td>
+              <td class="row-2 text-border">
+                <span>{{WaterMeter.drawingcode}}</span>
+              </td>
+              <td class="row-4 text-border">
+                <span>{{WaterMeter.name}}</span>
+              </td>
+              <td class="row-4">
+                <span>{{WaterMeter.site}}</span>
+              </td>
+              <td class="row-2" v-bind:title="WaterMeter.relevance">
+                <span v-if="WaterMeter.relevance != null">{{relevanceCode(WaterMeter.relevance)}}</span>
+              </td>
+              <td class="row-2">
+                <span>{{WaterMeter.supply}}</span>
+              </td>
+               <td class="row-1" align="right">
+                <span>{{WaterMeter.level}}</span>
+              </td>
+              <td class="row-1" align="right">
+                <span>{{WaterMeter.coefficient}}</span>
+              </td>
+              <td class="row-1" align="right">
+                <span>{{WaterMeter.diameter}}</span>
+              </td>
+              <td class="row-1" align="right">
+                <span v-if="WaterMeter.state == 0">激活</span>
+                <span v-else-if="WaterMeter.state == 1">停用</span>
+                <span v-else-if="WaterMeter.state == 2">删除</span>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
+      <Footer>
+        <div slot="footer-msg" class="footer-msg"></div>
+      </Footer>
     </div>
-    <!-- <RightBar>
-      <img slot="add-button" class="button-normal" :src="IconAdd" @click="addNewMeter" title="新增">
-      <img slot="back-button" class="button-normal" :src="IconBack" @click="backPage" title="返回上一页">
-      <img
-        slot="detail-button"
-        class="button-normal button-normal-margin"
-        :src="IconDetail"
-        @click="detail"
-        title="详情"
-      >
-      <img
-        slot="edit-button"
-        class="button-normal button-normal-margin"
-        :src="IconEdit"
-        @click="edit"
-        title="修改"
-      >
-      <img
-        slot="delete-button"
-        class="button-normal button-normal-margin"
-        :src="IconDel"
-        @click="del"
-        title="删除"
-      >
-    </RightBar> -->
   </div>
 </template>
 
 <script>
 import Header from "./header.vue"
-// import RightBar from "./rightbar.vue"
+import Footer from "./footer.vue"
 
-import IconAdd from "../assets/add@24x24_gray.png"
-import IconBack from "../assets/back@32x32_black.png"
-import IconDetail from "../assets/detail@24x24_gray.png"
-import IconEdit from "../assets/edit@24x24_gray.png"
-import IconDel from "../assets/del@24x24_gray.png"
-import IconSearch from "../assets/search@24x24_gray.png"
+import AddGray from "../assets/add@24x24_gray.png"
+import DetailGray from "../assets/detail@24x24_gray.png"
+import EditGray from "../assets/edit@24x24_gray.png"
+import DelGray from "../assets/del@24x24_gray.png"
+import SearchGray from "../assets/search@24x24_gray.png"
+
+import AddPurple from "../assets/add@24x24_purple.png"
+import DetailPurple from "../assets/detail@24x24_purple.png"
+import EditPurple from "../assets/edit@24x24_purple.png"
+import DelPurple from "../assets/del@24x24_purple.png"
+import SearchPurple from "../assets/search@24x24_Purple.png"
 
 import Bus from "../static/bus.js"
-import $ from "../static/jquery-vendor.js"
+// import $ from "../static/jquery-vendor.js"
+// import {mapGetters, mapActions} from 'vuex'
 
 export default {
   components: {
     Header,
-    // RightBar,
+    Footer,
   },
   data() {
     return {
       WaterMeterList: [],
-      NothingMore: "Nothing more...",
       Operation: "修改",
       isActive: -1,
       check: "",
-      ind: "",
+      ind: 0,
       searchVal: "",
       DrawingNumber: "",
       AssociationCollect: "",
       checkID: "",
+      // inputCss: false,
 
-      IconAdd,
-      IconBack,
-      IconDetail,
-      IconEdit,
-      IconDel,
-      IconSearch,
+      overAddPurple: AddPurple,
+      outAddGray: AddGray,
+
+      overDetailPurple: DetailPurple,
+      outDetailGray: DetailGray,
+
+      overEditPurple: EditPurple,
+      outEditGray: EditGray,
+
+      overDelPurple: DelPurple,
+      outDelGray: DelGray,
+
+      overSearchPurple: SearchPurple,
+      outSearchGray: SearchGray,
+
+      AddGray,
+      DetailGray,
+      EditGray,
+      DelGray,
+      SearchGray,
+
+      autoheight:{
+　　　　　　height:''
+　　　 },
+
+      WaterCollectList: [],
     }
   },
+
+
+
+  // 在实例创建完成后被立即调用
+  created() {
+    // 实例创建完成后为window添加resize(调整)事件
+    window.addEventListener('resize', this.getHeight)
+    window.addEventListener('mousewheel',this.handleScroll,false)
+    this.getHeight()
+  },
+
+
 
   // 在请求执行成功后执行回调函数中的内容，回调函数处于其它函数的内部this不会与任何对象绑定，为undefined:
 
@@ -297,49 +265,94 @@ export default {
 
   // 使用箭头函数
   mounted: function() {
+    // 获取采集
     this.$ajax({
       method: "post",
-      url: "/watermeter/a"
-      // data: {}
+      url: "/watercollect"
     })
       .then(response => {
-        this.WaterMeterList = response.data
-        // console.log(this.WaterMeterList)
+        this.WaterCollectList = response.data
       })
       .catch(error => {
         console.log(error)
       })
+    
+    // 获取表具
+    this.$ajax({
+      method: "post",
+      url: "/watermeter"
+    })
+      .then(response => {
+        // this.WaterMeterList = response.data
+        for(let i=0;i<response.data.length;i++){
+          if(response.data[i].state !== 2){
+            this.WaterMeterList.push(response.data[i])
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })   
   },
 
+
+
   methods: {
+    // 获得设备激活或停用状态数量
+    activateNum() {    
+      var activateNum = 0
+      for(var i=0; i<this.WaterMeterList.length; i++){
+        if(this.WaterMeterList[i].state == 0){
+          activateNum++
+        }    
+      }       
+      return activateNum
+    },
+    disableNum() {
+      var disableNum = 0
+      for(var i=0; i<this.WaterMeterList.length; i++){
+        if(this.WaterMeterList[i].state == 1){
+          disableNum++
+        }    
+      }       
+      return disableNum
+    },
+    relevance() {
+      var relevance = 0
+      for(var i=0; i<this.WaterMeterList.length; i++){
+        if(this.WaterMeterList[i].relevance == ""){
+          relevance++
+        }    
+      }       
+      return relevance
+    },
+    relevanceCode(relevance) {   
+      return relevance.split(' ')[0]
+    },
+
+    // Focus() {
+    //   this.inputCss = true
+    // },
+    // loseFocus() {
+    //   this.inputCss = false
+    // },
+
     // 补零
     addPreZero(index) {
       return ("00" + index).slice(-3)
     },
-    // // 点击修改
-    // alter(index) {
-    //   alert(
-    //     "/watermeter/alter?DrawingNumber=" +
-    //       this.WaterMeterList[index].DrawingNumber
-    //   );
-    //   // location.href = '/watermeter' + window.location.search + '?DrawingNumber=' + this.WaterMeterList[index].DrawingNumber
-    // },
-    // 鼠标移入修改
-    // enterAlter(index) {
-    //   this.isActive = index
-    // },
-    // 点击明细
-    // detail(index) {
-    //   // alert("/watermeter?DrawingNumber=" + this.WaterMeterList[index].DrawingNumber)
-    //   // location.href = '/#/watermeter/detail/' + this.WaterMeterList[index].DrawingNumber
-    //   // this.ind = index
-    // },
-    
+
     selectRadio: function(DN, IN, ID) {
       // Bus.$emit('val', DN)
-      this.ind = IN
-      this.check = DN
-      this.checkID = ID
+      if(this.ind != 0 && this.ind == IN + 1){
+        this.ind = ""
+        this.check = ""
+        this.checkID = ""
+      }else{
+        this.ind = IN + 1
+        this.check = DN
+        this.checkID = ID
+      }
     },
 
     // 添加新设备
@@ -357,7 +370,7 @@ export default {
       } else {
         this.$router.push({
           path: '/watermeter/detail',
-          query: { drawingcode: this.check }
+          query: { drawingcode: this.check, id: this.checkID, }
         })
       }
     },
@@ -370,7 +383,7 @@ export default {
       } else {
         this.$router.push({
           path: '/watermeter/edit/',
-          query: { drawingcode: this.check }
+          query: { drawingcode: this.check, id: this.checkID, }
         })
       }
     },
@@ -397,7 +410,31 @@ export default {
         alert('请选择一个表具')
       }
     },
+
+    // 自动设置.content的高度
+    getHeight() {
+      this.autoheight.height = window.innerHeight-400+'px'
+    },
+
+    // 滚动事件
+    handleScroll(e) {
+      var direction = e.deltaY>0?'down':'up' // 该语句可以用来判断滚轮是向上滑动还是向下
+      // if(document.getElementsByTagName("li").length == 1){   //此处决定无论一次滚轮滚动的距离是多少，此事件都得等上次滚动结束，才会执行本次
+      //      this.isShow = false
+      //       setTimeout(() => {
+      //           this.isShow = true
+      //           ++ this.nowIndex
+      //           if(this.nowIndex == 3){
+      //           this.nowIndex = 0
+      //       }
+      //       }, 10)
+      //   }
+      console.log(direction)
+    }
   },
+
+
+
   computed: {
     // 逻辑-->升序降序排列  false: 默认从小到大  true：默认从大到小
     // 判断，如果要letter不为空，说明要进行排序
@@ -425,14 +462,26 @@ export default {
       }
       return waterMeterListArr
     }
-  }
+  },
+  
+
+
+  // 实例销毁后调用 Vue实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。
+  destroyed() {
+    // 实例销毁后为window移除resize(调整)事件
+    window.removeEventListener('resize', this.getHeight)
+    window.removeEventListener('mousewheel',this.handleScroll,false)
+  },
+
+
+
+  filters: {
+    
+  },
 }
 </script>
 
 <style>
-.table-dividers {
-  margin-right: 8px;
-  border-right: 2px solid #eee;
-}
+
 </style>
 

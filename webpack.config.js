@@ -227,6 +227,17 @@ module.exports = {
           limit: 10000,
           name: '[hash:8].[name].[ext]' //不知道什么效果...
         }  
+      },
+      {
+        test: /\.(ttf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][hash:8].[name].[ext]'
+            }
+          }
+        ]
       }
     ]//.concat(htmlPlugin())
   },

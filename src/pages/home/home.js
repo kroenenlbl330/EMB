@@ -1,4 +1,4 @@
-import '../../static/style.1.css'
+import '../../static/style.css'
 import Vue from 'vue'
 import router from '../route/routes.js'
 import App from './home.vue'
