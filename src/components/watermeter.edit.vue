@@ -288,6 +288,26 @@ var strategies = {
       return ""
     }
   },
+  // 系数输入不正确
+  isCoefficient: function (value) {
+    if (value==0.1||value==1) {
+      return ""
+    } else if (value=="") {
+      return "系数不能为空"
+    } else {
+      return "系数必须为0.1或1"
+    }
+  },
+  // 管径输入不正确
+  isDiameter: function (value) {
+    if (value==15||value==20||value==32||value==40||value==50||value==65||value==80||value==100||value==150||value==200||value==300) {
+      return ""
+    } else if (value == "") {
+      return "管径不能为空"
+    } else {
+      return value+"不是正确管径"
+    }
+  },
   // 表具名称、安装位置不能为空
   isNoEmpty: function (value,name) {
     if (value === "") {
@@ -541,11 +561,11 @@ export default {
     loseFocusSite(value,name) {
       this.promptSite = strategies.isNoEmpty(value,name)
     },
-    loseFocusCoefficient(value,name) {
-      this.promptCoefficient = strategies.isNoEmpty(value,name)
+    loseFocusCoefficient(value) {
+      this.promptCoefficient = strategies.isCoefficient(value)
     },
-    loseFocusDiameter(value,name) {
-      this.promptDiameter = strategies.isNoEmpty(value,name)
+    loseFocusDiameter(value) {
+      this.promptDiameter = strategies.isDiameter(value)
     },
 
     save: function() {
@@ -573,60 +593,50 @@ export default {
       let diameter = this.diameter
 
       let state = this.stateValue
-           
-      // if (drawingcode == "") {
-      //   alert("图纸编号不能为空")
-      //   return
-      // } else if (!name) {
-      //   alert("表具名称不能为空")
-      //   return
-      // } else if (!site) {
-      //   alert("安装位置不能为空")
-      //   return
-      // } else if (!coefficient) {
-      //   alert("请选择正确的系数")
-      //   return
-      // } else if (!diameter) {
-      //   alert("请选择正确的管径")
-      //   return;
-      // } else {
-      //   this.$ajax({
-      //     method: "post",
-      //     url: "/editmeter",
-      //     data: {
-      //       id: this.id,
-      //       energycode: energycode,
-      //       drawingcode: drawingcode,
-      //       name: name,
-      //       site: site,
+      
+      // 应该写在witch中
+      if (this.promptEnergyCode!=""||this.promptDrawingCode!=""||this.promptName!=""||this.promptSite!=""||this.promptCoefficient!=""||this.promptDiameter!="") {
+        alert("图纸编号不能为空")
+        return
+      } else {
+        this.$ajax({
+          method: "post",
+          url: "/editmeter",
+          data: {
+            id: this.id,
+            energycode: energycode,
+            drawingcode: drawingcode,
+            name: name,
+            site: site,
 
-      //       superior: superior,
-      //       relevance: relevance,
-      //       relevance_id: relevance_id,
-      //       level: level,
+            superior: superior,
+            relevance: relevance,
+            relevance_id: relevance_id,
+            level: level,
 
-      //       build: build,
-      //       department: department,
-      //       purpose: purpose,
-      //       supply: supply,
+            build: build,
+            department: department,
+            purpose: purpose,
+            supply: supply,
 
-      //       coefficient: coefficient,
-      //       diameter: diameter,
+            coefficient: coefficient,
+            diameter: diameter,
 
-      //       state: state,
-      //     }
-      //   })
-      //   .then(response => {
-      //     if(response){
-      //       alert("修改成功")
-      //       history.go(-1)
-      //     }
-      //   })
-      //   .catch(error => {
-      //     console.log(error)
-      //   })
-      // }
+            state: state,
+          }
+        })
+        .then(response => {
+          if(response){
+            alert("修改成功")
+            history.go(-1)
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
     },
+
     selsctSuperior() {
       // 获取上级表的列表
       this.$ajax({
