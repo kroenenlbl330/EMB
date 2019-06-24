@@ -27,8 +27,8 @@
                 <span>能源数据编号{{promptEnergyCode}}</span>
               </div>
               <div>
-                <div v-once>{{energyCodeEC}}</div>      
-                <input type="text" v-model="energycode" @blur.prevent="loseFocusEnergyCode(energycode)"/>
+                <span v-once hidden>{{energyCodeEC}}</span>      
+                <input type="text" v-model="energycode"/>
               </div>
             </div>
             <div>
@@ -36,7 +36,7 @@
                 <span>图纸编号{{promptDrawingCode}}</span>
               </div>
               <div>
-                <input type="text" v-model="drawingcode" @blur.prevent="loseFocusDrawingCode(drawingcode)"/>
+                <input type="text" v-model="drawingcode"/>
               </div>
             </div>
             <div>
@@ -44,7 +44,7 @@
                 <span>表具名称{{promptName}}</span>
               </div>
               <div> 
-                <input type="text" v-model="name" @blur.prevent="loseFocusName(name,'表具名称')"/>
+                <input type="text" v-model="name"/>
               </div>
             </div>
             <div>
@@ -52,21 +52,21 @@
                 <span>安装位置{{promptSite}}</span>
               </div>
               <div>      
-                <input type="text" v-model="site" @blur.prevent="loseFocusSite(site,'安装位置')"/>
+                <input type="text" v-model="site"/>
               </div>
             </div>
           </div>
           <div class="main-content-list">
             <div>
               <div>
-                <span>上级表</span>
+                <span>上级表{{promptSuperior}}</span>
               </div>
               <div>
-                <div class="select-head" @click.stop="dropDown('superiorMenu'),selsctSuperior()">
+                <div class="select-head" @click.stop="dropDown('superiorMenu')">
                   <p>
                     <span>{{superior}}</span>
-                    <span>{{superiorCode}}&nbsp;&nbsp;{{superiorName}}</span>
-                    </p>
+                    <span>{{superiorValue}}</span>
+                  </p>
                   <img :src="DropDownGray">
                 </div>
                 <div v-show="superiorMenu">
@@ -196,7 +196,7 @@
                 <span>系数{{promptCoefficient}}</span>
               </div>
               <div>      
-                <input type="text" v-model="coefficient" @blur.prevent="loseFocusCoefficient(coefficient,'系数')"/>
+                <input type="text" v-model="coefficient"/>
               </div>
             </div>
             <div>
@@ -204,7 +204,7 @@
                 <span>管径{{promptDiameter}}</span>
               </div>
               <div>      
-                <input type="text" v-model="diameter" @blur.prevent="loseFocusDiameter(diameter,'管径')"/>
+                <input type="text" v-model="diameter"/>
               </div>
             </div>
           </div>
@@ -261,62 +261,9 @@ import BackGray from "../assets/back@24x24_gray.png"
 import BackPurple from "../assets/back@24x24_purple.png"
 import SaveGray from "../assets/save@24x24_gray.png"
 import SaveWhite from "../assets/save@24x24_white.png"
+
+import {strategies} from "../static/pubilc.js"
 import { type } from 'os'
-
-
-
-var strategies = {
-  // 能源编号格式不正确
-  isEnergyCode: function (value, errorMsg) {
-    if (value === "") {
-      return "能源编号不能为空"
-    } else if (value.length !== 16) {
-      return "请填写长度为16位的能源编号"
-    } else if(!/^([A-Z]{2})([A-Z0-9]{1})([0-9]{13})$/.test(value)) {
-      return "能源编号格式不正确"
-    } else {
-      return ""
-    }
-  },
-  // 图纸编号格式不正确
-  isDrawingCode: function (value) {
-    if (value === "") {
-      return "图纸编号不能为空"
-    } else if (!/^([S]{1})([1-9]{1})-([0-9]{1,3})$/.test(value))  {
-      return "图纸编号格式不正确"
-    } else {
-      return ""
-    }
-  },
-  // 系数输入不正确
-  isCoefficient: function (value) {
-    if (value==0.1||value==1) {
-      return ""
-    } else if (value=="") {
-      return "系数不能为空"
-    } else {
-      return "系数必须为0.1或1"
-    }
-  },
-  // 管径输入不正确
-  isDiameter: function (value) {
-    if (value==15||value==20||value==32||value==40||value==50||value==65||value==80||value==100||value==150||value==200||value==300) {
-      return ""
-    } else if (value == "") {
-      return "管径不能为空"
-    } else {
-      return value+"不是正确管径"
-    }
-  },
-  // 表具名称、安装位置不能为空
-  isNoEmpty: function (value,name) {
-    if (value === "") {
-      return name+"不能为空"
-    } else {
-      return ""
-    }
-  },
-}
 
 
 
@@ -358,8 +305,7 @@ export default {
 
       // 上级表
       superiorList: "",
-      superiorCode: "",
-      superiorName: "",
+      superiorValue: "",
       superiorMenu: false,
       // 所属楼宇
       buildList: "",
@@ -394,6 +340,7 @@ export default {
 　　　 },
 
       showRelevanceArea: false,
+
       // v-once的值 不会重新渲染数据
       energyCodeEC: "",
       relevanceID: "",
@@ -405,6 +352,12 @@ export default {
       promptDrawingCode: "",
       promptName: "",
       promptSite: "",
+      promptSuperior: "",
+      promptBuild: "",
+      promptDepartment: "",
+      promptSchool: "",
+      promptPurpose: "",
+      promptSupply: "",
       promptCoefficient: "",
       promptDiameter: "",
     }
@@ -434,7 +387,7 @@ export default {
     })
       .then(response => {
         this.energycode = response.data[0].energycode
-        this.energyCodeEC = response.data[0].drawingcode
+        this.energyCodeEC = response.data[0].energycode
         this.drawingcode = response.data[0].drawingcode
         this.name = response.data[0].name
         this.site = response.data[0].site
@@ -496,7 +449,7 @@ export default {
         // 去除state为2的项
         for(let i=0;i<response.data.length;i++){
           if(response.data[i].state != 2){
-            if(response.data[i].energycode != this.energycode && response.data[i].drawingcode != this.drawingcode){
+            if(response.data[i].id != this.id){
               this.waterMeterList.push(response.data[i])
             }
           }
@@ -508,138 +461,20 @@ export default {
   },
 
 
-
-  // 页面的增删改查
-  methods: {
-    back: function() {
-      this.$router.go(-1)
+  // 侦听器
+  watch: {
+    energycode: function(newVal,oldVal){ 
+      this.promptEnergyCode = strategies.isEnergyCode(newVal,this.waterMeterList)
     },
+    drawingcode(newVal,oldVal) {
+      this.promptDrawingCode = strategies.isDrawingCode(newVal,this.waterMeterList)
 
-    addPreZero(index) {
-      return ("00" + index).slice(-3)
-    },
-
-    // 当鼠标离开能源编号时,检查是否输入正确
-    loseFocusEnergyCode(value) {
-      this.promptEnergyCode = strategies.isEnergyCode(value)
-    },
-    // 当鼠标离开图纸编号时,检查是否输入正确并请求上级表
-    loseFocusDrawingCode(value) {
-      this.promptDrawingCode = strategies.isDrawingCode(value)
-
-      this.$ajax({
-      method: "post",
-      url: "/returnlevel",
-      data: {
-        level: this.drawingcode.substring(1,2) - 1
-      }
-    })
-      .then(response => {
-        let arr = response.data
-        for(var i=0; i<arr.length; i++){
-          if(arr[i].drawingcode == this.energyCodeEC){
-            var index = arr.indexOf(arr[i]);
-            if (index > -1) {
-              arr.splice(index, 1);
-            }
-          }
-        }
-        if(response.data == ""){
-          this.superiorList = [{drawingcode:"最上级"},{name:""}]
-        }else {
-          this.superiorList = response.data;
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
-    // 当鼠标离开表具名称、安装位置时,检查是否输入为空
-    loseFocusName(value,name) {
-      this.promptName = strategies.isNoEmpty(value,name)
-    },
-    loseFocusSite(value,name) {
-      this.promptSite = strategies.isNoEmpty(value,name)
-    },
-    loseFocusCoefficient(value) {
-      this.promptCoefficient = strategies.isCoefficient(value)
-    },
-    loseFocusDiameter(value) {
-      this.promptDiameter = strategies.isDiameter(value)
-    },
-
-    save: function() {
-      let energycode = this.energycode
-      let drawingcode = this.drawingcode
-      let name = this.name
-      let site = this.site
-
-      let relevance = this.relevanceContent
-      let relevance_id = this.relevanceID
-      let superior
-      (this.superiorCode != '' && this.superiorName != '')?superior = this.superiorCode + " " + this.superiorName:superior=this.superior
-      let level = this.drawingcode.substring(1,2)
-
-      let build
-      (this.build != '')?build=this.build:build=this.buildValue
-      let department
-      (this.department != '')?department=this.department:department=this.departmentValue
-      let purpose
-      (this.purpose != '')?purpose=this.purpose:purpose=this.purposeValue
-      let supply
-      (this.supply != '')?supply=this.supply:supply=this.supplyValue
-
-      let coefficient = this.coefficient
-      let diameter = this.diameter
-
-      let state = this.stateValue
-      
-      // 应该写在witch中
-      if (this.promptEnergyCode!=""||this.promptDrawingCode!=""||this.promptName!=""||this.promptSite!=""||this.promptCoefficient!=""||this.promptDiameter!="") {
-        alert("图纸编号不能为空")
-        return
-      } else {
+      if(oldVal!=""){
+        // this.superiorCode = ""
+        // this.superiorName = ""
+        this.superior = ""
+        
         this.$ajax({
-          method: "post",
-          url: "/editmeter",
-          data: {
-            id: this.id,
-            energycode: energycode,
-            drawingcode: drawingcode,
-            name: name,
-            site: site,
-
-            superior: superior,
-            relevance: relevance,
-            relevance_id: relevance_id,
-            level: level,
-
-            build: build,
-            department: department,
-            purpose: purpose,
-            supply: supply,
-
-            coefficient: coefficient,
-            diameter: diameter,
-
-            state: state,
-          }
-        })
-        .then(response => {
-          if(response){
-            alert("修改成功")
-            history.go(-1)
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      }
-    },
-
-    selsctSuperior() {
-      // 获取上级表的列表
-      this.$ajax({
         method: "post",
         url: "/returnlevel",
         data: {
@@ -669,7 +504,230 @@ export default {
         .catch(error => {
           console.log(error)
         })
+      }
     },
+    name(newVal,oldVal) {
+      this.promptName = strategies.isNoEmpty(newVal,"表具名称不能为空")
+    },
+    site(newVal,oldVal) {
+      this.promptSite = strategies.isNoEmpty(newVal,"安装位置不能为空")
+    },
+    superior(newVal,oldVal) {
+      this.promptSuperior = strategies.isNoEmpty(newVal,"请选择上级表")
+    },
+    // relevance(value,name) {
+
+    //},
+    build(newVal,oldVal) {
+      this.promptBuild = strategies.isNoEmpty(newVal,"请选择楼宇")
+    },
+    department(newVal,oldVal) {
+      this.promptDepartment = strategies.isNoEmpty(newVal,"请选择部门")
+    },
+    schoole(newVal,oldVal) {
+      this.promptSchool = strategies.isNoEmpty(newVal,"请选择校区")
+    },
+    purpose(newVal,oldVal) {
+      this.promptPurpose = strategies.isNoEmpty(newVal,"请选择用途")
+    },
+    supply(newVal,oldVal) {
+      this.promptSupply = strategies.isNoEmpty(newVal,"请选择电源类型")
+    },
+    coefficient(newVal,oldVal) {
+      this.promptCoefficient = strategies.isCoefficient(newVal,"系数不能为空","系数必须为0.1或1")
+    },
+    diameter(newVal,oldVal) {
+      this.promptDiameter = strategies.isDiameter(newVal,"管径不能为空","不存在该管径")
+    },
+  },
+
+
+
+  // 页面的增删改查
+  methods: {
+    back: function() {
+      this.$router.go(-1)
+    },
+
+    addPreZero(index) {
+      return ("00" + index).slice(-3)
+    },
+
+    // 当鼠标离开能源编号时,检查是否输入正确
+    // loseFocusEnergyCode(value) {
+    //   this.promptEnergyCode = strategies.isEnergyCode(value)
+    // },
+    // 当鼠标离开图纸编号时,检查是否输入正确并请求上级表
+    // loseFocusDrawingCode(value) {
+    //   this.$ajax({
+    //     method: "post",
+    //     url: "/returnlevel",
+    //     data: {
+    //       level: this.drawingcode.substring(1,2) - 1
+    //     }
+    //   })
+    //     .then(response => {
+    //       let arr = response.data
+    //       for(var i=0; i<arr.length; i++){
+    //         if(arr[i].drawingcode == this.energyCodeEC){
+    //           var index = arr.indexOf(arr[i]);
+    //           if (index > -1) {
+    //             arr.splice(index, 1);
+    //           }
+    //         }
+    //       }
+    //       if(response.data == ""){
+    //         this.superiorList = [{drawingcode:"最上级"},{name:""}]
+    //       }else {
+    //         this.superiorList = response.data;
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // },
+    // loseFocus() {
+    //   this.superior = ""
+    //   this.$ajax({
+    //     method: "post",
+    //     url: "/returnlevel",
+    //     data: {
+    //       level: this.drawingcode.substring(1,2) - 1
+    //     }
+    //   })
+    //     .then(response => {
+    //       let arr = response.data
+    //       for(var i=0; i<arr.length; i++){
+    //         if(arr[i].drawingcode == this.energyCodeEC){
+    //           var index = arr.indexOf(arr[i])
+    //           if (index > -1) {
+    //             arr.splice(index, 1)
+    //           }
+    //         }
+    //       }
+    //       if(this.drawingcode.substring(1,2) == 1){
+    //         this.superiorList = [{drawingcode:"最上级", name:""}]
+    //       }else if(response.data == ""){
+    //         this.superiorList = [{drawingcode:"无上级", name:""}]
+    //         return
+    //        }else{
+    //         this.superiorList = arr
+    //       }
+          
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // },    
+
+    save: function() {
+      let energycode = this.energycode
+      let drawingcode = this.drawingcode
+      let name = this.name
+      let site = this.site
+
+      let relevance = this.relevanceContent
+      let relevance_id = this.relevanceID
+      let superior
+      (this.superior != '')?superior = superior=this.superior:this.superiorValue
+      let level = this.drawingcode.substring(1,2)
+
+      let build
+      (this.build != '')?build=this.build:build=this.buildValue
+      let department
+      (this.department != '')?department=this.department:department=this.departmentValue
+      let purpose
+      (this.purpose != '')?purpose=this.purpose:purpose=this.purposeValue
+      let supply
+      (this.supply != '')?supply=this.supply:supply=this.supplyValue
+
+      let coefficient = this.coefficient
+      let diameter = this.diameter
+
+      let state = this.stateValue
+      
+      if (this.promptEnergyCode||
+          this.promptDrawingCode||
+          this.promptName||
+          this.promptSite||
+          this.promptSuperior||
+          this.promptBuild||
+          this.promptDepartment||
+          this.promptSchool||
+          this.promptPurpose||
+          this.promptSupply||
+          this.promptCoefficient||
+          this.promptDiameter) {
+        alert("请检测填写是否正确")
+        return
+      } else {
+        this.$ajax({
+          method: "post",
+          url: "/editmeter",
+          data: {
+            id: this.id,
+            energycode: energycode,
+            drawingcode: drawingcode,
+            name: name,
+            site: site,
+            superior: superior,
+            relevance: relevance,
+            relevance_id: relevance_id,
+            level: level,
+            build: build,
+            department: department,
+            purpose: purpose,
+            supply: supply,
+            coefficient: coefficient,
+            diameter: diameter,
+            state: state,
+          }
+        })
+        .then(response => {
+          if(response){
+            alert("修改成功")
+            history.go(-1)
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
+    },
+
+    // selsctSuperior() {
+    //   // 获取上级表的列表
+    //   this.$ajax({
+    //     method: "post",
+    //     url: "/returnlevel",
+    //     data: {
+    //       level: this.drawingcode.substring(1,2) - 1
+    //     }
+    //   })
+    //     .then(response => {
+    //       let arr = response.data
+    //       for(var i=0; i<arr.length; i++){
+    //         if(arr[i].drawingcode == this.energyCodeEC){
+    //           var index = arr.indexOf(arr[i])
+    //           if (index > -1) {
+    //             arr.splice(index, 1)
+    //           }
+    //         }
+    //       }
+    //       if(this.drawingcode.substring(1,2) == 1){
+    //         this.superiorList = [{drawingcode:"最上级", name:""}]
+    //       }else if(response.data == ""){
+    //         this.superiorList = [{drawingcode:"无上级", name:""}]
+    //         return
+    //        }else{
+    //         this.superiorList = arr
+    //       }
+          
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // },
 
     dropDown(strMenu) {
       // 点击下拉菜单 传入菜单名称
@@ -695,8 +753,11 @@ export default {
       // 选择菜单项 传入选择项的名称，选择项的值
       this[strItem] = ""
       this[strItem + 'Menu'] = false
-      this[strItem + 'Code'] = items[0]
-      this[strItem + 'Name'] = items[1]
+      if(!items[1]) {
+        this[strItem + 'Value'] = items[0]
+      }else {
+        this[strItem] = items[0] + " " + items[1]
+      }
     },
     removeEvt(){
       //为document移除点击触发removeEvt()
@@ -716,7 +777,7 @@ export default {
       this.ind = index
     },
 
-    // 
+    // 在关联列表中选择的状态
     selectMeter: function(id) {
       if(this.relevanceID != 0 && this.relevanceID == id){
         this.relevanceID = ""
@@ -725,6 +786,7 @@ export default {
       }
     },
 
+    // 将在关联列表中选中的采集信息保存到this.relevanceContent中
     chooseRelevanceMeter: function(id) {
       this.relevanceContent = ""
       for(let i=0;i<this.waterCollectList.length;i++){
@@ -733,16 +795,7 @@ export default {
         }
       }      
     },
-
-    // 判断是否有重复的图纸或能源数据编号
-    judgementRepeat() {
-      for(let i=0;i<this.waterMeterList.length;i++){
-        if(this.waterMeterList[i].energycode == this.energycode || this.waterMeterList[i].drawingcode == this.drawingcode){
-          alert("？？？")
-        }
-      }
-    },
-
+    //
     getHeight(){
       this.autoheight.height = window.innerHeight-304+'px'
       this.meterlistheight.height = window.innerHeight-248+'px'
@@ -754,16 +807,6 @@ export default {
   filters: {
     empty: function (value) {
       return value?value:'no more...'
-    }
-  },
-
-
-
-  watch: {
-    drawingcode(newVal, oldVal) {
-      this.superiorCode = ""
-      this.superiorName = ""
-      this.oldVal = oldVal
     }
   },
 

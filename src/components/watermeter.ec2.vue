@@ -47,10 +47,11 @@
         </div>
 
       </Header>
-      <div class="content">
-        <table class="meter-table">
+      <div>
+        <table>
           <thead>
             <tr>
+              <!-- <th class="row-3">备注</th> -->
               <th class="row-1" align="center"></th>
               <th class="row-1"></th>
               <th class="row-2"><span>图纸编号</span></th>
@@ -58,55 +59,61 @@
               <th class="row-4"><span>安装位置</span></th>
               <th class="row-2"><span>关联采集</span></th>
               <th class="row-2"><span>电源类型</span></th>
-              <th class="row-1 th-space" align="right"><span>表级</span></th>
-              <th class="row-1 th-space" align="right"><span>系数</span></th>
-              <th class="row-1 th-space" align="right"><span>管径</span></th>
-              <th class="row-1 th-space" align="right"><span>状态</span></th>
+              <th class="row-1" align="right"><span>表级</span></th>
+              <th class="row-1" align="right"><span>系数</span></th>
+              <th class="row-1" align="right"><span>管径</span></th>
+              <th class="row-1" align="right"><span>状态</span></th>
             </tr>
           </thead>
 
           <!-- 搜索 -->
-          <tbody class="autoheight" :style="autoheight" v-if="searchVal">
+          <tbody v-if="searchVal">
             <tr v-for="(WaterMeter, index) in search" :key="index" @click="selectRadio(WaterMeter.drawingcode,index,WaterMeter.id)">
+              <!-- <td class="row-3 text-gray" v-bind:title="WaterMeter.remark">
+                <span>{{WaterMeter.remark}}</span>
+              </td> -->
               <td class="row-1" align="center">
-                <div :class="{'radioChecked':ind === index + 1}" class="radioCheck">
-                  <!-- 选择框 -->
-                </div>
+                <div
+                  :class="{'radioChecked':ind === index + 1}"
+                  class="radioCheck"
+                  
+                ></div>
               </td>
               <td class="row-1">
                 <span>{{addPreZero(index + 1)}}</span>
               </td>
-              <td class="row-2">
-                <span><b>{{WaterMeter.drawingcode}}</b></span>
+              <td class="row-2 text-border">
+                <span>{{WaterMeter.drawingcode}}</span>
               </td>
-              <td class="row-4">
-                <span><b>{{WaterMeter.name}}</b></span>
+              <td class="row-4 text-border">
+                <span>{{WaterMeter.name}}</span>
               </td>
               <td class="row-4">
                 <span>{{WaterMeter.site}}</span>
               </td>
-              <td class="row-2" v-bind:title="WaterMeter.relevance">
-                <span v-if="WaterMeter.relevance != null">{{relevanceCode(WaterMeter.relevance)}}</span>
+              <td class="row-2">
+                <span>{{WaterMeter.relevance}}</span>
               </td>
               <td class="row-2">
                 <span>{{WaterMeter.supply}}</span>
               </td>
-               <td class="row-1 td-space" align="right">
+               <td class="row-1" align="right">
                 <span>{{WaterMeter.level}}</span>
               </td>
-              <td class="row-1 td-space" align="right">
+              <td class="row-1" align="right">
                 <span>{{WaterMeter.coefficient}}</span>
               </td>
-              <td class="row-1 td-space" align="right">
+              <td class="row-1" align="right">
                 <span>{{WaterMeter.diameter}}</span>
               </td>
-              <td class="row-1 td-space" align="right">
+              <td class="row-1" align="right">
                 <span v-if="WaterMeter.state == 0">激活</span>
                 <span v-else-if="WaterMeter.state == 1">停用</span>
                 <span v-else-if="WaterMeter.state == 2">删除</span>
               </td>
             </tr>
           </tbody>
+
 
           <tbody class="autoheight" :style="autoheight" v-else>
             <tr v-for="(WaterMeter, index) in WaterMeterList" :key="index" @click="selectRadio(WaterMeter.drawingcode,index,WaterMeter.id)">
@@ -133,16 +140,16 @@
               <td class="row-2">
                 <span>{{WaterMeter.supply}}</span>
               </td>
-               <td class="row-1 td-space" align="right">
+               <td class="row-1" align="right">
                 <span>{{WaterMeter.level}}</span>
               </td>
-              <td class="row-1 td-space" align="right">
+              <td class="row-1" align="right">
                 <span>{{WaterMeter.coefficient}}</span>
               </td>
-              <td class="row-1 td-space" align="right">
+              <td class="row-1" align="right">
                 <span>{{WaterMeter.diameter}}</span>
               </td>
-              <td class="row-1 td-space" align="right">
+              <td class="row-1" align="right">
                 <span v-if="WaterMeter.state == 0">激活</span>
                 <span v-else-if="WaterMeter.state == 1">停用</span>
                 <span v-else-if="WaterMeter.state == 2">删除</span>
@@ -151,7 +158,7 @@
           </tbody>
         </table>
       </div>
-      <Footer :class="{a:shangyy}">
+      <Footer>
         <div slot="footer-msg" class="footer-msg"></div>
       </Footer>
     </div>
@@ -177,8 +184,6 @@ import SearchPurple from "../assets/search@24x24_Purple.png"
 import Bus from "../static/bus.js"
 // import $ from "../static/jquery-vendor.js"
 // import {mapGetters, mapActions} from 'vuex'
-
-
 
 export default {
   components: {
@@ -224,9 +229,6 @@ export default {
 　　　 },
 
       WaterCollectList: [],
-
-      shangyy: false,
-      Y: 0,
     }
   },
 
@@ -416,25 +418,7 @@ export default {
 
     // 滚动事件
     handleScroll(e) {
-      // this.Y=0
-      if(e.deltaY>0){
-        this.shangyy = !this.shangyy
-        console.log("aaa")
-        setTimeout(function(){
-            this.shangyy = false
-            console.log(this.shangyy)
-          },1000)
-        // this.Y = 1
-      }else if(e.deltaY<0) {
-        this.Y = 2
-      }
-      console.log(this.Y)
-      // 
-      // else if (this.Y < 1) {
-      //   this.shangyy = false
-      // }else if (this.Y = 0) {
-      //   this.shangyy = false
-      // }
+      var direction = e.deltaY>0?'down':'up' // 该语句可以用来判断滚轮是向上滑动还是向下
       // if(document.getElementsByTagName("li").length == 1){   //此处决定无论一次滚轮滚动的距离是多少，此事件都得等上次滚动结束，才会执行本次
       //      this.isShow = false
       //       setTimeout(() => {
@@ -445,30 +429,11 @@ export default {
       //       }
       //       }, 10)
       //   }
-      // console.log(direction)
+      console.log(direction)
     }
   },
 
-  // watch: {
-  //   Y(x,c) {
-      
-  //     if(x == 1){
-  //       this.shangyy = true
-  //         setTimeout(function(x,c){
-  //         // if(x!=c){
-  //         //   console.log("aaa")
-  //         //   this.shangyy = false
-  //         // }
-  //         console.log("aaa")
-  //         this.shangyy = false
-  //       },1000)
-  //     }else if(x == 2){
-  //       this.shangyy = false
-  //     }
 
-      
-  //   }
-  // },
 
   computed: {
     // 逻辑-->升序降序排列  false: 默认从小到大  true：默认从大到小
@@ -517,9 +482,6 @@ export default {
 </script>
 
 <style>
-.a {
-  box-shadow:inset 0px 15px 10px -15px #000;
-  background-color: hotpink; 
-}
+
 </style>
 

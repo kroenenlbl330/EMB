@@ -21,106 +21,79 @@ a {
   text-decoration: none;
 }
 
-/* TABLE */
+/* --------------------------------------- TABLE --------------------------------------- */
 table {
   border-collapse: collapse;  
   border-spacing: 0; 
-  /* margin: 0 12px 0 8px; */
-  /* margin: 0 0 0 8px; */
-  margin: 0 32px;
-}
-
-thead {
-  /* border-right: 8px solid var(--white); */
   box-sizing: border-box;
-  vertical-align: top;
-  /* border-bottom: 2px solid var(--gray); */
-  /* width: calc(100% - 22px); */
 }
 
-table tbody {
+tbody {
   display: block;
-  /* height: 690px; */
   overflow-y: scroll;
   width: calc(100% + 4px);
 }
 
-table > thead > tr {
+tr {
   display: table;
   table-layout: fixed;
   text-align: left;
-  width: calc(100% - 16px);
-  height: 36px;
-  /* background-color: rgb(255,255,255); */
-  /* width: calc(100% - 22px); */
-  margin: 24px 8px 20px 8px;
 }
 
-table > thead > tr > th > span {
-  line-height: 36px;
+.meter-table {
+  margin: 0 32px;
+}
+
+.meter-table thead tr {
+  width: calc(100% - 16px);
+  margin: 22px 8px 18px 8px;
+}
+
+.meter-table thead span {
   font-weight: normal;
   font-weight: bold;
-  /* margin-left: 8px; */
 }
 
-table > tbody > tr {
-  display: table;
-  table-layout: fixed;
-  text-align: left;
-  width: calc(100% - 16px);
-  background-color: rgb(255,255,255);
-  /* width: calc(100% - 22px); */
-  margin: 0 8px 6px 8px;
-  border-radius: 6px;
-}
-
-tbody {
+.meter-table tbody {
   margin-bottom: 12px;
   padding-bottom: 12px;
 }
 
-td{
-  height: 40px;
-  font-size: 1rem;
-  /* padding-top: 8px; */
-  /* border-bottom: 1px solid var(--white); */
-}
-
-td > span{
-  line-height: 40px;
-  /* margin-left: 8px; */
-}
-
-td, th{
-  white-space: nowrap; /* 设置内容抵达容器边界会不会转到下一行 */
-  overflow: hidden; /* 不显示超过对象尺寸的内容（这个绝对不能少）,也就是说设置td里面的数据无论有多少，都不会换行 */
-  text-overflow: ellipsis; /* 将被隐藏的那部分用省略号代替 */
-}
-
-tbody > tr{
-  /* border-bottom: 1px solid var(--white); */
+.meter-table tbody tr {
+  width: calc(100% - 16px);
+  margin: 0 8px 6px 8px;
+  border-radius: 6px;
+  background-color: #fff;
   box-sizing: border-box;
   cursor: default;
-  /* vertical-align: text-bottom; */
   box-shadow: 0px 0px 0px rgb(107, 53, 251, 0.4),   /*左边阴影*/ 
               0px 0px 0px rgb(107, 53, 251, 0.4),
               0px 0px 0px rgb(107, 53, 251, 0.4),
               0px 3px 3px 3px rgb(0, 0, 0, 0.02);
 }
 
-tbody > tr:hover{
-  /* cursor: pointer; */
-  /* border-bottom: 1px solid var(--black); */
+.meter-table tbody tr:hover {
+  width: calc(100% - 12px);
+  position: relative;
+  z-index: 1000;
+  margin: 0 6px 6px 6px;
   box-sizing: border-box;
-  /* box-shadow: 0px 0px 3px 9px rgb(48,192,169,0.4); */
   box-shadow: 0px 0px 0px rgb(107, 53, 251, 0.4),   /*左边阴影*/ 
               0px 0px 0px rgb(107, 53, 251, 0.4),
               0px 0px 0px rgb(107, 53, 251, 0.4),
               0px 9px 9px 3px rgb(107,53,251, 0.04);
-  z-index: 1000;
-  margin: 0 6px 6px 6px;
-  width: calc(100% - 12px);
-  position: relative;
+}
+
+.meter-table span {
+  line-height: 40px;
+  white-space: nowrap; /* 设置内容抵达容器边界会不会转到下一行 */
+  overflow: hidden; /* 不显示超过对象尺寸的内容（这个绝对不能少）,也就是说设置td里面的数据无论有多少，都不会换行 */
+  text-overflow: ellipsis; /* 将被隐藏的那部分用省略号代替 */
+}
+
+/* 表格 列 距离右侧 */
+.td-space, .th-space {
+  padding-right: 16px;
 }
 
 /* --------------------------------------- COLOR --------------------------------------- */
@@ -136,10 +109,10 @@ tbody > tr:hover{
   --lightGrey: #f8f8f8;
   --Green: rgb(48,192,169);
 }
-
+/* 选取文字时的背景颜色 */
 ::selection {
-  background:rgb(0, 209, 178);
-  color:rgb(255, 255, 255);
+  background: rgb(0, 209, 178);
+  color: rgb(255, 255, 255);
 }
 ::-moz-selection {
   background:rgb(0, 209, 178);
@@ -148,10 +121,6 @@ tbody > tr:hover{
 ::-webkit-selection {
   background:rgb(0, 209, 178);
   color:rgb(255, 255, 255);
-}
-
-.row-1-half {
-  width: 2.5%;
 }
 
 .row-1{
@@ -198,7 +167,7 @@ tbody > tr:hover{
   width: 100%;
 }
 
-.text-bottom{
+/* .text-bottom{
   vertical-align: bottom;
 }
 
@@ -207,9 +176,9 @@ tbody > tr:hover{
   height: 48px;
   border-bottom: 1px solid var(--white) !important;
   box-sizing: border-box;
-}
+} */
 
-/* 滚动条 */
+/* --------------------------------------- 滚动条 --------------------------------------- */
 /* 滚动条整体部分 */
 ::-webkit-scrollbar {  
   width: 4px;
@@ -288,11 +257,10 @@ input:-ms-input-placeholder {
 } 
 
 .wrapper {
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+  width: 100%;
   background-color: rgb(250, 250, 250);
 }
 
@@ -327,57 +295,7 @@ input:-ms-input-placeholder {
 }
 
 
-/* LIST */
-table > tbody > tr > td:nth-child(n + 8) span,
-table > thead > tr > th:nth-child(n + 8) {
-  padding-right: 16px;
-}
-
-.td-empty, .th-empty {
-  width: 0px;
-}
-
-.water-meter-name {
-  font-weight: bold;
-}
-
-.water-meter-note {
-  color: var(--gray-text);
-}
-
-.empty-list {
-  font-size: 1rem;
-  color: var(--prompt);
-}
-
-/* .icon {
-  width: 18px;
-  height: 18px;
-}
-
-.alter img {
-  color: #294cb0;
-  cursor: pointer;
-  border-bottom: none;
-} */
-
-/* input[type=radio] + span {
-  display: inline-block;
-  height: 16px;
-  width: 16px;
-  border-radius: 8px;
-  background-color: var(--gray);
-  vertical-align: middle;
-}
-
-label:hover{
-  border-bottom: none;
-}
-
-input[type=radio]:checked + span {
-  background-color: var(--black);
-} */
-
+/* --------------------------------------- LIST --------------------------------------- */
 .radioCheck {
   display: inline-block;
   height: 24px;
@@ -513,6 +431,10 @@ input[type=radio]:checked + span {
 
 
 /* --------------------------------------- CONTENT --------------------------------------- */
+.content {
+  width: 100%;
+}
+
 .main {
   /* display: flex;
   flex-direction: column; */
@@ -916,3 +838,4 @@ input[type=radio]:checked + span {
 .relevance-area-btn:hover, .relevance-list:hover {
   cursor: pointer;
 }
+

@@ -27,7 +27,7 @@
                 <span>能源数据编号</span>
               </div>
               <div>
-                <input type="text" v-model="energycode" placeholder="请输入16位能源数据编号"/>
+                <input type="text" v-model="energycode" placeholder="请输入16位能源数据编号" @blur.prevent="judgementRepeat()"/>
               </div>
             </div>
             <div>
@@ -352,15 +352,15 @@ export default {
       this.$ajax.post('/purpose'),
       this.$ajax.post('/supply'),
       this.$ajax.post('/department'),
-      this.$ajax.post('/coefficient'),
+      // this.$ajax.post('/coefficient'),
       this.$ajax.post('/build'),
       this.$ajax.post('/school'),
     ])
-    .then(this.$ajax.spread((purpose,supply,department,coefficient,build,school)=> {
+    .then(this.$ajax.spread((purpose,supply,department,build,school)=> {
       this.purposeList = purpose.data
       this.supplyList = supply.data
       this.departmentList = department.data
-      this.coefficientList = coefficient.data
+      // this.coefficientList = coefficient.data
       this.buildList = build.data
       this.schoolList = school.data
     }))

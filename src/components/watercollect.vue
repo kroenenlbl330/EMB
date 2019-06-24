@@ -46,10 +46,10 @@
           </div>
           <span>添加</span>
         </div>
-
       </Header>
-      <div class="autoheight" :style="autoheight">
-        <table>
+
+      <div class="content">
+        <table class="meter-table">
           <thead>
             <tr>
               <th class="row-1" align="center"></th>
@@ -59,10 +59,10 @@
               <th class="row-5"><span>安装位置</span></th>
               <th class="row-2"><span>关联中继</span></th>
               <th class="row-2"><span>电源类型</span></th>    
-              <th class="row-1" align="right"><span>状态</span></th>
+              <th class="row-1 th-space" align="right"><span>状态</span></th>
             </tr>
           </thead>
-          <tbody v-if="searchVal">
+          <tbody class="autoheight" :style="autoheight" v-if="searchVal">
             <tr v-for="(WaterCollect, index) in search" :key="index" @click="selectRadio(WaterCollect.communicationcode,index,WaterCollect.id)">
               <td class="row-1" align="center">
                 <div :class="{'radioChecked':ind === index + 1}" class="radioCheck">
@@ -90,14 +90,15 @@
               <td class="row-2" align="right">
                 <span>{{WaterCollect.supply}}</span>
               </td>
-              <td class="row-1" align="right">
+              <td class="row-1 td-space" align="right">
                 <span v-if="WaterCollect.state == 0">激活</span>
                 <span v-else-if="WaterCollect.state == 1">停用</span>
                 <span v-else-if="WaterCollect.state == 2">删除</span>
               </td>
             </tr>
           </tbody>
-          <tbody v-else>
+
+          <tbody class="autoheight" :style="autoheight" v-else>
             <tr v-for="(WaterCollect, index) in waterCollectList" :key="index" @click="selectRadio(WaterCollect.communicationcode,index,WaterCollect.id)">
               <td class="row-1" align="center">
                 <div :class="{'radioChecked':ind === index + 1}" class="radioCheck">
@@ -122,7 +123,7 @@
               <td class="row-2">
                 <span>{{WaterCollect.supply}}</span>
               </td>
-              <td class="row-1" align="right">
+              <td class="row-1 td-space" align="right">
                 <span v-if="WaterCollect.state == 0">激活</span>
                 <span v-else-if="WaterCollect.state == 1">停用</span>
                 <span v-else-if="WaterCollect.state == 2">删除</span>
@@ -131,6 +132,7 @@
           </tbody>
         </table>
       </div>
+
       <Footer>
         <div slot="footer-msg" class="footer-msg"></div>
       </Footer>
@@ -335,7 +337,7 @@ export default {
       }
     },
     getHeight(){
-      this.autoheight.height = window.innerHeight-296+'px'
+      this.autoheight.height = window.innerHeight-400+'px'
     },
   },
   computed: {

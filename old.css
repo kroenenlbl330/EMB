@@ -1,0 +1,90 @@
+table {
+  border-collapse: collapse;  
+  border-spacing: 0; 
+  /* margin: 0 12px 0 8px; */
+  /* margin: 0 0 0 8px; */
+  /* margin: 0 32px; */
+}
+
+thead {
+  /* border-right: 8px solid var(--white); */
+  box-sizing: border-box;
+  /* vertical-align: top; */
+  /* border-bottom: 2px solid var(--gray); */
+  /* width: calc(100% - 22px); */
+}
+
+tbody {
+  display: block;
+  /* height: 690px; */
+  overflow-y: scroll;
+  width: calc(100% + 4px);
+}
+
+tr {
+  display: table;
+  table-layout: fixed;
+  text-align: left;
+  /* width: calc(100% - 16px);
+  height: 36px;
+  background-color: rgb(255,255,255);
+  width: calc(100% - 22px);
+  margin: 24px 8px 20px 8px; */
+}
+
+/* table > tbody > tr {
+  width: calc(100% - 16px);
+  background-color: rgb(255,255,255);
+  width: calc(100% - 22px);
+  margin: 0 8px 6px 8px;
+  border-radius: 6px;
+} */
+
+/* tbody {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+} */
+
+/* td{
+  height: 40px;
+  font-size: 1rem;
+  padding-top: 8px;
+  border-bottom: 1px solid var(--white);
+} */
+
+/* td > span{
+  line-height: 40px;
+  margin-left: 8px;
+} */
+
+/* td, th{
+  white-space: nowrap; 设置内容抵达容器边界会不会转到下一行
+  overflow: hidden; 不显示超过对象尺寸的内容（这个绝对不能少）,也就是说设置td里面的数据无论有多少，都不会换行
+  text-overflow: ellipsis; 将被隐藏的那部分用省略号代替
+} */
+
+/* tbody > tr{
+  border-bottom: 1px solid var(--white);
+  box-sizing: border-box;
+  cursor: default;
+  vertical-align: text-bottom;
+  box-shadow: 0px 0px 0px rgb(107, 53, 251, 0.4),   左边阴影 
+              0px 0px 0px rgb(107, 53, 251, 0.4),
+              0px 0px 0px rgb(107, 53, 251, 0.4),
+              0px 3px 3px 3px rgb(0, 0, 0, 0.02);
+} */
+
+/* tbody > tr:hover{
+  cursor: pointer;
+  border-bottom: 1px solid var(--black);
+  box-sizing: border-box;
+  box-shadow: 0px 0px 3px 9px rgb(48,192,169,0.4);
+  box-shadow: 0px 0px 0px rgb(107, 53, 251, 0.4),   左边阴影 
+              0px 0px 0px rgb(107, 53, 251, 0.4),
+              0px 0px 0px rgb(107, 53, 251, 0.4),
+              0px 9px 9px 3px rgb(107,53,251, 0.04);
+  z-index: 1000;
+  margin: 0 6px 6px 6px;
+  width: calc(100% - 12px);
+  position: relative;
+} */
