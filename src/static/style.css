@@ -12,13 +12,19 @@
   /* font-family: '思源黑体','Helvetica Neue',Roboto,Arial,'Droid Sans',sans-serif; */
   /* font-family: '更纱黑体 UI SC','Helvetica Neue',Roboto,Arial,'Droid Sans',sans-serif; */
   /* font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol; */
-  font-family: "Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue","Helvetica","Arial",sans-serif;
+  /* font-family: "Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue","Helvetica","Arial",sans-serif; */
+  font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
   list-style-type: none;  
   /* color: rgb(68, 68, 68); */
 }
 
 a {
   text-decoration: none;
+}
+
+button {
+  border: none;
+  outline: none;
 }
 
 /* --------------------------------------- TABLE --------------------------------------- */
@@ -571,7 +577,7 @@ input:-ms-input-placeholder {
 
 .main-content-list > div > div:last-child > input {
   width: 60%;
-  margin-right: 35%;
+  /* margin-right: 35%; */
   border: 0px;
   outline: none;
   height: 36px;
@@ -584,14 +590,31 @@ input:-ms-input-placeholder {
   border-radius: 6px;
 }
 
-.main-msg div{
-  border-top: 1px solid var(--black);
-  /* height: 24px; */
+.input-select-prompt {
+  display: flex;
+  /* justify-content: flex-start; */
+  align-items: center;
 }
 
-.main-right-list > div:last-child{
-  height: 48px;
+.input-select-prompt > input{
+  width: 80%;
+  min-height: 40px;
+  border-radius: 6px;
 }
+
+.input-select-prompt > div:last-child {
+  border-radius: 4px;
+  margin-left: 8px;
+  background-color: rgb(255, 88, 70);
+  padding: 0 4px;
+}
+
+.input-select-prompt > div:last-child > span {
+  font-size: 0.875rem;
+  color: #fff;
+}
+
+
 
 .select-state{
   display: flex;
@@ -632,11 +655,17 @@ input:-ms-input-placeholder {
 
 
 /* --------------------------------------- SELECT --------------------------------------- */
+.bb {
+  width: 60%;
+}
+
 .select-head {
   /* box-sizing: border-box; */
   height: 36px;
-  width: calc(60% + 8px);
-  margin-right: 35%;
+  /* width: calc(60% + 8px); */
+  width: 100%;
+  margin-right: 8px;
+  padding-left: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -655,11 +684,12 @@ input:-ms-input-placeholder {
 }
 
 .select-head + div {
+  /* padding-left: 8px; */
   margin-top: 4px;
   padding: 8px 0;
   text-indent: 8px;
-  width: calc(60% + 8px);
-  /* width: calc(75% + 3px); */
+  /* width: calc(60% + 8px); */
+  width: calc(100% + 8px);
   /* background-color: var(--lightGrey); */
   border: 2px solid rgb(237, 237, 237);
   background-color: #fff;
@@ -690,7 +720,6 @@ input:-ms-input-placeholder {
   font-size: 1rem;
   color: rgb(182, 182, 182);
   line-height: 37px;
-  padding-left: 8px;
 }
 
 .select-head > p > span:last-child {

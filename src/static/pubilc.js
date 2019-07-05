@@ -1,38 +1,35 @@
 var strategies = {
   // 能源编号格式不正确
   isEnergyCode: function (value,waterMeterList) {
-    if (value === "") {
+    // 判断是否有重复的能源编号
+    for(let i=0;i<waterMeterList.length;i++){
+      if(value == waterMeterList[i].energycode){
+        return "能源编号不能重复"
+      }
+    }
+    if (value == "") {
       return "能源编号不能为空"
-    } else if (value.length !== 16) {
+    } else if (value.length != 16) {
       return "请填写长度为16位的能源编号"
     } else if (!/^([A-Z]{2})([A-Z0-9]{1})([0-9]{13})$/.test(value)) {
       return "能源编号格式不正确"
-    } else {
-      // 判断是否有重复的能源编号
-      for(let i=0;i<waterMeterList.length;i++){
-        if(value == waterMeterList[i].energycode){
-          return "能源编号不能重复"
-        }else{
-          return ""
-        }
-      }
     }
   },
   // 图纸编号格式不正确
   isDrawingCode: function (value,waterMeterList) {
+    // 判断是否有重复的图纸编号
+    for(let i=0;i<waterMeterList.length;i++){
+      if(value == waterMeterList[i].drawingcode){
+        console.log(waterMeterList[i].drawingcode)
+        return "图纸编号不能重复"
+      }
+    }
     if (value == "") {
       return "图纸编号不能为空"
     } else if (!/^([S]{1})([1-9]{1})-([0-9]{1,3})$/.test(value))  {
       return "图纸编号格式不正确"
     } else {
-      // 判断是否有重复的图纸编号
-      for(let i=0;i<waterMeterList.length;i++){
-        if(value == waterMeterList[i].drawingcode){
-          return "图纸编号不能重复"
-        }else{
-          return ""
-        }
-      }
+      return ""
     }
   },
   // 系数输入不正确

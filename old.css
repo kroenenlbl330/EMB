@@ -88,3 +88,13 @@ tr {
   width: calc(100% - 12px);
   position: relative;
 } */
+
+
+/* .main-msg div{
+  border-top: 1px solid var(--black);
+  height: 24px;
+}
+
+.main-right-list > div:last-child{
+  height: 48px;
+} */

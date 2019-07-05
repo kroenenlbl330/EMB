@@ -24,57 +24,73 @@
           <div class="main-content-list">
             <div>
               <div>
-                <span>能源数据编号{{promptEnergyCode}}</span>
+                <span>能源数据编号</span>
               </div>
-              <div>
-                <span v-once hidden>{{energyCodeEC}}</span>      
+              <div class="input-select-prompt">
                 <input type="text" v-model="energycode"/>
+                <div>
+                  <span>{{promptEnergyCode}}</span>
+                </div>
               </div>
             </div>
             <div>
               <div>
-                <span>图纸编号{{promptDrawingCode}}</span>
+                <span>图纸编号</span>
               </div>
-              <div>
+              <div class="input-select-prompt">
                 <input type="text" v-model="drawingcode"/>
+                <div>
+                  <span>{{promptDrawingCode}}</span>
+                </div>
               </div>
             </div>
             <div>
               <div>
-                <span>表具名称{{promptName}}</span>
+                <span>表具名称</span>
               </div>
-              <div> 
+              <div class="input-select-prompt"> 
                 <input type="text" v-model="name"/>
+                <div>
+                  <span>{{promptName}}</span>
+                </div>
               </div>
             </div>
             <div>
               <div>
-                <span>安装位置{{promptSite}}</span>
+                <span>安装位置</span>
               </div>
-              <div>      
+              <div class="input-select-prompt">      
                 <input type="text" v-model="site"/>
+                <div>
+                  <span>{{promptSite}}</span>
+                </div>
               </div>
             </div>
           </div>
           <div class="main-content-list">
             <div>
               <div>
-                <span>上级表{{promptSuperior}}</span>
+                <span>上级表</span>
               </div>
-              <div>
-                <div class="select-head" @click.stop="dropDown('superiorMenu')">
-                  <p>
-                    <span>{{superior}}</span>
-                    <span>{{superiorValue}}</span>
-                  </p>
-                  <img :src="DropDownGray">
-                </div>
-                <div v-show="superiorMenu">
-                  <div v-for="(superior, index) in superiorList" @click.stop="selectDropDownItem('superior',superior.drawingcode,superior.name)" :key="index">
-                    {{superior.drawingcode}}&nbsp;&nbsp;{{superior.name}}
+              <div class="input-select-prompt">
+                <div class="bb">
+                  <div class="select-head" @click.stop="dropDown('superiorMenu')">
+                    <p>
+                      <span>{{superior}}</span>
+                      <span>{{superiorValue}}</span>
+                    </p>
+                    <img :src="DropDownGray">
                   </div>
+                  <div v-show="superiorMenu">
+                    <div v-for="(superior, index) in superiorList" @click.stop="selectDropDownItem('superior',superior.drawingcode,superior.name,superior.id)" :key="index">
+                      {{superior.drawingcode}}&nbsp;&nbsp;{{superior.name}}
+                    </div>
+                  </div>
+                </div> 
+                <div>
+                  <span>{{promptSuperior}}</span>
                 </div>
-              </div>
+              </div>      
             </div>
             <div>
               <div>
@@ -84,9 +100,9 @@
                 <div>
                   <span>{{relevanceContent}}</span>
                 </div>
-                <div class="choose-relevance-btn" @click="showRelevanceArea = !showRelevanceArea">
+                <button class="choose-relevance-btn" @click="showRelevanceArea = !showRelevanceArea">
                   <span>选择采集</span>
-                </div>
+                </button>
                 <!-- <div style="width:40px;height:40px;background:hotpink;">
 
                 </div> -->
@@ -262,7 +278,7 @@ import BackPurple from "../assets/back@24x24_purple.png"
 import SaveGray from "../assets/save@24x24_gray.png"
 import SaveWhite from "../assets/save@24x24_white.png"
 
-import {strategies} from "../static/pubilc.js"
+import { strategies } from "../static/pubilc.js"
 import { type } from 'os'
 
 
@@ -304,27 +320,28 @@ export default {
       state: "",
 
       // 上级表
-      superiorList: "",
+      superiorList: [],
       superiorValue: "",
       superiorMenu: false,
+      superiorID: "",
       // 所属楼宇
-      buildList: "",
+      buildList: [],
       buildValue: "",
       buildMenu: false,
       // 所属部门
-      departmentList: "",
+      departmentList: [],
       departmentValue: "",
       departmentMenu: false,
       // 所属校区
-      schoolList: "",
+      schoolList: [],
       schoolValue: "",
       schoolMenu: false,
       // 表具用途
-      purposeList: "",
+      purposeList: [],
       purposeValue: "",
       purposeMenu: false,
       // 电源
-      supplyList: "",
+      supplyList: [],
       supplyValue: "",
       supplyMenu: false,
       // 状态
@@ -342,7 +359,7 @@ export default {
       showRelevanceArea: false,
 
       // v-once的值 不会重新渲染数据
-      energyCodeEC: "",
+      drawingcodeEC: "",
       relevanceID: "",
       relevanceContent: "",
       waterCollectList: [],
@@ -387,10 +404,11 @@ export default {
     })
       .then(response => {
         this.energycode = response.data[0].energycode
-        this.energyCodeEC = response.data[0].energycode
+        this.drawingcodeEC = response.data[0].drawingcode
         this.drawingcode = response.data[0].drawingcode
         this.name = response.data[0].name
         this.site = response.data[0].site
+        this.superiorID = response.data[0].superior_id
         this.superior = response.data[0].superior
         this.relevance_id = response.data[0].relevance_id
         this.relevanceID = response.data[0].relevance_id
@@ -431,7 +449,7 @@ export default {
     })
       .then(response => {
         for(let i=0;i<response.data.length;i++){
-          if(response.data[i].state == 0){          
+          if(response.data[i].state != 2){
             this.waterCollectList.push(response.data[i])
           }
         }
@@ -448,10 +466,14 @@ export default {
       .then(response => {
         // 去除state为2的项
         for(let i=0;i<response.data.length;i++){
-          if(response.data[i].state != 2){
-            if(response.data[i].id != this.id){
-              this.waterMeterList.push(response.data[i])
-            }
+          if(response.data[i].state != 2 && response.data[i].id != this.id){
+            this.waterMeterList.push(response.data[i])
+          }
+        }
+        // 初始存入superiorList的数据
+        for(let i=0;i<response.data.length;i++){
+          if(response.data[i].level == this.drawingcode.substring(1,2)-1){
+            this.superiorList.push(response.data[i])
           }
         }
       })
@@ -474,6 +496,7 @@ export default {
         // this.superiorName = ""
         this.superior = ""
         
+        // 获得上级表
         this.$ajax({
         method: "post",
         url: "/returnlevel",
@@ -483,8 +506,9 @@ export default {
       })
         .then(response => {
           let arr = response.data
+          // 防止改低表级后能查询到自己之前的图纸编号
           for(var i=0; i<arr.length; i++){
-            if(arr[i].drawingcode == this.energyCodeEC){
+            if(arr[i].drawingcode == this.drawingcodeEC){
               var index = arr.indexOf(arr[i])
               if (index > -1) {
                 arr.splice(index, 1)
@@ -628,8 +652,9 @@ export default {
 
       let relevance = this.relevanceContent
       let relevance_id = this.relevanceID
+      let superior_id = this.superiorID
       let superior
-      (this.superior != '')?superior = superior=this.superior:this.superiorValue
+      (this.superior != '')?superior=this.superior:this.superiorValue
       let level = this.drawingcode.substring(1,2)
 
       let build
@@ -670,6 +695,7 @@ export default {
             drawingcode: drawingcode,
             name: name,
             site: site,
+            superior_id: superior_id,
             superior: superior,
             relevance: relevance,
             relevance_id: relevance_id,
@@ -758,6 +784,7 @@ export default {
       }else {
         this[strItem] = items[0] + " " + items[1]
       }
+      this[strItem + 'ID'] = items[2]
     },
     removeEvt(){
       //为document移除点击触发removeEvt()

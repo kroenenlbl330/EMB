@@ -151,7 +151,7 @@
           </tbody>
         </table>
       </div>
-      <Footer :class="{a:shangyy}">
+      <Footer>
         <div slot="footer-msg" class="footer-msg"></div>
       </Footer>
     </div>
@@ -225,8 +225,8 @@ export default {
 
       WaterCollectList: [],
 
-      shangyy: false,
-      Y: 0,
+      // shangyy: false,
+      // Y: 0,
     }
   },
 
@@ -236,7 +236,7 @@ export default {
   created() {
     // 实例创建完成后为window添加resize(调整)事件
     window.addEventListener('resize', this.getHeight)
-    window.addEventListener('mousewheel',this.handleScroll,false)
+    // window.addEventListener('mousewheel',this.handleScroll,false)
     this.getHeight()
   },
 
@@ -416,19 +416,29 @@ export default {
 
     // 滚动事件
     handleScroll(e) {
+      // if(e.deltaY){
+      //   if(e.deltaY>0) {
+      //     console.log("1")
+      //   }else if(e.deltaY<0) {
+      //     console.log("2")
+      //   }
+      // }else{
+      //   console.log("3")
+      // }
+      
       // this.Y=0
-      if(e.deltaY>0){
-        this.shangyy = !this.shangyy
-        console.log("aaa")
-        setTimeout(function(){
-            this.shangyy = false
-            console.log(this.shangyy)
-          },1000)
-        // this.Y = 1
-      }else if(e.deltaY<0) {
-        this.Y = 2
-      }
-      console.log(this.Y)
+      // if(e.deltaY>0){
+      //   this.shangyy = !this.shangyy
+      //   console.log("aaa")
+      //   setTimeout(function(){
+      //       this.shangyy = false
+      //       console.log(this.shangyy)
+      //     },1000)
+      //   // this.Y = 1
+      // }else if(e.deltaY<0) {
+      //   this.Y = 2
+      // }
+      // console.log(this.Y)
       // 
       // else if (this.Y < 1) {
       //   this.shangyy = false
@@ -449,26 +459,9 @@ export default {
     }
   },
 
-  // watch: {
-  //   Y(x,c) {
-      
-  //     if(x == 1){
-  //       this.shangyy = true
-  //         setTimeout(function(x,c){
-  //         // if(x!=c){
-  //         //   console.log("aaa")
-  //         //   this.shangyy = false
-  //         // }
-  //         console.log("aaa")
-  //         this.shangyy = false
-  //       },1000)
-  //     }else if(x == 2){
-  //       this.shangyy = false
-  //     }
-
-      
-  //   }
-  // },
+  watch: {
+    
+  },
 
   computed: {
     // 逻辑-->升序降序排列  false: 默认从小到大  true：默认从大到小

@@ -95,6 +95,7 @@ exports.editMeter = function(req,res,callback){
       site='${req.body.site}', 
       name='${req.body.name}', 
       superior='${req.body.superior}', 
+      superior_id='${req.body.superior_id}', 
       relevance='${req.body.relevance}', 
       relevance_id='${req.body.relevance_id}', 
       level='${req.body.level}', 
